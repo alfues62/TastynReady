@@ -12,6 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -46,10 +51,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_carta) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CartaFragment()).commit();
         } else if(id == R.id.nav_acerca){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AcercaDeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentUsuario()).commit();
         }else if (id == R.id.nav_usuario) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
+        }
+        else if (id == R.id.nav_logout) {
+            AuthUI.getInstance().signOut(getApplicationContext()) .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override public void onComplete(@NonNull Task<Void> task) {
+                    Intent i = new Intent( getApplicationContext (), MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); startActivity(i); finish(); } });
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
