@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TastyReady" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/AmarilloTYR</item>
+        <item name="colorPrimaryVariant">@color/AmarilloTYR</item>
+        <item name="colorSecondary">@color/AzulTYR</item>
+        <item name="colorSecondaryVariant">@color/AzulTYR</item>
+    </style>
+
+    <style name="Theme.TastyReady" parent="Base.Theme.TastyReady" />
+</resources>
