@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110084925608",
+    "project_id": "tastynready",
+    "storage_bucket": "tastynready.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110084925608:android:6c89e9605c8d00af00ba9d",
+        "android_client_info": {
+          "package_name": "com.example.afusesc.tastynready"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhs_38HvhgPNRuhixk-OfZg08MjCvczl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
