@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ShowIn="navigation_view">
+
+    <item android:title="Mi Perfil"
+        android:id="@+id/nav_usuario"
+        android:icon="@drawable/icono_usuario"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom|withText"/>
 
     <group android:checkableBehavior="single">
         <item
