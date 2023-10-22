@@ -3,10 +3,15 @@ package com.example.afusesc.tastynready;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartaFragment extends Fragment {
 
@@ -14,6 +19,20 @@ public class CartaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_carta, container, false);
+        View view = inflater.inflate(R.layout.fragment_carta, container, false);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+
+        List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
+        itemList.add(new AdaptadorComidas.MyItem("Elemento 1", R.drawable.headerbkg));
+        itemList.add(new AdaptadorComidas.MyItem("Elemento 2", R.drawable.headerbkg));
+        // Agrega más elementos...
+
+        AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 }
