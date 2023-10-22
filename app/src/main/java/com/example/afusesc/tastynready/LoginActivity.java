@@ -25,24 +25,29 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuario != null) {
-            Toast.makeText(this, "inicia sesión: "+usuario.getDisplayName()+
-                    " - "+ usuario.getEmail(),Toast.LENGTH_LONG).show();
+        if (usuario != null && usuario.isEmailVerified()) {
+            Toast.makeText(this, "inicia sesión: "+usuario.getDisplayName()+ " - "+ usuario.getEmail(),Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         } else {
-            List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.EmailBuilder().build(),
-                    new AuthUI.IdpConfig.GoogleBuilder().build());
-            startActivityForResult(
-                    AuthUI.getInstance().createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .setIsSmartLockEnabled(false)
-                            .build(),
-                    RC_SIGN_IN);
+            if (usuario != null) {
+                // El usuario está autenticado, pero su correo no está verificado
+                Toast.makeText(this, "Por favor, verifica tu correo electrónico para continuar.", Toast.LENGTH_LONG).show();
+                usuario.sendEmailVerification();
+            } else {
+                List<AuthUI.IdpConfig> providers = Arrays.asList(
+                        new AuthUI.IdpConfig.EmailBuilder().build(),
+                        new AuthUI.IdpConfig.GoogleBuilder().build());
+                startActivityForResult(
+                        AuthUI.getInstance().createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .setIsSmartLockEnabled(false)
+                                .build(),
+                        RC_SIGN_IN);
+            }
         }
     }
 
