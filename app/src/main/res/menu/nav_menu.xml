@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ShowIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icono_home"
+            android:title="Inicio"
+            />
+        <item
+            android:id="@+id/nav_carta"
+            android:icon="@drawable/icono_carta"
+            android:title="Nuestra Carta"
+            />
+        <item
+            android:id="@+id/nav_acerca"
+            android:icon="@drawable/icono_acerca_de"
+            android:title="Sobre Nosotros"
+            />
+    </group>
+
+</menu>
