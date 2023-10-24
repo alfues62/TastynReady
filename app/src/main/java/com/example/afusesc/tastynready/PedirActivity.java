@@ -1,37 +1,38 @@
 package com.example.afusesc.tastynready;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaFragment extends Fragment {
+public class PedirActivity extends AppCompatActivity {
 
     ImageView imgEntrantes;
-    ImageView imgComidas;
     ImageView imgAperitivos;
     ImageView imgBebidas;
     ImageView imgPostres;
+    Button button;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.reservas_cont);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        View view = inflater.inflate(R.layout.fragment_carta, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-
-        imgEntrantes = view.findViewById(R.id.img_entrante);
-        imgAperitivos = view.findViewById(R.id.img_aperitivos);
-        imgBebidas = view.findViewById(R.id.img_bebidas);
-        imgPostres = view.findViewById(R.id.img_postres);
+        imgEntrantes = findViewById(R.id.img_entrante);
+        imgAperitivos = findViewById(R.id.img_aperitivos);
+        imgBebidas = findViewById(R.id.img_bebidas);
+        imgPostres = findViewById(R.id.img_postres);
+        button = findViewById(R.id.button2);
 
         imgEntrantes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +44,9 @@ public class CartaFragment extends Fragment {
                 itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -60,9 +61,9 @@ public class CartaFragment extends Fragment {
                 itemList.add(new AdaptadorComidas.MyItem("Tacos de Barbacoa", R.drawable.img_taco,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -77,9 +78,9 @@ public class CartaFragment extends Fragment {
                 itemList.add(new AdaptadorComidas.MyItem("Coca-Cola", R.drawable.headerbkg,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -94,10 +95,18 @@ public class CartaFragment extends Fragment {
                 itemList.add(new AdaptadorComidas.MyItem("Café Espresso", R.drawable.img_cafe,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PedirActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -108,11 +117,9 @@ public class CartaFragment extends Fragment {
         itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
         // Agrega más elementos...
 
-        AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+        AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 }
