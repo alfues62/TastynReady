@@ -32,6 +32,7 @@ public class AdaptadorComidas extends RecyclerView.Adapter<AdaptadorComidas.View
         MyItem item = itemList.get(position);
         holder.textView.setText(item.getText());
         holder.imageView.setImageResource(item.getImageResId());
+        holder.textView2.setText(item.getText2());
     }
 
     @Override
@@ -42,21 +43,25 @@ public class AdaptadorComidas extends RecyclerView.Adapter<AdaptadorComidas.View
     public class ViewHolderComidas extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView textView;
+        public TextView textView2;
 
         public ViewHolderComidas(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.img_entrante);
             textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
         }
     }
 
     public static class MyItem {
         private String text;
         private int imageResId;
+        private String text2;
 
-        public MyItem(String text, int imageResId) {
+        public MyItem(String text, int imageResId, String text2) {
             this.text = text;
             this.imageResId = imageResId;
+            this.text2 = text2;
         }
 
         public String getText() {
@@ -66,5 +71,7 @@ public class AdaptadorComidas extends RecyclerView.Adapter<AdaptadorComidas.View
         public int getImageResId() {
             return imageResId;
         }
+
+        public String getText2(){ return  text2; }
     }
 }
