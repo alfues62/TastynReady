@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+<<<<<<< HEAD
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,6 +18,11 @@ public class HomeFragment extends Fragment {
 
     Button reserButton;
     FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+=======
+public class HomeFragment extends Fragment {
+
+    Button reserButton;
+>>>>>>> master
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,6 +33,7 @@ public class HomeFragment extends Fragment {
         reserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 if(usuario != null){
                     Intent intent = new Intent(getActivity(), ReservasActivity.class);
                     startActivity(intent);
@@ -35,6 +42,10 @@ public class HomeFragment extends Fragment {
                     startActivity(loginIntent);
                 }
 
+=======
+                Intent intent = new Intent(getActivity(), ReservasActivity.class);
+                startActivity(intent);
+>>>>>>> master
             }
         });
 
