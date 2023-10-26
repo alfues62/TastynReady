@@ -9,4 +9,16 @@
         <item name="android:hint">Escribe aquí</item>
     </style>
 
+    <style name="BotonApp">
+        <item name="android:background">@drawable/boton_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">12dp</item> <!-- Puedes ajustar el valor del padding -->
+        <item name="android:layout_width">wrap_content</item> <!-- Ajusta el ancho según tus necesidades -->
+        <item name="android:layout_height">wrap_content</item> <!-- Ajusta la altura según tus necesidades -->
+        <item name="android:layout_gravity">center</item> <!-- Ajusta la alineación según tus necesidades -->
+        <item name="android:gravity">center</item> <!-- Ajusta la alineación del texto según tus necesidades -->
+        <item name="android:layout_margin">8dp</item> <!-- Ajusta el margen según tus necesidades -->
+        <item name="android:stateListAnimator">@null</item> <!-- Desactiva la animación predeterminada -->
+    </style>
+
 </resources>

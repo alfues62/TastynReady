@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/AmarilloTYR" /> <!-- Color amarillo -->
+            <corners android:radius="20dp" /> <!-- Radio para bordes redondos -->
+        </shape>
+    </item>
+</selector>

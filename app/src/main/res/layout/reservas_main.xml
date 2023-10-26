@@ -46,7 +46,7 @@
 
         <Button
             android:id="@+id/decrementButton"
-            style="@style/Widget.AppCompat.Button"
+            style="@style/BotonApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-" />
@@ -60,7 +60,7 @@
 
         <Button
             android:id="@+id/incrementButton"
-            style="@style/Widget.AppCompat.Button"
+            style="@style/BotonApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+" />
@@ -68,7 +68,7 @@
 
     <Button
         android:id="@+id/fechaButton"
-        style="@style/Widget.AppCompat.Button"
+        style="@style/BotonApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -89,7 +89,7 @@
 
     <Button
         android:id="@+id/timeButton"
-        style="@style/Widget.AppCompat.Button"
+        style="@style/BotonApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -126,7 +126,8 @@
 
     <Button
         android:id="@+id/BotonContinuar"
-        android:layout_width="0dp"
+        style="@style/BotonApp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
