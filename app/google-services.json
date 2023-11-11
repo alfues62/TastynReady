@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "110084925608",
+    "firebase_url": "https://tastynready-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "tastynready",
     "storage_bucket": "tastynready.appspot.com"
   },
