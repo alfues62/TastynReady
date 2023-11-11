@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ReservasActivity extends AppCompatActivity {
@@ -111,15 +112,46 @@ public class ReservasActivity extends AppCompatActivity {
         });
     }
 
-    private void openDatePicker(){
+    private void openDatePicker() {
+        // Obtén la fecha actual
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // Verifica si la fecha seleccionada es el mismo día
+                if (year == currentYear && month == currentMonth && day == currentDay) {
+                    // No permitir selección del mismo día
+                    return;
+                }
 
-                textFecha.setText("Fecha Seleccionada:" + String.valueOf(year)+ "."+String.valueOf(month)+ "."+String.valueOf(day));
+                // Verifica si el día seleccionado es domingo (domingo tiene valor 1 en Calendar.DAY_OF_WEEK)
+                calendar.set(year, month, day);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                if (dayOfWeek == Calendar.SUNDAY) {
+                    // No permitir selección de domingo
+                    return;
+                }
 
+                // Verifica si la fecha seleccionada es en el pasado
+                if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+                    // No permitir selección de fechas pasadas
+                    return;
+                }
+
+                // Muestra la fecha seleccionada
+                textFecha.setText("Fecha Seleccionada: " + String.valueOf(year) + "." + String.valueOf(month) + "." + String.valueOf(day));
             }
-        }, 2023, 10, 24);
+        }, currentYear, currentMonth, currentDay);
+
+        // Desactiva la selección de fechas pasadas
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+        // Personaliza el color de los domingos
+        datePickerDialog.getDatePicker().setCalendarViewShown(false);
 
         datePickerDialog.show();
     }
