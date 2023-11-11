@@ -3,6 +3,8 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+
+
 android {
     namespace = "com.example.afusesc.tastynready"
     compileSdk = 34
