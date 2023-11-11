@@ -128,16 +128,8 @@ public class ReservasActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Verifica si el día seleccionado es domingo (domingo tiene valor 1 en Calendar.DAY_OF_WEEK)
-                calendar.set(year, month, day);
-                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                if (dayOfWeek == Calendar.SUNDAY) {
-                    // No permitir selección de domingo
-                    return;
-                }
-
                 // Verifica si la fecha seleccionada es en el pasado
-                if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+                if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
                     // No permitir selección de fechas pasadas
                     return;
                 }
@@ -150,11 +142,9 @@ public class ReservasActivity extends AppCompatActivity {
         // Desactiva la selección de fechas pasadas
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
 
-        // Personaliza el color de los domingos
-        datePickerDialog.getDatePicker().setCalendarViewShown(false);
-
         datePickerDialog.show();
     }
+
 
 
     private void openTimePicker(){
