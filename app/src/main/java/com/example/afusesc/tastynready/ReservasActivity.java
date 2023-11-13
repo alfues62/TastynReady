@@ -36,6 +36,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReservasActivity extends AppCompatActivity {
 
+    DataPicker dataPicker = new DataPicker();
+
     //BBDD
     private FirebaseFirestore db; // Variable de clase
     FirebaseHandler firebaseHandler = new FirebaseHandler();
@@ -123,6 +125,7 @@ public class ReservasActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                firebaseHandler.guardarReservaEnFirebase();
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
                 startActivity(intent);
             }
@@ -160,8 +163,9 @@ public class ReservasActivity extends AppCompatActivity {
                 // Formatea la fecha como "yyyy-MM-dd"
                 String formattedDate = String.format("%04d-%02d-%02d", year, month + 1, day);
 
-                // Llama al método para guardar la fecha en Firebase
-                firebaseHandler.guardarFechaEnFirebase(formattedDate);
+                // Llama al método para guardar la fecha en DataPicker
+                dataPicker.guardarFechaSeleccionada(formattedDate);
+
             }
         }, currentYear, currentMonth, currentDay);
 
