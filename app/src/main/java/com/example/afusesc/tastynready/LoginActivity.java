@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         if (usuario != null && usuario.isEmailVerified()) {
             // Usuario autenticado y correo verificado
             DataPicker dataPicker = new DataPicker();
-            dataPicker.guardarUsuarioEnVariable(usuario);
+            dataPicker.guardarUsuarioEnFirebase(usuario);
 
             Toast.makeText(this, "Inicia sesión: " + usuario.getDisplayName() + " - " + usuario.getEmail(), Toast.LENGTH_LONG).show();
 

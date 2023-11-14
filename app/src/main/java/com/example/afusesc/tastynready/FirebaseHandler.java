@@ -22,7 +22,7 @@ public class FirebaseHandler {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario != null) {
             // Si el usuario está autenticado, guarda su información en la variable userData de DataPicker
-            dataPicker.guardarUsuarioEnVariable(usuario);
+            dataPicker.guardarUsuarioEnFirebase(usuario);
 
             // Obtén la información del usuario desde DataPicker
             Map<String, Object> usuarioInfo = DataPicker.obtenerDatosUsuario();
@@ -37,6 +37,31 @@ public class FirebaseHandler {
             reservaInfo.put("Hora", "14:00:00");
             reservaInfo.put("Fecha", fechaSeleccionada);
             reservaInfo.put("Comensales", 4);
+
+            Map<String, Object> plato1 = new HashMap<>();
+            plato1.put("Nombre", "Plato1");
+            plato1.put("Descripcion", "Descripción del Plato1");
+            plato1.put("Precio", 10.99);
+
+            Map<String, Object> plato2 = new HashMap<>();
+            plato2.put("Nombre", "Plato2");
+            plato2.put("Descripcion", "Descripción del Plato2");
+            plato2.put("Precio", 8.99);
+
+            Map<String, Object> plato3 = new HashMap<>();
+            plato3.put("Nombre", "Plato3");
+            plato3.put("Descripcion", "Descripción del Plato3");
+            plato3.put("Precio", 12.99);
+
+            Map<String, Object> plato4 = new HashMap<>();
+            plato4.put("Nombre", "Plato4");
+            plato4.put("Descripcion", "Descripción del Plato4");
+            plato4.put("Precio", 15.99);
+
+            db.collection("Platos").document("Plato1").set(plato1);
+            db.collection("Platos").document("Plato2").set(plato2);
+            db.collection("Platos").document("Plato3").set(plato3);
+            db.collection("Platos").document("Plato4").set(plato4);
 
             // Puedes guardar la reserva en una colección "reservas" con un identificador único
             db.collection("reservas").document()

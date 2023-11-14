@@ -9,7 +9,7 @@ import java.util.Map;
 public class DataPicker {
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
-    private static String selectedDate; // Agregado
+    private static String selectedDate;
 
     public DataPicker() {
         // Inicializa la instancia de Firebase
@@ -28,7 +28,7 @@ public class DataPicker {
         selectedDate = fecha;
     }
 
-    public void guardarUsuarioEnVariable(FirebaseUser usuario) {
+    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
         // Crea un nuevo mapa para almacenar la información del usuario en la variable
         userData = new HashMap<>();
         userData.put("displayName", usuario.getDisplayName());
