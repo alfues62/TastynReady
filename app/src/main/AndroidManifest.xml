@@ -15,7 +15,8 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +36,8 @@
 
         <activity android:name=".PedirActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
         </activity>
 
     </application>

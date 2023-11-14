@@ -47,23 +47,28 @@
         <Button
             android:id="@+id/decrementButton"
             style="@style/BotonApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boton_redondo"
+            android:text="-"
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/valueEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="0" />
+            android:text="0"
+            android:focusable="false"
+            android:clickable="false"/>
 
         <Button
             android:id="@+id/incrementButton"
             style="@style/BotonApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:text="+"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button

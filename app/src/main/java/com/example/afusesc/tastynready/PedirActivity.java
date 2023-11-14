@@ -37,14 +37,14 @@ public class PedirActivity extends AppCompatActivity {
         imgEntrantes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
+                List<AdaptadorPedidos.MyItem> itemList = new ArrayList<>();
+                itemList.add(new AdaptadorPedidos.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
+                AdaptadorPedidos adapter = new AdaptadorPedidos(PedirActivity.this, itemList);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
@@ -54,14 +54,14 @@ public class PedirActivity extends AppCompatActivity {
         imgAperitivos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Alitas de Pollo Buffalo", R.drawable.img_pollo,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Nachos Supremos", R.drawable.img_nacho,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Brochetas de Camarones y Piña", R.drawable.img_brocheta,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tacos de Barbacoa", R.drawable.img_taco,"20 €"));
+                List<AdaptadorPedidos.MyItem> itemList = new ArrayList<>();
+                itemList.add(new AdaptadorPedidos.MyItem("Alitas de Pollo Buffalo", R.drawable.img_pollo,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Nachos Supremos", R.drawable.img_nacho,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Brochetas de Camarones y Piña", R.drawable.img_brocheta,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Tacos de Barbacoa", R.drawable.img_taco,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
+                AdaptadorPedidos adapter = new AdaptadorPedidos(PedirActivity.this, itemList);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
@@ -71,14 +71,14 @@ public class PedirActivity extends AppCompatActivity {
         imgBebidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Agua Mineral Natural", R.drawable.img_awa,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Vino Tinto Malbec", R.drawable.img_wine,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Refresco de Limón Casero", R.drawable.img_limon,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Coca-Cola", R.drawable.headerbkg,"20 €"));
+                List<AdaptadorPedidos.MyItem> itemList = new ArrayList<>();
+                itemList.add(new AdaptadorPedidos.MyItem("Agua Mineral Natural", R.drawable.img_awa,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Vino Tinto Malbec", R.drawable.img_wine,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Refresco de Limón Casero", R.drawable.img_limon,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Coca-Cola", R.drawable.headerbkg,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
+                AdaptadorPedidos adapter = new AdaptadorPedidos(PedirActivity.this, itemList);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
@@ -88,14 +88,14 @@ public class PedirActivity extends AppCompatActivity {
         imgPostres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Tarta de Chocolate Decadente", R.drawable.img_cake,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tiramisú", R.drawable.img_tiramisu,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Crema Catalana", R.drawable.img_crema,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Café Espresso", R.drawable.img_cafe,"20 €"));
+                List<AdaptadorPedidos.MyItem> itemList = new ArrayList<>();
+                itemList.add(new AdaptadorPedidos.MyItem("Tarta de Chocolate Decadente", R.drawable.img_cake,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Tiramisú", R.drawable.img_tiramisu,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Crema Catalana", R.drawable.img_crema,"20 €"));
+                itemList.add(new AdaptadorPedidos.MyItem("Café Espresso", R.drawable.img_cafe,"20 €"));
                 // Agrega más elementos...
 
-                AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
+                AdaptadorPedidos adapter = new AdaptadorPedidos(PedirActivity.this, itemList);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
                 recyclerView.setAdapter(adapter);
@@ -110,14 +110,14 @@ public class PedirActivity extends AppCompatActivity {
             }
         });
 
-        List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-        itemList.add(new AdaptadorComidas.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
+        List<AdaptadorPedidos.MyItem> itemList = new ArrayList<>();
+        itemList.add(new AdaptadorPedidos.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
+        itemList.add(new AdaptadorPedidos.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
+        itemList.add(new AdaptadorPedidos.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
+        itemList.add(new AdaptadorPedidos.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
         // Agrega más elementos...
 
-        AdaptadorComidas adapter = new AdaptadorComidas(PedirActivity.this, itemList);
+        AdaptadorPedidos adapter = new AdaptadorPedidos(PedirActivity.this, itemList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(PedirActivity.this));
         recyclerView.setAdapter(adapter);
