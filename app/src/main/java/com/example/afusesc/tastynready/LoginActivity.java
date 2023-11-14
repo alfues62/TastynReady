@@ -1,8 +1,11 @@
 package com.example.afusesc.tastynready;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +15,12 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,7 +32,13 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario != null && usuario.isEmailVerified()) {
-            Toast.makeText(this, "inicia sesión: "+usuario.getDisplayName()+ " - "+ usuario.getEmail(),Toast.LENGTH_LONG).show();
+            // Usuario autenticado y correo verificado
+            DataPicker dataPicker = new DataPicker();
+            dataPicker.guardarUsuarioEnFirebase(usuario);
+
+            Toast.makeText(this, "Inicia sesión: " + usuario.getDisplayName() + " - " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+
+            // Intent para iniciar la actividad principal
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -38,9 +50,11 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Por favor, verifica tu correo electrónico para continuar.", Toast.LENGTH_LONG).show();
                 usuario.sendEmailVerification();
             } else {
+                // El usuario no está autenticado, inicia el flujo de inicio de sesión
                 List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build(),
                         new AuthUI.IdpConfig.GoogleBuilder().build());
+
                 startActivityForResult(
                         AuthUI.getInstance().createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
@@ -71,5 +85,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 } //Para cerrar la clase
 
