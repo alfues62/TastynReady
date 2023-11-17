@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.presentation;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.afusesc.tastynready.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

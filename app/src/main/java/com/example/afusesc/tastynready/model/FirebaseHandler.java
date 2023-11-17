@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.model;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

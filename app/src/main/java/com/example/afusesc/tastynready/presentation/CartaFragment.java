@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.presentation;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.afusesc.tastynready.R;
 
 import java.util.ArrayList;
 import java.util.List;

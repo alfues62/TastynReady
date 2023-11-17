@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.model;
 
 public class UsuarioInfo {
     private String nombre;

@@ -67,6 +67,7 @@
             style="@style/BotonApp"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:background="@drawable/boton_redondo"
             android:text="+"
             android:textSize="12sp" />
     </LinearLayout>

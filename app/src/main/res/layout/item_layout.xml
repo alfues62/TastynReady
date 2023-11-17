@@ -21,7 +21,8 @@
         android:paddingBottom="16dp"
         android:textAlignment="viewEnd"
         app:cardCornerRadius="16dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        tools:ignore="RtlCompat">
 
         <ImageView
             android:id="@+id/img_entrante"

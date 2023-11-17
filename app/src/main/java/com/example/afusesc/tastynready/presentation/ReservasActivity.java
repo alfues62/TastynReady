@@ -1,13 +1,9 @@
-package com.example.afusesc.tastynready;
-
-import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
-import static androidx.core.content.ContentProviderCompat.requireContext;
+package com.example.afusesc.tastynready.presentation;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,21 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.afusesc.tastynready.model.DataPicker;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
+import com.example.afusesc.tastynready.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;import com.firebase.ui.auth.AuthUI;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
