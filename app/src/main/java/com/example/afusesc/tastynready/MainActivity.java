@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem perfilMenuItem;
     FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
+    //FirebaseHandler firebaseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
+        // COMENTAR Y DESCOMENTAR CUANDO HAYA QUE AÑADIR PLATOS
+        //firebaseHandler = new FirebaseHandler();
+        //firebaseHandler.ponerPlatosFirebase();
 
     }
     @Override
