@@ -2,119 +2,74 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.afusesc.tastynready.R;
+import com.example.afusesc.tastynready.model.Platos;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartaFragment extends Fragment {
 
-    ImageView imgEntrantes;
-    ImageView imgComidas;
-    ImageView imgAperitivos;
-    ImageView imgBebidas;
-    ImageView imgPostres;
+   RecyclerView recyclerView;
+   ArrayList<Platos> platosArrayList;
+   AdaptadorComidasFirestore adaptadorComidasFirestore;
+   FirebaseFirestore db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_carta, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
-        imgEntrantes = view.findViewById(R.id.img_entrante);
-        imgAperitivos = view.findViewById(R.id.img_aperitivos);
-        imgBebidas = view.findViewById(R.id.img_bebidas);
-        imgPostres = view.findViewById(R.id.img_postres);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        imgEntrantes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
-                // Agrega más elementos...
+        db = FirebaseFirestore.getInstance();
+        platosArrayList = new ArrayList<Platos>();
+        adaptadorComidasFirestore = new AdaptadorComidasFirestore(getActivity(), platosArrayList);
 
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
+        recyclerView.setAdapter(adaptadorComidasFirestore);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-        imgAperitivos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Alitas de Pollo Buffalo", R.drawable.img_pollo,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Nachos Supremos", R.drawable.img_nacho,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Brochetas de Camarones y Piña", R.drawable.img_brocheta,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tacos de Barbacoa", R.drawable.img_taco,"20 €"));
-                // Agrega más elementos...
-
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-        imgBebidas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Agua Mineral Natural", R.drawable.img_awa,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Vino Tinto Malbec", R.drawable.img_wine,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Refresco de Limón Casero", R.drawable.img_limon,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Coca-Cola", R.drawable.headerbkg,"20 €"));
-                // Agrega más elementos...
-
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-        imgPostres.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-                itemList.add(new AdaptadorComidas.MyItem("Tarta de Chocolate Decadente", R.drawable.img_cake,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Tiramisú", R.drawable.img_tiramisu,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Crema Catalana", R.drawable.img_crema,"20 €"));
-                itemList.add(new AdaptadorComidas.MyItem("Café Espresso", R.drawable.img_cafe,"20 €"));
-                // Agrega más elementos...
-
-                AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-        List<AdaptadorComidas.MyItem> itemList = new ArrayList<>();
-        itemList.add(new AdaptadorComidas.MyItem("Filete de Ternera con Salsa de Champiñones", R.drawable.img_bistec,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Pasta Alfredo con Pollo", R.drawable.img_spaghet,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Ensalada de Salmón Ahumado", R.drawable.img_salad,"20 €"));
-        itemList.add(new AdaptadorComidas.MyItem("Tacos de Camarones al Chipotle", R.drawable.headerbkg,"20 €"));
-        // Agrega más elementos...
-
-        AdaptadorComidas adapter = new AdaptadorComidas(requireContext(), itemList);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
+        EventChangeListener();
 
         return view;
+    }
+
+    private void EventChangeListener(){
+        db.collection("Platos").orderBy("Categoria", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null){
+                            Log.e("Firestore Error", error.getMessage());
+                            return;
+                        }
+
+                        for(DocumentChange dc : value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                platosArrayList.add(dc.getDocument().toObject(Platos.class));
+                            }
+                            adaptadorComidasFirestore.notifyDataSetChanged();
+                        }
+
+                    }
+                });
+
     }
 }
