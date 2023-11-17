@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready.presentation;
+package com.example.afusesc.tastynready.deprecated;
 
 import android.content.Context;
 import android.view.LayoutInflater;
