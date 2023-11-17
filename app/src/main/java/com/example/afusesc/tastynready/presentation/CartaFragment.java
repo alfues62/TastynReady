@@ -63,7 +63,9 @@ public class CartaFragment extends Fragment {
 
                         for(DocumentChange dc : value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
-                                platosArrayList.add(dc.getDocument().toObject(Platos.class));
+                                Platos plato = dc.getDocument().toObject(Platos.class);
+                                plato.setImg(dc.getDocument().getString("img"));
+                                platosArrayList.add(plato);
                             }
                             adaptadorComidasFirestore.notifyDataSetChanged();
                         }

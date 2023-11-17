@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.Platos;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class AdaptadorComidasFirestore extends RecyclerView.Adapter<AdaptadorCom
 
         holder.Nombre.setText(platos.getNombre());
         holder.Precio.setText(String.valueOf(platos.getPrecio()));
+        Picasso.get().load(platos.getImg()).into(holder.img);
 
 
     }
@@ -50,13 +53,14 @@ public class AdaptadorComidasFirestore extends RecyclerView.Adapter<AdaptadorCom
     }
 
     public static class ViewHolderPlatosBD extends RecyclerView.ViewHolder{
-
         TextView Nombre, Precio;
+        ImageView img;
 
         public ViewHolderPlatosBD(@NonNull View itemView) {
             super(itemView);
             Nombre = itemView.findViewById(R.id.nombre);
             Precio = itemView.findViewById(R.id.precio);
+            img = itemView.findViewById(R.id.img_entrante);
         }
     }
 }
