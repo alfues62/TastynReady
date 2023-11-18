@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtComensasles" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/guardarReserva"
         style="@style/BotonAppAzul"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
