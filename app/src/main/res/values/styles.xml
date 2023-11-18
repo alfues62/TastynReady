@@ -33,4 +33,6 @@
         <item name="android:stateListAnimator">@null</item> <!-- Desactiva la animación predeterminada -->
     </style>
 
+
+
 </resources>

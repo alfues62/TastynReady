@@ -81,10 +81,8 @@ public class CarritoActivity extends AppCompatActivity {
                 platosList.add(platoInfo);
             }
 
-            // Add the list of plates to the platoData map
             platoData.put("Platos", platosList);
 
-            // Puedes guardar la reserva en una colección "reservas" con un identificador único
             db.collection("reservaComida").document()
                     .set(platoData)
                     .addOnSuccessListener(aVoid -> {

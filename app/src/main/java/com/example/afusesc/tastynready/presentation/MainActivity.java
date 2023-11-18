@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.afusesc.tastynready.R;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem perfilMenuItem;
     FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
-    //FirebaseHandler firebaseHandler;
+    FirebaseHandler firebaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
