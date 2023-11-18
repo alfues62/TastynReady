@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.example.afusesc.tastynready.model.Platos;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +30,8 @@ public class CarritoActivity extends AppCompatActivity {
     // EFECTUACION DE RESERVA
     private DataPicker dataPicker;
 
+    FirebaseHandler firebaseHandler;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +39,17 @@ public class CarritoActivity extends AppCompatActivity {
 
         button = findViewById(R.id.guardarReserva);
         dataPicker = new DataPicker(); // Initialize DataPicker
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                if (intent != null) {
-                    ArrayList<Platos> pedidosArrayList = (ArrayList<Platos>) intent.getSerializableExtra("pedidosArrayList");
 
-                    if (pedidosArrayList != null) {
-                        subirPlatosAFirebase(pedidosArrayList);
-                    }
-                }
+
+                // Procede con la reserva ya que ambos campos están completos
+                firebaseHandler.guardarReservaEnFirebase();
+                // Llama al resetValues para restablecer los valores cuando retrocedes
+                DataPicker.resetValues();
             }
         });
     }

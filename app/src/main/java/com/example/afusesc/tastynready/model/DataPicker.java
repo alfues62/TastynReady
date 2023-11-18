@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataPicker {
@@ -13,7 +14,9 @@ public class DataPicker {
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
     private static String selectedDate;
-    private static String selectedTime;  // Nueva variable para la hora seleccionada
+    private static String selectedTime;
+
+    private static List<Platos> selectedPlato;
 
     public DataPicker() {
         // Inicializa la instancia de Firebase
@@ -54,6 +57,11 @@ public class DataPicker {
     public static void guardarIdSala(String id) {
         idSala = id;
     }
+
+    public static void guardarArray(List<Platos> platosSeleccionados){selectedPlato = platosSeleccionados;}
+
+    public static List<Platos> obtenerArray(){return selectedPlato;}
+
     public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
         // Crea un nuevo mapa para almacenar la información del usuario en la variable
         userData = new HashMap<>();

@@ -1,15 +1,10 @@
 package com.example.afusesc.tastynready.presentation;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD:app/src/main/java/com/example/afusesc/tastynready/presentation/ReservasActivity.java
-=======
-import android.provider.ContactsContract;
-import android.util.Log;
->>>>>>> HaoXu:app/src/main/java/com/example/afusesc/tastynready/ReservasActivity.java
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,22 +12,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
-<<<<<<< HEAD:app/src/main/java/com/example/afusesc/tastynready/presentation/ReservasActivity.java
-=======
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
->>>>>>> HaoXu:app/src/main/java/com/example/afusesc/tastynready/ReservasActivity.java
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.model.DataPicker;
-import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.example.afusesc.tastynready.R;
 
 import java.util.Calendar;
 
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -48,7 +37,7 @@ public class ReservasActivity extends AppCompatActivity {
     private EditText valueEditText;
     private Button incrementButton;
     private Button decrementButton;
-    private int value = 0;
+    private int value = 2;
     private static final int MAX_VALUE = 8;
 
     private String salaReservada;
@@ -148,12 +137,6 @@ public class ReservasActivity extends AppCompatActivity {
                 //Llama al DataPicker para guardar el número de comensales
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
-
-                // Procede con la reserva ya que ambos campos están completos
-                firebaseHandler.guardarReservaEnFirebase();
-
-                // Llama al resetValues para restablecer los valores cuando retrocedes
-                DataPicker.resetValues();
 
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
                 startActivity(intent);

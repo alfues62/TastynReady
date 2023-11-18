@@ -41,8 +41,6 @@ public class PedirActivity extends AppCompatActivity {
     AdaptadorPedidosFirestore adaptadorPedidosFirestore;
     FirebaseFirestore db;
 
-
-
     // CODIGO _________________________________________________________________________________________________
     private void guardarPlatosSeleccionados() {
         List<Platos> platosSeleccionados = adaptadorPedidosFirestore.obtenerPlatosConCantidadMayorACero();
@@ -53,8 +51,10 @@ public class PedirActivity extends AppCompatActivity {
                     ", Precio: " + (plato.getPrecio()) * (plato.getCantidad()));
         }
 
+        DataPicker.guardarArray(platosSeleccionados);
+
         Intent intent = new Intent(this, CarritoActivity.class);
-        intent.putExtra("pedidosArrayList", new ArrayList<>(platosSeleccionados));
+        //intent.putExtra("pedidosArrayList", new ArrayList<>(platosSeleccionados));
         startActivity(intent);
         finish();
     }
