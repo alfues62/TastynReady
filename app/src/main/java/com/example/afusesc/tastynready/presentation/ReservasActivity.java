@@ -140,8 +140,11 @@ public class ReservasActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
+
+        DataPicker.resetValues();
     }
     private void mostrarDialogoCamposFaltantes() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -167,12 +170,6 @@ public class ReservasActivity extends AppCompatActivity {
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth = calendar.get(Calendar.MONTH);
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // Establece la fecha mínima como mañana
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        int minYear = calendar.get(Calendar.YEAR);
-        int minMonth = calendar.get(Calendar.MONTH);
-        int minDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override

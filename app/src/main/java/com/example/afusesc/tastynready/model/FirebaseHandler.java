@@ -66,7 +66,7 @@ public class FirebaseHandler {
                todosPlatos.add(platoInfo);
            }
 
-            reservaInfo.put("zPlatos", platosList);
+            reservaInfo.put("zPlatos", todosPlatos);
 
 
             // Puedes guardar la reserva en una colección "reservas" con un identificador único

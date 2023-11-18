@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,8 @@ public class CarritoActivity extends AppCompatActivity {
 
     Button button;
 
+    TextView sala, comensales, hora, fecha;
+
     // EFECTUACION DE RESERVA
     private DataPicker dataPicker;
 
@@ -38,6 +41,10 @@ public class CarritoActivity extends AppCompatActivity {
         setContentView(R.layout.reservas_carrito);
 
         button = findViewById(R.id.guardarReserva);
+        sala = findViewById(R.id.cambSala);
+        comensales = findViewById(R.id.cambComens);
+        hora = findViewById(R.id.cambHora);
+        fecha = findViewById(R.id.cambFecha);
         dataPicker = new DataPicker(); // Initialize DataPicker
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
@@ -52,6 +59,11 @@ public class CarritoActivity extends AppCompatActivity {
                 DataPicker.resetValues();
             }
         });
+
+        sala.setText(DataPicker.obtenerIdSala());
+        comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
+        fecha.setText(DataPicker.obtenerFechaSeleccionada());
+        hora.setText(DataPicker.obtenerHoraSeleccionada());
     }
 
     private void subirPlatosAFirebase(ArrayList<Platos> pedidosArrayList){
