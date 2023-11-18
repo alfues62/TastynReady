@@ -20,5 +20,14 @@
         <item name="android:layout_margin">8dp</item> <!-- Ajusta el margen según tus necesidades -->
         <item name="android:stateListAnimator">@null</item> <!-- Desactiva la animación predeterminada -->
     </style>
+    <style name="TimePickerDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">?attr/colorAccent</item>
+        <item name="android:textColorPrimary">?attr/colorPrimaryDark</item>
+    </style>
+    <style name="NumberPickerStyle">
+        <item name="colorControlNormal">@color/colorAccent</item>
+    </style>
+
+
 
 </resources>

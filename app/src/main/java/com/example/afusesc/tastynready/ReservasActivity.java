@@ -5,6 +5,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +14,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -175,18 +179,43 @@ public class ReservasActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void openTimePicker(){
+    private void openTimePicker() {
+        // Obtén la hora actual
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        // Crear un cuadro de diálogo personalizado para mostrar solo la hora
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Selecciona la hora de la reserva");
+
+        // Crear un NumberPicker personalizado para seleccionar las horas
+        final NumberPicker hourPicker = new NumberPicker(this);
+        hourPicker.setMinValue(9);
+        hourPicker.setMaxValue(21);
+        hourPicker.setValue(currentHour);
+
+        builder.setView(hourPicker);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+            public void onClick(DialogInterface dialog, int which) {
+                int hour = hourPicker.getValue();
 
-                textHora.setText("Hora Seleccionada: " + String.valueOf(hour)+ ":"+String.valueOf(minute));
+                // Muestra la hora seleccionada
+                textHora.setText("Hora Seleccionada: " + String.valueOf(hour) + ":00");
 
+                // Formatea la hora como "HH:00"
+                String formattedTime = String.format("%02d:00", hour);
+
+                // Llama al método para guardar la hora en DataPicker
+                dataPicker.guardarHoraSeleccionada(formattedTime);
             }
-        }, 15, 30, false);
+        });
 
-        timePickerDialog.show();
+        builder.setNegativeButton("Cancelar", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

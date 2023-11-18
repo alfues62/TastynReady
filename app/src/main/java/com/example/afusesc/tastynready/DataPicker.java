@@ -10,6 +10,7 @@ public class DataPicker {
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
     private static String selectedDate;
+    private static String selectedTime;  // Nueva variable para la hora seleccionada
 
     public DataPicker() {
         // Inicializa la instancia de Firebase
@@ -24,8 +25,16 @@ public class DataPicker {
         return selectedDate;
     }
 
+    public static String obtenerHoraSeleccionada() {
+        return selectedTime;
+    }
+
     public void guardarFechaSeleccionada(String fecha) {
         selectedDate = fecha;
+    }
+
+    public void guardarHoraSeleccionada(String hora) {
+        selectedTime = hora;
     }
 
     public void guardarUsuarioEnFirebase(FirebaseUser usuario) {

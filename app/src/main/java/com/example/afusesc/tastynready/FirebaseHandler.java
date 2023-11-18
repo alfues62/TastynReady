@@ -1,5 +1,7 @@
 package com.example.afusesc.tastynready;
 
+import android.provider.ContactsContract;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,11 +32,14 @@ public class FirebaseHandler {
             // Obtén la fecha seleccionada desde DataPicker
             String fechaSeleccionada = DataPicker.obtenerFechaSeleccionada();
 
+            // Obtén la hora seleccionada desde DataPicker
+            String horaSeleccionada = DataPicker.obtenerHoraSeleccionada();
+
             // Guarda la reserva en Firebase
             Map<String, Object> reservaInfo = new HashMap<>();
             reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
             reservaInfo.put("Sala", "ID_Sala_1");
-            reservaInfo.put("Hora", "14:00:00");
+            reservaInfo.put("Hora", horaSeleccionada);
             reservaInfo.put("Fecha", fechaSeleccionada);
             reservaInfo.put("Comensales", 4);
 
