@@ -15,6 +15,7 @@ import com.example.afusesc.tastynready.model.Platos;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdaptadorComidasFirestore extends RecyclerView.Adapter<AdaptadorComidasFirestore.ViewHolderPlatosBD> {
 
@@ -62,5 +63,10 @@ public class AdaptadorComidasFirestore extends RecyclerView.Adapter<AdaptadorCom
             Precio = itemView.findViewById(R.id.precio);
             img = itemView.findViewById(R.id.img_entrante);
         }
+    }
+
+    public void setPlatosList(List<Platos> platosList) {
+        this.platosArrayList = (ArrayList<Platos>) platosList;
+        notifyDataSetChanged();
     }
 }

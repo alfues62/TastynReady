@@ -58,6 +58,39 @@ public class CartaFragment extends Fragment {
 
         recyclerView.setAdapter(adaptadorComidasFirestore);
 
+
+        img_entrante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Platos> entrantesList = filterPlatosByCategoria("Entrantes");
+                adaptadorComidasFirestore.setPlatosList(entrantesList);
+            }
+        });
+
+        img_bebidas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Platos> bebidasList = filterPlatosByCategoria("Bebidas");
+                adaptadorComidasFirestore.setPlatosList(bebidasList);
+            }
+        });
+
+        img_aperitivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Platos> aperitivosList = filterPlatosByCategoria("Complementos");
+                adaptadorComidasFirestore.setPlatosList(aperitivosList);
+            }
+        });
+
+        img_postres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Platos> postresList = filterPlatosByCategoria("Postres");
+                adaptadorComidasFirestore.setPlatosList(postresList);
+            }
+        });
+
         EventChangeListener();
 
         return view;
@@ -78,6 +111,9 @@ public class CartaFragment extends Fragment {
                                 Platos plato = dc.getDocument().toObject(Platos.class);
                                 plato.setImg(dc.getDocument().getString("img"));
                                 platosArrayList.add(plato);
+                                List<Platos> entrantesList = filterPlatosByCategoria("Entrantes");
+                                adaptadorComidasFirestore.setPlatosList(entrantesList);
+
                             }
                             adaptadorComidasFirestore.notifyDataSetChanged();
                         }
@@ -85,5 +121,15 @@ public class CartaFragment extends Fragment {
                     }
                 });
 
+    }
+
+    private List<Platos> filterPlatosByCategoria(String categoria) {
+        List<Platos> filteredList = new ArrayList<>();
+        for (Platos plato : platosArrayList) {
+            if (plato.getCategoria().equals(categoria)) {
+                filteredList.add(plato);
+            }
+        }
+        return filteredList;
     }
 }

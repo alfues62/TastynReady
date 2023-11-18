@@ -17,6 +17,7 @@ import com.example.afusesc.tastynready.model.Platos;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPedidosFirestore.ViewHolderPedidosBD> {
 
@@ -90,7 +91,12 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
             img = itemView.findViewById(R.id.img_entrante);
             incrementButton = itemView.findViewById(R.id.incrementButton);
             decrementButton = itemView.findViewById(R.id.decrementButton);
-            valueEditText = itemView.findViewById(R.id.valueEditText);
+            valueEditText = itemView.findViewById(R.id.cantidad);
         }
+    }
+
+    public void setPlatosList(List<Platos> pedidosList) {
+        this.pedidosArrayList = (ArrayList<Platos>) pedidosList;
+        notifyDataSetChanged();
     }
 }

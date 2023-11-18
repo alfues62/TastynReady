@@ -50,7 +50,7 @@
                 android:textColor="#000"/>
 
             <EditText
-                android:id="@+id/valueEditText"
+                android:id="@+id/cantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"

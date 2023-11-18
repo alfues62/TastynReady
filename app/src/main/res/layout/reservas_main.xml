@@ -132,7 +132,7 @@
 
     <Button
         android:id="@+id/BotonContinuar"
-        style="@style/BotonApp"
+        style="@style/BotonAppAzul"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

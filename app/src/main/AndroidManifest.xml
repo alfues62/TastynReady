@@ -45,6 +45,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".presentation.CarritoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>
