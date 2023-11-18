@@ -53,7 +53,7 @@ public class PedirActivity extends AppCompatActivity {
     }
 
     private void EventChangeListener(){
-        db.collection("Platos").orderBy("Categoria", Query.Direction.ASCENDING)
+        db.collection("Platos").orderBy("Categoria", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

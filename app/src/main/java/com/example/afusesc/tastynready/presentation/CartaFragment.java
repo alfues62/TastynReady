@@ -1,5 +1,6 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,15 +28,26 @@ import java.util.List;
 
 public class CartaFragment extends Fragment {
 
-   RecyclerView recyclerView;
-   ArrayList<Platos> platosArrayList;
-   AdaptadorComidasFirestore adaptadorComidasFirestore;
-   FirebaseFirestore db;
+    //IMAGENES
+    ImageView img_entrante;
+    ImageView img_bebidas;
+    ImageView img_aperitivos;
+    ImageView img_postres;
+    //RECYCLER
+    RecyclerView recyclerView;
+    ArrayList<Platos> platosArrayList;
+    AdaptadorComidasFirestore adaptadorComidasFirestore;
+    FirebaseFirestore db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_carta, container, false);
+
+        img_entrante = view.findViewById(R.id.img_entrante);
+        img_bebidas = view.findViewById(R.id.img_bebidas);
+        img_aperitivos = view.findViewById(R.id.img_aperitivos);
+        img_postres = view.findViewById(R.id.img_postres);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
