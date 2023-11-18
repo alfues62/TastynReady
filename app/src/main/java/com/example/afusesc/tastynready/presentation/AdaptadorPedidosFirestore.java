@@ -57,6 +57,7 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
                     currentValue++;
                 }
                 holder.valueEditText.setText(String.valueOf(currentValue));
+                platos.setCantidad(currentValue);
             }
         });
         holder.decrementButton.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +68,10 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
                     currentValue--;
                 }
                 holder.valueEditText.setText(String.valueOf(currentValue));
+                platos.setCantidad(currentValue);
             }
         });
+        
     }
 
     @Override
@@ -95,8 +98,14 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
         }
     }
 
-    public void setPlatosList(List<Platos> pedidosList) {
-        this.pedidosArrayList = (ArrayList<Platos>) pedidosList;
-        notifyDataSetChanged();
+    public List<Platos> obtenerPlatosConCantidadMayorACero() {
+        List<Platos> platosSeleccionados = new ArrayList<>();
+        for (Platos plato : pedidosArrayList) {
+            int cantidad = plato.getCantidad();
+            if (cantidad > 0) {
+                platosSeleccionados.add(plato);
+            }
+        }
+        return platosSeleccionados;
     }
 }

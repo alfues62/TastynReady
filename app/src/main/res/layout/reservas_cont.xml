@@ -7,6 +7,16 @@
     tools:context=".presentation.HomeFragment">
 
 
+    <ImageView
+        android:id="@+id/atras"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_backarrow" />
+
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="0dp"
@@ -18,7 +28,7 @@
         android:hint="Busca un plato..."
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/atras"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -79,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/guardar"
         style="@style/BotonAppAzul"
         android:layout_width="330dp"
         android:layout_height="wrap_content"

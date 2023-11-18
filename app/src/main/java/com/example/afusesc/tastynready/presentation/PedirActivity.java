@@ -28,25 +28,26 @@ import java.util.List;
 
 public class PedirActivity extends AppCompatActivity {
 
-    //IMAGENES
-    ImageView img_entrante;
-    ImageView img_bebidas;
-    ImageView img_aperitivos;
-    ImageView img_postres;
     //RECYCLER
     RecyclerView recyclerView;
     ArrayList<Platos> pedidosArrayList;
     AdaptadorPedidosFirestore adaptadorPedidosFirestore;
     FirebaseFirestore db;
+
+    private void guardarPlatosSeleccionados() {
+        List<Platos> platosSeleccionados = adaptadorPedidosFirestore.obtenerPlatosConCantidadMayorACero();
+        Log.d("PlatosSeleccionados", "Número de platos seleccionados: " + platosSeleccionados.size());
+        for (Platos plato : platosSeleccionados) {
+            Log.d("PlatoSeleccionado", "Nombre: " + plato.getNombre() +
+                    ", Cantidad: " + plato.getCantidad() +
+                    ", Precio: " + plato.getPrecio());
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservas_cont);
-
-        img_entrante = findViewById(R.id.img_entrante);
-        img_bebidas = findViewById(R.id.img_bebidas);
-        img_aperitivos = findViewById(R.id.img_aperitivos);
-        img_postres = findViewById(R.id.img_postres);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,35 +58,11 @@ public class PedirActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adaptadorPedidosFirestore);
 
-        img_entrante.setOnClickListener(new View.OnClickListener() {
+        Button btnGuardarPlatos = findViewById(R.id.guardar);
+        btnGuardarPlatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Platos> entrantesList = filterPlatosByCategoria("Entrantes");
-                adaptadorPedidosFirestore.setPlatosList(entrantesList);
-            }
-        });
-
-        img_bebidas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Platos> bebidasList = filterPlatosByCategoria("Bebidas");
-                adaptadorPedidosFirestore.setPlatosList(bebidasList);
-            }
-        });
-
-        img_aperitivos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Platos> aperitivosList = filterPlatosByCategoria("Complementos");
-                adaptadorPedidosFirestore.setPlatosList(aperitivosList);
-            }
-        });
-
-        img_postres.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Platos> postresList = filterPlatosByCategoria("Postres");
-                adaptadorPedidosFirestore.setPlatosList(postresList);
+                guardarPlatosSeleccionados();
             }
         });
 
@@ -94,7 +71,7 @@ public class PedirActivity extends AppCompatActivity {
     }
 
     private void EventChangeListener(){
-        db.collection("Platos").orderBy("Categoria", Query.Direction.DESCENDING)
+        db.collection("Platos").orderBy("Categoria", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -108,8 +85,6 @@ public class PedirActivity extends AppCompatActivity {
                                 Platos plato = dc.getDocument().toObject(Platos.class);
                                 plato.setImg(dc.getDocument().getString("img"));
                                 pedidosArrayList.add(plato);
-                                List<Platos> entrantesList = filterPlatosByCategoria("Entrantes");
-                                adaptadorPedidosFirestore.setPlatosList(entrantesList);
                             }
                             adaptadorPedidosFirestore.notifyDataSetChanged();
                         }
