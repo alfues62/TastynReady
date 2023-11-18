@@ -39,12 +39,12 @@ public class FragmentUsuario extends Fragment {
         nombre.setText(usuario.getDisplayName());
         TextView coreo = view.findViewById(R.id.correo);
         coreo.setText(usuario.getEmail());
-        TextView prove = view.findViewById(R.id.proveedor);
+        /*TextView prove = view.findViewById(R.id.proveedor);
         prove.setText(usuario.getProviderId());
         TextView telf = view.findViewById(R.id.telefono);
         telf.setText(usuario.getPhoneNumber());
         TextView Uid = view.findViewById(R.id.uid);
-        Uid.setText(usuario.getUid());
+        Uid.setText(usuario.getUid());*/
 
         return view;
     }
