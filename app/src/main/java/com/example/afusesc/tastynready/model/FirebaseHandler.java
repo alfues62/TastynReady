@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,19 @@ public class FirebaseHandler {
             reservaInfo.put("Hora", horaSeleccionada);
             reservaInfo.put("Fecha", fechaSeleccionada);
             reservaInfo.put("Comensales", numComersales);
+
+            List<Map<String, Object>> todosPlatos = new ArrayList<>();
+
+           for (Platos platos : platosList){
+               Map<String, Object> platoInfo = new HashMap<>();
+               platoInfo.put("Nombre", platos.getNombre());
+               platoInfo.put("Cantidad", platos.getCantidad());
+               platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
+
+               // Add the plate information to the list
+               todosPlatos.add(platoInfo);
+           }
+
             reservaInfo.put("zPlatos", platosList);
 
 
