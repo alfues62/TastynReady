@@ -1,6 +1,8 @@
 package com.example.afusesc.tastynready.model;
 
-public class Platos {
+import java.io.Serializable;
+
+public class Platos implements Serializable {
     String Nombre, img, Categoria, Descripcion;
     double Precio, precioTotal;
     int cantidad;
