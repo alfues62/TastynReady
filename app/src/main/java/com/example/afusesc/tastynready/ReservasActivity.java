@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,9 @@ public class ReservasActivity extends AppCompatActivity {
     private Button incrementButton;
     private Button decrementButton;
     private int value = 0;
-    private static final int MAX_VALUE = 20;
+    private static final int MAX_VALUE = 8;
+
+    private String salaReservada;
 
     //HORA Y FECHA
     private TextView textHora;
@@ -97,7 +100,7 @@ public class ReservasActivity extends AppCompatActivity {
         decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (value > 0) {
+                if (value > 2) {
                     value--;
                     valueEditText.setText(String.valueOf(value));
                 }
@@ -121,6 +124,7 @@ public class ReservasActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(ReservasActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -129,11 +133,52 @@ public class ReservasActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Verifica si se ha seleccionado la fecha y la hora
+                if (dataPicker.obtenerFechaSeleccionada() == null || dataPicker.obtenerHoraSeleccionada() == null) {
+                    // Muestra un cuadro de diálogo para informar al usuario
+                    mostrarDialogoCamposFaltantes();
+                    return;
+                }
+
+                // Convierte el valor de valueEditText a un entero
+                int numComensales = Integer.parseInt(valueEditText.getText().toString());
+
+                if (numComensales > 4){
+                    salaReservada = "ID_Sala_2";
+                }else {
+                    salaReservada = "ID_Sala_1";
+                }
+                //Llama al DataPicker para guardar el número de comensales
+                DataPicker.guardarNumComensales(numComensales);
+                DataPicker.guardarIdSala(salaReservada);
+
+                // Procede con la reserva ya que ambos campos están completos
                 firebaseHandler.guardarReservaEnFirebase();
+
+                // Llama al resetValues para restablecer los valores cuando retrocedes
+                DataPicker.resetValues();
+
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
                 startActivity(intent);
             }
         });
+    }
+    private void mostrarDialogoCamposFaltantes() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Campos faltantes");
+        builder.setMessage("Por favor, completa la fecha y la hora antes de continuar.");
+
+        // Agrega un botón de OK para cerrar el cuadro de diálogo
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Cierra el cuadro de diálogo
+                dialogInterface.dismiss();
+            }
+        });
+
+        // Muestra el cuadro de diálogo
+        builder.show();
     }
 
     private void openDatePicker() {

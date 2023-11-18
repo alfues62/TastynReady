@@ -35,38 +35,17 @@ public class FirebaseHandler {
             // Obtén la hora seleccionada desde DataPicker
             String horaSeleccionada = DataPicker.obtenerHoraSeleccionada();
 
+            // Obtén el numero de comersales desde DataPicker
+            int numComersales = DataPicker.obtenerNumComensales();
+
             // Guarda la reserva en Firebase
             Map<String, Object> reservaInfo = new HashMap<>();
             reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
             reservaInfo.put("Sala", "ID_Sala_1");
             reservaInfo.put("Hora", horaSeleccionada);
             reservaInfo.put("Fecha", fechaSeleccionada);
-            reservaInfo.put("Comensales", 4);
+            reservaInfo.put("Comensales", numComersales);
 
-            Map<String, Object> plato1 = new HashMap<>();
-            plato1.put("Nombre", "Plato1");
-            plato1.put("Descripcion", "Descripción del Plato1");
-            plato1.put("Precio", 10.99);
-
-            Map<String, Object> plato2 = new HashMap<>();
-            plato2.put("Nombre", "Plato2");
-            plato2.put("Descripcion", "Descripción del Plato2");
-            plato2.put("Precio", 8.99);
-
-            Map<String, Object> plato3 = new HashMap<>();
-            plato3.put("Nombre", "Plato3");
-            plato3.put("Descripcion", "Descripción del Plato3");
-            plato3.put("Precio", 12.99);
-
-            Map<String, Object> plato4 = new HashMap<>();
-            plato4.put("Nombre", "Plato4");
-            plato4.put("Descripcion", "Descripción del Plato4");
-            plato4.put("Precio", 15.99);
-
-            db.collection("Platos").document("Plato1").set(plato1);
-            db.collection("Platos").document("Plato2").set(plato2);
-            db.collection("Platos").document("Plato3").set(plato3);
-            db.collection("Platos").document("Plato4").set(plato4);
 
             // Puedes guardar la reserva en una colección "reservas" con un identificador único
             db.collection("reservas").document()

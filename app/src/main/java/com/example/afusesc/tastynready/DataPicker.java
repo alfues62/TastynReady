@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataPicker {
+
+    private static int numComensales;
+    private static String idSala;
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
     private static String selectedDate;
@@ -25,18 +28,32 @@ public class DataPicker {
         return selectedDate;
     }
 
-    public static String obtenerHoraSeleccionada() {
-        return selectedTime;
-    }
-
     public void guardarFechaSeleccionada(String fecha) {
         selectedDate = fecha;
     }
 
+    public static String obtenerHoraSeleccionada() {
+        return selectedTime;
+    }
     public void guardarHoraSeleccionada(String hora) {
         selectedTime = hora;
     }
 
+    public static int obtenerNumComensales() {
+        return numComensales;
+    }
+
+    public static void guardarNumComensales(int num) {
+        numComensales = num;
+    }
+
+    public static String obtenerIdSala() {
+        return idSala;
+    }
+
+    public static void guardarIdSala(String id) {
+        idSala = id;
+    }
     public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
         // Crea un nuevo mapa para almacenar la información del usuario en la variable
         userData = new HashMap<>();
@@ -53,5 +70,11 @@ public class DataPicker {
                 .addOnFailureListener(e -> {
                     // Manejar el error, si es necesario
                 });
+    }
+    public static void resetValues() {
+        numComensales = 0;
+        idSala = null;
+        selectedDate = null;
+        selectedTime = null;
     }
 }
