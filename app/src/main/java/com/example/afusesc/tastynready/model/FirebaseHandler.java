@@ -1,10 +1,14 @@
 package com.example.afusesc.tastynready.model;
 
+import android.provider.ContactsContract;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FirebaseHandler {
@@ -30,13 +34,40 @@ public class FirebaseHandler {
             // Obtén la fecha seleccionada desde DataPicker
             String fechaSeleccionada = DataPicker.obtenerFechaSeleccionada();
 
+            // Obtén la hora seleccionada desde DataPicker
+            String horaSeleccionada = DataPicker.obtenerHoraSeleccionada();
+
+            // Obtén el numero de comersales desde DataPicker
+            int numComersales = DataPicker.obtenerNumComensales();
+
+            // Obtén el numero de sala desde DataPicker
+            String idSala = DataPicker.obtenerIdSala();
+
+            // Obtén el array de platos desde DataPicker
+            List<Platos> platosList = DataPicker.obtenerArray();
+
             // Guarda la reserva en Firebase
             Map<String, Object> reservaInfo = new HashMap<>();
             reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
-            reservaInfo.put("Sala", "ID_Sala_1");
-            reservaInfo.put("Hora", "14:00:00");
+            reservaInfo.put("Sala", idSala);
+            reservaInfo.put("Hora", horaSeleccionada);
             reservaInfo.put("Fecha", fechaSeleccionada);
-            reservaInfo.put("Comensales", 4);
+            reservaInfo.put("Comensales", numComersales);
+
+            List<Map<String, Object>> todosPlatos = new ArrayList<>();
+
+           for (Platos platos : platosList){
+               Map<String, Object> platoInfo = new HashMap<>();
+               platoInfo.put("Nombre", platos.getNombre());
+               platoInfo.put("Cantidad", platos.getCantidad());
+               platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
+
+               // Add the plate information to the list
+               todosPlatos.add(platoInfo);
+           }
+
+            reservaInfo.put("zPlatos", todosPlatos);
+
 
             // Puedes guardar la reserva en una colección "reservas" con un identificador único
             db.collection("reservas").document()

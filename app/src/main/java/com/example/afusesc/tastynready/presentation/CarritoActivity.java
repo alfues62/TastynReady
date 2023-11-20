@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.example.afusesc.tastynready.model.Platos;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +28,12 @@ public class CarritoActivity extends AppCompatActivity {
 
     Button button;
 
+    TextView sala, comensales, hora, fecha;
+
     // EFECTUACION DE RESERVA
     private DataPicker dataPicker;
+
+    FirebaseHandler firebaseHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,21 +41,29 @@ public class CarritoActivity extends AppCompatActivity {
         setContentView(R.layout.reservas_carrito);
 
         button = findViewById(R.id.guardarReserva);
+        sala = findViewById(R.id.cambSala);
+        comensales = findViewById(R.id.cambComens);
+        hora = findViewById(R.id.cambHora);
+        fecha = findViewById(R.id.cambFecha);
         dataPicker = new DataPicker(); // Initialize DataPicker
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                if (intent != null) {
-                    ArrayList<Platos> pedidosArrayList = (ArrayList<Platos>) intent.getSerializableExtra("pedidosArrayList");
 
-                    if (pedidosArrayList != null) {
-                        subirPlatosAFirebase(pedidosArrayList);
-                    }
-                }
+
+                // Procede con la reserva ya que ambos campos están completos
+                firebaseHandler.guardarReservaEnFirebase();
+                // Llama al resetValues para restablecer los valores cuando retrocedes
+                DataPicker.resetValues();
             }
         });
+
+        sala.setText(DataPicker.obtenerIdSala());
+        comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
+        fecha.setText(DataPicker.obtenerFechaSeleccionada());
+        hora.setText(DataPicker.obtenerHoraSeleccionada());
     }
 
     private void subirPlatosAFirebase(ArrayList<Platos> pedidosArrayList){
