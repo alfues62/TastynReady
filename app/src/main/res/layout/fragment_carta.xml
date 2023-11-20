@@ -15,7 +15,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="64dp"
         android:ems="10"
-        android:hint="Busca un plato..."
+        android:hint="Busca un plato...."
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
