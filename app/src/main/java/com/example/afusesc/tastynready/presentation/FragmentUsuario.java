@@ -1,4 +1,4 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.presentation;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.afusesc.tastynready.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,12 +39,12 @@ public class FragmentUsuario extends Fragment {
         nombre.setText(usuario.getDisplayName());
         TextView coreo = view.findViewById(R.id.correo);
         coreo.setText(usuario.getEmail());
-        TextView prove = view.findViewById(R.id.proveedor);
+        /*TextView prove = view.findViewById(R.id.proveedor);
         prove.setText(usuario.getProviderId());
         TextView telf = view.findViewById(R.id.telefono);
         telf.setText(usuario.getPhoneNumber());
         TextView Uid = view.findViewById(R.id.uid);
-        Uid.setText(usuario.getUid());
+        Uid.setText(usuario.getUid());*/
 
         return view;
     }

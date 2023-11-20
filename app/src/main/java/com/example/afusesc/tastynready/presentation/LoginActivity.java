@@ -1,12 +1,12 @@
-package com.example.afusesc.tastynready;
+package com.example.afusesc.tastynready.presentation;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.afusesc.tastynready.model.DataPicker;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -26,7 +26,13 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario != null && usuario.isEmailVerified()) {
-            Toast.makeText(this, "inicia sesión: "+usuario.getDisplayName()+ " - "+ usuario.getEmail(),Toast.LENGTH_LONG).show();
+            // Usuario autenticado y correo verificado
+            DataPicker dataPicker = new DataPicker();
+            dataPicker.guardarUsuarioEnFirebase(usuario);
+
+            Toast.makeText(this, "Inicia sesión: " + usuario.getDisplayName() + " - " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+
+            // Intent para iniciar la actividad principal
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -38,9 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Por favor, verifica tu correo electrónico para continuar.", Toast.LENGTH_LONG).show();
                 usuario.sendEmailVerification();
             } else {
+                // El usuario no está autenticado, inicia el flujo de inicio de sesión
                 List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build(),
                         new AuthUI.IdpConfig.GoogleBuilder().build());
+
                 startActivityForResult(
                         AuthUI.getInstance().createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
@@ -71,5 +79,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 } //Para cerrar la clase
 

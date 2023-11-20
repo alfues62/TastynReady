@@ -1,6 +1,4 @@
-package com.example.afusesc.tastynready;
-
-import static androidx.core.content.ContentProviderCompat.requireContext;
+package com.example.afusesc.tastynready.presentation;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,15 +13,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.afusesc.tastynready.model.DataPicker;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
+import com.example.afusesc.tastynready.R;
+
+import java.util.Calendar;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class ReservasActivity extends AppCompatActivity {
+
+    DataPicker dataPicker = new DataPicker();
+
+    //BBDD
+    private FirebaseFirestore db; // Variable de clase
+    FirebaseHandler firebaseHandler = new FirebaseHandler();
 
     //INPUT STEPPER
     private EditText valueEditText;
@@ -59,6 +65,9 @@ public class ReservasActivity extends AppCompatActivity {
 
         back = findViewById(R.id.imageView2);
         next = findViewById(R.id.BotonContinuar);
+
+        db = FirebaseFirestore.getInstance();
+
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,25 +114,55 @@ public class ReservasActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                firebaseHandler.guardarReservaEnFirebase();
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void openDatePicker(){
+    private void openDatePicker() {
+        // Obtén la fecha actual
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Establece la fecha mínima como mañana
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        int minYear = calendar.get(Calendar.YEAR);
+        int minMonth = calendar.get(Calendar.MONTH);
+        int minDay = calendar.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // Actualiza la instancia de Calendar con la fecha seleccionada
+                calendar.set(year, month, day);
 
-                textFecha.setText("Fecha Seleccionada:" + String.valueOf(year)+ "."+String.valueOf(month)+ "."+String.valueOf(day));
+                // Verifica si la fecha seleccionada es en el pasado
+                if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+                    // No permitir selección de fechas pasadas
+                    return;
+                }
+
+                // Muestra la fecha seleccionada
+                textFecha.setText("Fecha Seleccionada: " + String.valueOf(year) + "." + String.valueOf(month + 1) + "." + String.valueOf(day));
+
+                // Formatea la fecha como "yyyy-MM-dd"
+                String formattedDate = String.format("%04d-%02d-%02d", year, month + 1, day);
+
+                // Llama al método para guardar la fecha en DataPicker
+                dataPicker.guardarFechaSeleccionada(formattedDate);
 
             }
-        }, 2023, 10, 24);
+        }, currentYear, currentMonth, currentDay);
+
+        // Establece la fecha mínima como mañana
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
         datePickerDialog.show();
     }
-
 
     private void openTimePicker(){
 
