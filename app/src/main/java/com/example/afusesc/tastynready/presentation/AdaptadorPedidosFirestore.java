@@ -58,6 +58,13 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
                 }
                 holder.valueEditText.setText(String.valueOf(currentValue));
                 platos.setCantidad(currentValue);
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+                notifyDataSetChanged();
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             }
         });
         holder.decrementButton.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +76,22 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
                 }
                 holder.valueEditText.setText(String.valueOf(currentValue));
                 platos.setCantidad(currentValue);
+<<<<<<< Updated upstream
             }
         });
+=======
+<<<<<<< Updated upstream
+            }
+        });
+=======
+                notifyDataSetChanged();
+
+            }
+        });
+
+        holder.valueEditText.setText(String.valueOf(platos.getCantidad()));
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         
     }
 

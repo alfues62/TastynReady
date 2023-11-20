@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
     <Button
         android:id="@+id/guardarReserva2"
@@ -20,6 +24,7 @@
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correo" />
+<<<<<<< Updated upstream
 
     <TextView
         android:id="@+id/nombre"
@@ -30,6 +35,45 @@
         app:layout_constraintBottom_toTopOf="@+id/correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+=======
+
+    <TextView
+        android:id="@+id/nombre"
+        style="@style/Perfil"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="Nombre"
+        app:layout_constraintBottom_toTopOf="@+id/correo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+=======
+
+    <TextView
+        android:id="@+id/nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre de Usuario:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proveedores:"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
     <TextView
         android:id="@+id/correo"
@@ -55,6 +99,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<<<<<<< Updated upstream
+=======
+
+<<<<<<< Updated upstream
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="47dp"
+        android:layout_height="40dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:srcCompat="@drawable/flecha_atras" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@+id/nombre"
+        app:layout_constraintTop_toTopOf="@+id/nombre"
+        app:srcCompat="@drawable/boton_editar" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@+id/correo"
+        app:layout_constraintTop_toTopOf="@+id/correo"
+        app:srcCompat="@drawable/boton_editar" />
+=======
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correo:"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
     <ImageView
         android:id="@+id/imageView6"

@@ -5,6 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+import android.widget.TextView;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+import com.example.afusesc.tastynready.model.FirebaseHandler;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 import com.example.afusesc.tastynready.model.Platos;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,20 +40,53 @@ public class CarritoActivity extends AppCompatActivity {
 
     Button button;
 
+<<<<<<< Updated upstream
     // EFECTUACION DE RESERVA
     private DataPicker dataPicker;
 
+=======
+<<<<<<< Updated upstream
+    // EFECTUACION DE RESERVA
+    private DataPicker dataPicker;
+
+=======
+    TextView sala, comensales, hora, fecha;
+
+    // EFECTUACION DE RESERVA
+    private DataPicker dataPicker;
+
+    FirebaseHandler firebaseHandler;
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservas_carrito);
 
         button = findViewById(R.id.guardarReserva);
+<<<<<<< Updated upstream
         dataPicker = new DataPicker(); // Initialize DataPicker
+=======
+<<<<<<< Updated upstream
+        dataPicker = new DataPicker(); // Initialize DataPicker
+=======
+        sala = findViewById(R.id.cambSala);
+        comensales = findViewById(R.id.cambComens);
+        hora = findViewById(R.id.cambHora);
+        fecha = findViewById(R.id.cambFecha);
+        dataPicker = new DataPicker(); // Initialize DataPicker
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
                 Intent intent = getIntent();
                 if (intent != null) {
                     ArrayList<Platos> pedidosArrayList = (ArrayList<Platos>) intent.getSerializableExtra("pedidosArrayList");
@@ -50,6 +97,24 @@ public class CarritoActivity extends AppCompatActivity {
                 }
             }
         });
+<<<<<<< Updated upstream
+=======
+=======
+
+
+                // Procede con la reserva ya que ambos campos están completos
+                firebaseHandler.guardarReservaEnFirebase();
+                // Llama al resetValues para restablecer los valores cuando retrocedes
+                DataPicker.resetValues();
+            }
+        });
+
+        sala.setText(DataPicker.obtenerIdSala());
+        comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
+        fecha.setText(DataPicker.obtenerFechaSeleccionada());
+        hora.setText(DataPicker.obtenerHoraSeleccionada());
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     private void subirPlatosAFirebase(ArrayList<Platos> pedidosArrayList){
@@ -81,10 +146,21 @@ public class CarritoActivity extends AppCompatActivity {
                 platosList.add(platoInfo);
             }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
             // Add the list of plates to the platoData map
             platoData.put("Platos", platosList);
 
             // Puedes guardar la reserva en una colección "reservas" con un identificador único
+<<<<<<< Updated upstream
+=======
+=======
+            platoData.put("Platos", platosList);
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             db.collection("reservaComida").document()
                     .set(platoData)
                     .addOnSuccessListener(aVoid -> {
