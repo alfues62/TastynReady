@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/fui_ic_anonymous_white_24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/editTextRegistroEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/imageLogo"
+        android:hint="Correo electrónico"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextRegistroUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de usuario"
+        android:layout_below="@id/editTextRegistroEmail"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextRegistroPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Contraseña"
+        android:layout_below="@id/editTextRegistroUsername"
+        android:layout_marginTop="16dp"
+        android:maxLength="16"/>
+
+    <EditText
+        android:id="@+id/editTextRegistroConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Confirmar Contraseña"
+        android:layout_below="@id/editTextRegistroPassword"
+        android:layout_marginTop="28dp"/>
+
+    <Button
+        android:id="@+id/btnRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        android:layout_below="@id/editTextRegistroConfirmPassword"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/errorRegistroEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextRegistroEmail"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Correo electrónico requerido o inválido" />
+
+    <TextView
+        android:id="@+id/errorRegistroUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextRegistroUsername"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Usuario requerido" />
+
+    <TextView
+        android:id="@+id/errorRegistroPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextRegistroPassword"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="La contraseña debe tener entre 6 y 16 caracteres y contener letras y números" />
+
+
+    <TextView
+        android:id="@+id/errorRegistroConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextRegistroConfirmPassword"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Las contraseñas no coinciden" />
+
+</RelativeLayout>

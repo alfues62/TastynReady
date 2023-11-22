@@ -81,6 +81,7 @@ public class FirebaseHandler {
         }
     }
 
+
     // ESTE METODO SOLO DEBE UTILIZARSE SI HAY UN CAMBIO EN LA BBDD DE FIREBASE
     public void ponerPlatosFirebase(){
 

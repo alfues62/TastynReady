@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/fui_ic_anonymous_white_24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de usuario"
+        android:layout_below="@id/imageLogo"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Contraseña"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión"
+        android:layout_below="@id/editTextPassword"
+        android:layout_marginTop="24dp"/>
+
+    <Button
+        android:id="@+id/btnGoToRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate"
+        android:layout_below="@id/btnLogin"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/darker_gray"
+        android:background="@android:color/transparent"/>
+
+    <TextView
+        android:id="@+id/errorPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextPassword"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Contraseña requerida" />
+
+    <TextView
+        android:id="@+id/errorUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Usuario requerido" />
+
+</RelativeLayout>

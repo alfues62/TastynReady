@@ -2,83 +2,110 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
+import com.example.afusesc.tastynready.model.UsuarioInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 123;
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        login();
-    }
-    private void login() {
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuario != null && usuario.isEmailVerified()) {
-            // Usuario autenticado y correo verificado
-            DataPicker dataPicker = new DataPicker();
-            dataPicker.guardarUsuarioEnFirebase(usuario);
+    private EditText editTextUsername;
+    private EditText editTextPassword;
+    private Button btnLogin;
+    private FirebaseAuth mAuth;
 
-            Toast.makeText(this, "Inicia sesión: " + usuario.getDisplayName() + " - " + usuario.getEmail(), Toast.LENGTH_LONG).show();
-
-            // Intent para iniciar la actividad principal
-            Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-        } else {
-            if (usuario != null) {
-                // El usuario está autenticado, pero su correo no está verificado
-                Toast.makeText(this, "Por favor, verifica tu correo electrónico para continuar.", Toast.LENGTH_LONG).show();
-                usuario.sendEmailVerification();
-            } else {
-                // El usuario no está autenticado, inicia el flujo de inicio de sesión
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build());
-
-                startActivityForResult(
-                        AuthUI.getInstance().createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setIsSmartLockEnabled(false)
-                                .build(),
-                        RC_SIGN_IN);
-            }
-        }
-    }
+    DataPicker dataPicker = new DataPicker();
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                login();
-            } else {
-                String s = "";
-                IdpResponse response = IdpResponse.fromResultIntent(data);
-                if (response == null) s = "Cancelado";
-                else switch (response.getError().getErrorCode()) {
-                    case ErrorCodes.NO_NETWORK: s="Sin conexión a Internet"; break;
-                    case ErrorCodes.PROVIDER_ERROR: s="Error en proveedor"; break;
-                    case ErrorCodes.DEVELOPER_ERROR: s="Error desarrollador"; break;
-                    default: s="Otros errores de autentificación";
-                }
-                Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        Button btnGoToRegister = findViewById(R.id.btnGoToRegister);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLoginButtonClick();
             }
+        });
+        btnGoToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void onLoginButtonClick() {
+        String username = editTextUsername.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            // Utilizar Firebase Authentication para iniciar sesión
+            mAuth.signInWithEmailAndPassword(username, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Inicio de sesión exitoso, obtener el usuario actual
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                // Guardar el usuario en DataPicker
+                                dataPicker.guardarUsuarioRegistrado(new UsuarioInfo(
+                                        user.getDisplayName(),
+                                        user.getEmail(),
+                                        user.getUid()
+                                ));
+
+                                // Resto de tu lógica de inicio de sesión
+                                // ...
+
+                            } else {
+                                // Si el inicio de sesión falla, mostrar un mensaje de error
+                                Map<String, String> errores = new HashMap<>();
+                                errores.put("errorLogin", "Inicio de sesión fallido");
+                                mostrarErrores(errores);
+                            }
+                        }
+                    });
+        } else {
+            // Campos vacíos, mostrar mensaje de error
+            Map<String, String> errores = new HashMap<>();
+            errores.put("errorCampos", "Por favor, complete todos los campos");
+            mostrarErrores(errores);
         }
     }
 
-} //Para cerrar la clase
+    private void mostrarErrores(Map<String, String> errores) {
+        // Implementa la lógica para mostrar mensajes de error en tu interfaz de usuario
+        // Puedes mostrar estos errores en TextViews, Toasts, o cualquier otro método que prefieras
+        // Por ejemplo:
+        for (Map.Entry<String, String> entry : errores.entrySet()) {
+            String mensaje = entry.getValue();
+            // Muestra el mensaje en algún lugar de tu interfaz de usuario
+        }
+    }
 
+}
