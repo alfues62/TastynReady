@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentUsuario extends Fragment {
+
+    Button btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,12 +41,16 @@ public class FragmentUsuario extends Fragment {
         nombre.setText(usuario.getDisplayName());
         TextView coreo = view.findViewById(R.id.correo);
         coreo.setText(usuario.getEmail());
-        /*TextView prove = view.findViewById(R.id.proveedor);
-        prove.setText(usuario.getProviderId());
-        TextView telf = view.findViewById(R.id.telefono);
-        telf.setText(usuario.getPhoneNumber());
-        TextView Uid = view.findViewById(R.id.uid);
-        Uid.setText(usuario.getUid());*/
+
+        btn = view.findViewById(R.id.guardarReserva2);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), SalaActivity.class);
+                startActivity(i);
+            }
+        });
 
         return view;
     }
