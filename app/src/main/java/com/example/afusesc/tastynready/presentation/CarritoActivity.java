@@ -61,6 +61,11 @@ public class CarritoActivity extends AppCompatActivity {
         platoAdapter = new PlatoAdapter(platosReservados);
         recyclerView.setAdapter(platoAdapter);
 
+        double totalPrecio = calcularTotalPrecio(platosReservados);
+
+        TextView totalPrecioTextView = findViewById(R.id.cambiImporte);
+        totalPrecioTextView.setText(String.format("%.2f", totalPrecio));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,5 +83,13 @@ public class CarritoActivity extends AppCompatActivity {
         comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
         fecha.setText(DataPicker.obtenerFechaSeleccionada());
         hora.setText(DataPicker.obtenerHoraSeleccionada());
+    }
+
+    private double calcularTotalPrecio(List<Platos> platos) {
+        double total = 0;
+        for (Platos plato : platos) {
+            total += plato.getPrecioTotal();
+        }
+        return total;
     }
 }
