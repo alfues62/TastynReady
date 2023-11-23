@@ -22,21 +22,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correo" />
 
-    <TextView
+    <EditText
         android:id="@+id/nombre"
         style="@style/Perfil"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:enabled="false"
         android:text="Nombre"
         app:layout_constraintBottom_toTopOf="@+id/correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+
+    <EditText
         android:id="@+id/correo"
         style="@style/Perfil"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:enabled="false"
         android:text="Correo electrónico"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,20 +69,46 @@
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/flecha_atras" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
+    <ImageButton
+        android:id="@+id/editarNombre"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="Editar Nombre"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/nombre"
         app:layout_constraintStart_toEndOf="@+id/nombre"
         app:layout_constraintTop_toTopOf="@+id/nombre"
-        app:srcCompat="@drawable/boton_editar" />
+        app:srcCompat="@drawable/boton_editar"
+        />
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
+    <ImageButton
+        android:id="@+id/editarCorreo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="Editar Correo"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/correo"
         app:layout_constraintStart_toEndOf="@+id/correo"
         app:layout_constraintTop_toTopOf="@+id/correo"
         app:srcCompat="@drawable/boton_editar" />
+
+    <Button
+        android:id="@+id/guardarDatos"
+        style="@style/BotonAppAzul"
+        android:layout_width="77dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:text="Guardar"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/guardarReserva2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.832"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/correo"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
