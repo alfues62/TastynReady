@@ -3,9 +3,9 @@ package com.example.afusesc.tastynready.model;
 import java.io.Serializable;
 
 public class Platos implements Serializable {
-    String Nombre, img, Categoria, Descripcion;
-    double Precio, precioTotal;
-    int cantidad;
+    private String Nombre, img, Categoria, Descripcion;
+    private double Precio, precioTotal;
+    private int cantidad;
     public Platos(){}
 
     public Platos(String nombre, String img, String categoria, String descripcion, double precio, int cantidad) {
