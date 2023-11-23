@@ -140,6 +140,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                 }
                                             }
                                         });
+
+                                // Establecer el username como displayName
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                         .setDisplayName(username)
                                         .build();
@@ -180,6 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
         TextView errorTextView = findViewById(getResources().getIdentifier(errorTextViewId, "id", getPackageName()));

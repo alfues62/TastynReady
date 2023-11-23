@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                         user.getUid()
                                 ));
                                 Log.d("LoginActivity", "Login successful");
+                                dataPicker.guardarUsuarioEnFirebase();
                                 Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
                                 startActivity(intent);
                                 finish();

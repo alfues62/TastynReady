@@ -79,6 +79,8 @@ public class DataPicker {
     public void guardarUsuarioEnFirebase() {
         // Asegúrate de que el usuario esté registrado antes de intentar guardarlo
         if (usuarioRegistrado != null) {
+            // Obtén el usuario actualmente autenticado desde Firebase
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             // Crea un nuevo mapa para almacenar la información del usuario en la variable
             userData = new HashMap<>();
             userData.put("nombre", usuarioRegistrado.getNombre());
