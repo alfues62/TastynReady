@@ -96,8 +96,7 @@
 
     <Button
         android:id="@+id/guardarDatos"
-        style="@style/BotonAppAzul"
-        android:layout_width="77dp"
+        android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:layout_marginTop="20dp"
         android:text="Guardar"
