@@ -2,6 +2,7 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,6 +42,8 @@ public class FragmentUsuario extends Fragment {
     private String nombreOriginal;
     private String correoOriginal;
 
+    Button btn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +70,17 @@ public class FragmentUsuario extends Fragment {
         });
 
         botones();
+
+        btn = view.findViewById(R.id.guardarReserva2);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), SalaActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         return view;
     }

@@ -9,49 +9,57 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.TastyReady"
-        tools:targetApi="31"
-        android:screenOrientation="portrait">
+        tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".presentation.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TastyReady.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".presentation.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        <activity
+            android:name=".presentation.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".presentation.ReservasActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustNothing">
         </activity>
-
-        <activity android:name=".presentation.PedirActivity"
+        <activity
+            android:name=".presentation.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".presentation.ReservasActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".presentation.PedirActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".presentation.CarritoActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".presentation.CarritoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".presentation.SalaActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>

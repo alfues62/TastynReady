@@ -54,7 +54,6 @@ public class PedirActivity extends AppCompatActivity {
         DataPicker.guardarArray(platosSeleccionados);
 
         Intent intent = new Intent(this, CarritoActivity.class);
-        //intent.putExtra("pedidosArrayList", new ArrayList<>(platosSeleccionados));
         startActivity(intent);
         finish();
     }
@@ -106,15 +105,5 @@ public class PedirActivity extends AppCompatActivity {
                     }
                 });
 
-    }
-
-    private List<Platos> filterPlatosByCategoria(String categoria) {
-        List<Platos> filteredList = new ArrayList<>();
-        for (Platos plato : pedidosArrayList) {
-            if (plato.getCategoria().equals(categoria)) {
-                filteredList.add(plato);
-            }
-        }
-        return filteredList;
     }
 }
