@@ -27,48 +27,53 @@ public class FirebaseHandler {
 
     public void guardarReservaEnFirebase() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (usuario != null) {
-
-            Map<String, Object> usuarioInfo = dataPicker.obtenerDatosUsuario();
-
-                String fechaSeleccionada = dataPicker.obtenerFechaSeleccionada();
-                String horaSeleccionada = dataPicker.obtenerHoraSeleccionada();
-                int numComensales = dataPicker.obtenerNumComensales();
-                String idSala = dataPicker.obtenerIdSala();
-                List<Platos> platosList = dataPicker.obtenerArray();
-
-                Map<String, Object> reservaInfo = new HashMap<>();
-                reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
-                reservaInfo.put("Sala", idSala);
-                reservaInfo.put("Hora", horaSeleccionada);
-                reservaInfo.put("Fecha", fechaSeleccionada);
-                reservaInfo.put("Comensales", numComensales);
-
-                List<Map<String, Object>> todosPlatos = new ArrayList<>();
-
-                for (Platos platos : platosList) {
-                    Map<String, Object> platoInfo = new HashMap<>();
-                    platoInfo.put("Nombre", platos.getNombre());
-                    platoInfo.put("Cantidad", platos.getCantidad());
-                    platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
-                    todosPlatos.add(platoInfo);
-                }
-
-                reservaInfo.put("zPlatos", todosPlatos);
-
-                db.collection("reservas").document().set(reservaInfo)
-                        .addOnSuccessListener(aVoid -> {
-                            // Manejar el éxito, si es necesario
-                        })
-                        .addOnFailureListener(e -> {
-                            // Manejar el error, si es necesario
-                            Log.e("FirebaseHandler", "Error al guardar reserva en Firestore", e);
-                        });
-
+        if (usuario == null) {
+            Log.e("FirebaseHandler", "El usuario es nulo. No se puede guardar la reserva.");
+            // Aquí puedes redirigir al usuario a la pantalla de inicio de sesión si es necesario.
+            return;
         }
-    }
 
+        // Asegúrate de que el objeto DataPicker se haya inicializado correctamente.
+        if (dataPicker == null) {
+            Log.e("FirebaseHandler", "Error: DataPicker no inicializado correctamente.");
+            return;
+        }
+
+        Map<String, Object> usuarioInfo = dataPicker.obtenerDatosUsuario();
+        String fechaSeleccionada = dataPicker.obtenerFechaSeleccionada();
+        String horaSeleccionada = dataPicker.obtenerHoraSeleccionada();
+        int numComensales = dataPicker.obtenerNumComensales();
+        String idSala = dataPicker.obtenerIdSala();
+        List<Platos> platosList = dataPicker.obtenerArray();
+
+        Map<String, Object> reservaInfo = new HashMap<>();
+        reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
+        reservaInfo.put("Sala", idSala);
+        reservaInfo.put("Hora", horaSeleccionada);
+        reservaInfo.put("Fecha", fechaSeleccionada);
+        reservaInfo.put("Comensales", numComensales);
+
+        List<Map<String, Object>> todosPlatos = new ArrayList<>();
+
+        for (Platos platos : platosList) {
+            Map<String, Object> platoInfo = new HashMap<>();
+            platoInfo.put("Nombre", platos.getNombre());
+            platoInfo.put("Cantidad", platos.getCantidad());
+            platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
+            todosPlatos.add(platoInfo);
+        }
+
+        reservaInfo.put("zPlatos", todosPlatos);
+
+        db.collection("reservas").document().set(reservaInfo)
+                .addOnSuccessListener(aVoid -> {
+                    // Manejar el éxito, si es necesario
+                })
+                .addOnFailureListener(e -> {
+                    // Manejar el error, si es necesario
+                    Log.e("FirebaseHandler", "Error al guardar reserva en Firestore", e);
+                });
+    }
 
     // ESTE METODO SOLO DEBE UTILIZARSE SI HAY UN CAMBIO EN LA BBDD DE FIREBASE
     public void ponerPlatosFirebase(){

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private MenuItem perfilMenuItem;
     FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseAuth mAuth;
+
     FirebaseHandler firebaseHandler;
 
     @Override
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
