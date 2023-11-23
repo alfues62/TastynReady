@@ -64,7 +64,7 @@ public class CarritoActivity extends AppCompatActivity {
         double totalPrecio = calcularTotalPrecio(platosReservados);
 
         TextView totalPrecioTextView = findViewById(R.id.cambiImporte);
-        totalPrecioTextView.setText(String.format("%.2f", totalPrecio));
+        totalPrecioTextView.setText(String.format("%.2f", totalPrecio) + " € ");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

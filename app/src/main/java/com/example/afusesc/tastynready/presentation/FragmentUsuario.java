@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.afusesc.tastynready.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +47,8 @@ public class FragmentUsuario extends Fragment {
 
     Button btn;
 
+    ImageView imageView6;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +63,7 @@ public class FragmentUsuario extends Fragment {
         botonGuardar = view.findViewById(R.id.guardarDatos);
         editarNombre = view.findViewById(R.id.editarNombre);
         editarCorreo = view.findViewById(R.id.editarCorreo);
+        imageView6 = view.findViewById(R.id.imageView6);
 
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -81,10 +87,35 @@ public class FragmentUsuario extends Fragment {
             }
         });
 
+        imageView6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    requireActivity().getSupportFragmentManager().popBackStack();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d("BackStackDebug", "Back stack count: " + requireActivity().getSupportFragmentManager().getBackStackEntryCount());
+
+            }
+        });
+
 
         return view;
     }
 
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);  // Add this line if you want to add the current fragment to the back stack
+        transaction.commit();
+    }
+
+    private void navigateBack() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate();  // Use popBackStackImmediate to pop the back stack immediately
+    }
     private void botones() {
         editarNombre.setOnClickListener(new View.OnClickListener() {
             @Override

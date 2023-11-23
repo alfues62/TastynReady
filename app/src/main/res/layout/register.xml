@@ -7,11 +7,11 @@
 
     <ImageView
         android:id="@+id/imageLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/img_tasty2"
+        android:layout_width="333dp"
+        android:layout_height="313dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/img_tasty2" />
 
     <EditText
         android:id="@+id/editTextRegistroEmail"
@@ -51,11 +51,12 @@
 
     <Button
         android:id="@+id/btnRegistro"
+        style="@style/BotonApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
         android:layout_below="@id/editTextRegistroConfirmPassword"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp"
+        android:text="Registrarse" />
 
     <TextView
         android:id="@+id/errorRegistroEmail"
