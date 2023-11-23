@@ -155,7 +155,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                     dataPicker.guardarUsuarioRegistrado(new UsuarioInfo(
                                                             user.getDisplayName(),
                                                             user.getEmail(),
-                                                            user.getUid()
+                                                            user.getUid(),
+                                                            "cliente"
                                                     ));
 
                                                     // Llama al método para guardar el usuario en Firebase Firestore

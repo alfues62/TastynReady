@@ -75,17 +75,20 @@ public class LoginActivity extends AppCompatActivity {
                                 // Inicio de sesión exitoso, obtener el usuario actual
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                // Guardar el usuario en DataPicker
-                                dataPicker.guardarUsuarioRegistrado(new UsuarioInfo(
-                                        user.getDisplayName(),
-                                        user.getEmail(),
-                                        user.getUid()
-                                ));
-                                Log.d("LoginActivity", "Login successful");
-                                dataPicker.guardarUsuarioEnFirebase();
-                                Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                                startActivity(intent);
-                                finish();
+                                // Obtener el rol del DataPicker
+                                String rol = DataPicker.obtenerRolUsuario();
+
+                                // Verificar el rol del usuario
+                                if (rol != null && rol.equals("cliente")) {
+                                    // Usuario con rol "cliente", dirigirlo a ReservasActivity
+                                    Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             } else {
                                 // Si el inicio de sesión falla, mostrar un mensaje de error
                                 Log.d("LoginActivity", "Login failed: " + task.getException());
@@ -105,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
+
         } else {
             // Campos vacíos, mostrar mensaje de error
             Map<String, String> errores = new HashMap<>();

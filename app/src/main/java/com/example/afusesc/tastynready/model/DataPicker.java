@@ -80,12 +80,12 @@ public class DataPicker {
         // Asegúrate de que el usuario esté registrado antes de intentar guardarlo
         if (usuarioRegistrado != null) {
             // Obtén el usuario actualmente autenticado desde Firebase
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             // Crea un nuevo mapa para almacenar la información del usuario en la variable
             userData = new HashMap<>();
-            userData.put("nombre", usuarioRegistrado.getNombre());
+            userData.put("displayName", usuarioRegistrado.getNombre());
             userData.put("email", usuarioRegistrado.getEmail());
             userData.put("uid", usuarioRegistrado.getUid());
+            userData.put("rol",usuarioRegistrado.getRol());
 
             // Guarda la información del usuario en la colección "usuarios" de Firestore
             db.collection("usuarios").document(usuarioRegistrado.getUid())
@@ -102,7 +102,12 @@ public class DataPicker {
             Log.e(TAG, "Usuario no registrado. No se puede guardar en Firestore.");
         }
     }
-
+    public static String obtenerRolUsuario() {
+        if (usuarioRegistrado != null) {
+            return usuarioRegistrado.getRol();
+        }
+        return null;
+    }
     public static void resetValues() {
         numComensales = 0;
         idSala = null;

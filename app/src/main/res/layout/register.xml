@@ -26,7 +26,7 @@
         android:id="@+id/editTextRegistroUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de usuario"
+        android:hint="Nombre y Apellido"
         android:layout_below="@id/editTextRegistroEmail"
         android:layout_marginTop="16dp"/>
 
@@ -77,7 +77,7 @@
         android:layout_below="@id/editTextRegistroUsername"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="10dp"
-        android:text="Usuario requerido" />
+        android:text="Nombre y Apellido requerido" />
 
     <TextView
         android:id="@+id/errorRegistroPassword"
