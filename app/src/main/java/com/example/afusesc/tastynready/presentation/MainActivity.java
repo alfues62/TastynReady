@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.FirebaseHandler;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
         setSupportActionBar(toolbar);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //firebaseHandler.ponerPlatosFirebase();
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
@@ -77,18 +80,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.nav_home){
+        if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         } else if (id == R.id.nav_carta) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CartaFragment()).commit();
-        } else if(id == R.id.nav_acerca){
+        } else if (id == R.id.nav_acerca) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AcercaDeFragment()).commit();
-        }
-        else if (id == R.id.nav_logout) {
-            AuthUI.getInstance().signOut(getApplicationContext()) .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override public void onComplete(@NonNull Task<Void> task) {
-                    Intent i = new Intent( getApplicationContext (), MainActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); startActivity(i); finish(); } });
+        } else if (id == R.id.nav_logout) {
+            AuthUI.getInstance().signOut(getApplicationContext()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    finish();
+                }
+            });
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -100,10 +107,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.action_mi_perfil) {
-            if(usuario != null){
+            if (usuario != null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentUsuario()).commit();
                 return true;
-            }else{
+            } else {
                 Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
             }
