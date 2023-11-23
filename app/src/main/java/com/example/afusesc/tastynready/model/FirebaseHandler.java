@@ -1,6 +1,7 @@
 package com.example.afusesc.tastynready.model;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,72 +15,60 @@ import java.util.Map;
 public class FirebaseHandler {
 
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     private DataPicker dataPicker;
 
     public FirebaseHandler() {
         // Inicializa la instancia de Firebase
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         dataPicker = new DataPicker();
     }
 
     public void guardarReservaEnFirebase() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
         if (usuario != null) {
-            // Si el usuario está autenticado, guarda su información en la variable userData de DataPicker
-            dataPicker.guardarUsuarioEnFirebase(usuario);
 
-            // Obtén la información del usuario desde DataPicker
-            Map<String, Object> usuarioInfo = DataPicker.obtenerDatosUsuario();
+            Map<String, Object> usuarioInfo = dataPicker.obtenerDatosUsuario();
 
-            // Obtén la fecha seleccionada desde DataPicker
-            String fechaSeleccionada = DataPicker.obtenerFechaSeleccionada();
+                String fechaSeleccionada = dataPicker.obtenerFechaSeleccionada();
+                String horaSeleccionada = dataPicker.obtenerHoraSeleccionada();
+                int numComensales = dataPicker.obtenerNumComensales();
+                String idSala = dataPicker.obtenerIdSala();
+                List<Platos> platosList = dataPicker.obtenerArray();
 
-            // Obtén la hora seleccionada desde DataPicker
-            String horaSeleccionada = DataPicker.obtenerHoraSeleccionada();
+                Map<String, Object> reservaInfo = new HashMap<>();
+                reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
+                reservaInfo.put("Sala", idSala);
+                reservaInfo.put("Hora", horaSeleccionada);
+                reservaInfo.put("Fecha", fechaSeleccionada);
+                reservaInfo.put("Comensales", numComensales);
 
-            // Obtén el numero de comersales desde DataPicker
-            int numComersales = DataPicker.obtenerNumComensales();
+                List<Map<String, Object>> todosPlatos = new ArrayList<>();
 
-            // Obtén el numero de sala desde DataPicker
-            String idSala = DataPicker.obtenerIdSala();
+                for (Platos platos : platosList) {
+                    Map<String, Object> platoInfo = new HashMap<>();
+                    platoInfo.put("Nombre", platos.getNombre());
+                    platoInfo.put("Cantidad", platos.getCantidad());
+                    platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
+                    todosPlatos.add(platoInfo);
+                }
 
-            // Obtén el array de platos desde DataPicker
-            List<Platos> platosList = DataPicker.obtenerArray();
+                reservaInfo.put("zPlatos", todosPlatos);
 
-            // Guarda la reserva en Firebase
-            Map<String, Object> reservaInfo = new HashMap<>();
-            reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
-            reservaInfo.put("Sala", idSala);
-            reservaInfo.put("Hora", horaSeleccionada);
-            reservaInfo.put("Fecha", fechaSeleccionada);
-            reservaInfo.put("Comensales", numComersales);
+                db.collection("reservas").document().set(reservaInfo)
+                        .addOnSuccessListener(aVoid -> {
+                            // Manejar el éxito, si es necesario
+                        })
+                        .addOnFailureListener(e -> {
+                            // Manejar el error, si es necesario
+                            Log.e("FirebaseHandler", "Error al guardar reserva en Firestore", e);
+                        });
 
-            List<Map<String, Object>> todosPlatos = new ArrayList<>();
-
-           for (Platos platos : platosList){
-               Map<String, Object> platoInfo = new HashMap<>();
-               platoInfo.put("Nombre", platos.getNombre());
-               platoInfo.put("Cantidad", platos.getCantidad());
-               platoInfo.put("Precio", (platos.getPrecio()) * (platos.getCantidad()));
-
-               // Add the plate information to the list
-               todosPlatos.add(platoInfo);
-           }
-
-            reservaInfo.put("zPlatos", todosPlatos);
-
-
-            // Puedes guardar la reserva en una colección "reservas" con un identificador único
-            db.collection("reservas").document()
-                    .set(reservaInfo)
-                    .addOnSuccessListener(aVoid -> {
-                        // Manejar el éxito, si es necesario
-                    })
-                    .addOnFailureListener(e -> {
-                        // Manejar el error, si es necesario
-                    });
         }
     }
+
 
     // ESTE METODO SOLO DEBE UTILIZARSE SI HAY UN CAMBIO EN LA BBDD DE FIREBASE
     public void ponerPlatosFirebase(){
