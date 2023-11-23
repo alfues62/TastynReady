@@ -151,16 +151,8 @@ public class RegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> profileUpdateTask) {
                                                 if (profileUpdateTask.isSuccessful()) {
-                                                    // Usuario actualizado con el nombre de usuario y el rol
-                                                    dataPicker.guardarUsuarioRegistrado(new UsuarioInfo(
-                                                            user.getDisplayName(),
-                                                            user.getEmail(),
-                                                            user.getUid(),
-                                                            "cliente"
-                                                    ));
-
                                                     // Llama al método para guardar el usuario en Firebase Firestore
-                                                    dataPicker.guardarUsuarioEnFirebase();
+                                                    dataPicker.guardarUsuarioEnFirebase(user);
 
                                                     mostrarMensajeRegistroExitoso();
                                                 } else {

@@ -72,23 +72,18 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Inicio de sesión exitoso, obtener el usuario actual
                                 FirebaseUser user = mAuth.getCurrentUser();
+
+                                // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                                dataPicker.guardarUsuarioEnFirebase(user);
 
                                 // Obtener el rol del DataPicker
                                 String rol = DataPicker.obtenerRolUsuario();
 
-                                // Verificar el rol del usuario
-                                if (rol != null && rol.equals("cliente")) {
-                                    // Usuario con rol "cliente", dirigirlo a ReservasActivity
+
                                     Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
                                     startActivity(intent);
                                     finish();
-                                } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
                             } else {
                                 // Si el inicio de sesión falla, mostrar un mensaje de error
                                 Log.d("LoginActivity", "Login failed: " + task.getException());
@@ -107,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                 mostrarErrores(errores);
                             }
                         }
+
                     });
 
         } else {

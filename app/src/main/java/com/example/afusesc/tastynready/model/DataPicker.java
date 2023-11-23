@@ -64,10 +64,6 @@ public class DataPicker {
         idSala = id;
     }
 
-    public static void guardarUsuarioRegistrado(UsuarioInfo usuario) {
-        usuarioRegistrado = usuario;
-    }
-
     public static void guardarArray(List<Platos> platosSeleccionados) {
         selectedPlato = platosSeleccionados;
     }
@@ -75,20 +71,17 @@ public class DataPicker {
     public static List<Platos> obtenerArray() {
         return selectedPlato;
     }
-
-    public void guardarUsuarioEnFirebase() {
+    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
         // Asegúrate de que el usuario esté registrado antes de intentar guardarlo
-        if (usuarioRegistrado != null) {
-            // Obtén el usuario actualmente autenticado desde Firebase
+        if (usuario != null) {
             // Crea un nuevo mapa para almacenar la información del usuario en la variable
             userData = new HashMap<>();
-            userData.put("displayName", usuarioRegistrado.getNombre());
-            userData.put("email", usuarioRegistrado.getEmail());
-            userData.put("uid", usuarioRegistrado.getUid());
-            userData.put("rol",usuarioRegistrado.getRol());
+            userData.put("nombre", usuario.getDisplayName());
+            userData.put("email", usuario.getEmail());
+            userData.put("uid", usuario.getUid());
 
             // Guarda la información del usuario en la colección "usuarios" de Firestore
-            db.collection("usuarios").document(usuarioRegistrado.getUid())
+            db.collection("usuarios").document(usuario.getUid())
                     .set(userData)
                     .addOnSuccessListener(aVoid -> {
                         // Manejar el éxito, si es necesario
