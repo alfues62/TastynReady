@@ -72,22 +72,26 @@ public class DataPicker {
         return selectedPlato;
     }
     public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
-        // Crea un nuevo mapa para almacenar la información del usuario en la variable
-        userData = new HashMap<>();
-        userData.put("displayName", usuario.getDisplayName());
-        userData.put("email", usuario.getEmail());
-        userData.put("uid", usuario.getUid());
 
-        // Guarda la información del usuario en la colección "usuarios" de Firestore
-        db.collection("usuarios").document(usuario.getUid())
-                .set(userData)
-                .addOnSuccessListener(aVoid -> {
-                    // Manejar el éxito, si es necesario
-                })
-                .addOnFailureListener(e -> {
-                    // Manejar el error, si es necesario
-                });
+        if (usuario != null) {
+            // Crea un nuevo mapa para almacenar la información del usuario en la variable
+            userData = new HashMap<>();
+            userData.put("displayName", usuario.getDisplayName());
+            userData.put("email", usuario.getEmail());
+            userData.put("uid", usuario.getUid());
+
+            // Guarda la información del usuario en la colección "usuarios" de Firestore
+            db.collection("usuarios").document(usuario.getUid())
+                    .set(userData)
+                    .addOnSuccessListener(aVoid -> {
+                        // Manejar el éxito, si es necesario
+                    })
+                    .addOnFailureListener(e -> {
+                        // Manejar el error, si es necesario
+                    });
+        }
     }
+
     public static void resetValues() {
         numComensales = 0;
         idSala = null;
