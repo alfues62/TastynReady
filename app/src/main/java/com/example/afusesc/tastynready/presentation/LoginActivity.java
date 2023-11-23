@@ -1,7 +1,10 @@
 package com.example.afusesc.tastynready.presentation;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,14 +81,25 @@ public class LoginActivity extends AppCompatActivity {
                                         user.getEmail(),
                                         user.getUid()
                                 ));
-
-                                // Resto de tu lógica de inicio de sesión
-                                // ...
-
+                                Log.d("LoginActivity", "Login successful");
+                                Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 // Si el inicio de sesión falla, mostrar un mensaje de error
+                                Log.d("LoginActivity", "Login failed: " + task.getException());
+                                String errorMessage = "Inicio de sesión fallido";
+
+                                // Check if the failure is due to an incorrect username or password
+                                if (task.getException() != null &&
+                                        task.getException().getMessage() != null &&
+                                        (task.getException().getMessage().contains("invalid email") ||
+                                                task.getException().getMessage().contains("password is invalid"))) {
+                                    errorMessage = "Usuario o contraseña incorrecta";
+                                }
+
                                 Map<String, String> errores = new HashMap<>();
-                                errores.put("errorLogin", "Inicio de sesión fallido");
+                                errores.put("errorLogin", errorMessage);
                                 mostrarErrores(errores);
                             }
                         }

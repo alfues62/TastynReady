@@ -73,7 +73,7 @@ public class CarritoActivity extends AppCompatActivity {
 
         if (usuario != null) {
             // Si el usuario está autenticado, guarda su información en la variable userData de DataPicker
-            dataPicker.guardarUsuarioEnFirebase(usuario);
+            dataPicker.guardarUsuarioEnFirebase();
 
             // Obtén la información del usuario desde DataPicker
             Map<String, Object> usuarioInfo = DataPicker.obtenerDatosUsuario();

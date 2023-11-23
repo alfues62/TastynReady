@@ -1,9 +1,7 @@
 package com.example.afusesc.tastynready.model;
 
 import static android.content.ContentValues.TAG;
-
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +21,6 @@ public class DataPicker {
     private static Map<String, Object> userData;
     private static String selectedDate;
     private static String selectedTime;
-
     private static List<Platos> selectedPlato;
 
     public DataPicker() {
@@ -66,6 +63,7 @@ public class DataPicker {
     public static void guardarIdSala(String id) {
         idSala = id;
     }
+
     public static void guardarUsuarioRegistrado(UsuarioInfo usuario) {
         usuarioRegistrado = usuario;
     }
@@ -78,24 +76,30 @@ public class DataPicker {
         return selectedPlato;
     }
 
-    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
-        // Crea un nuevo mapa para almacenar la información del usuario en la variable
-        userData = new HashMap<>();
-        userData.put("displayName", usuario.getDisplayName());
-        userData.put("email", usuario.getEmail());
-        userData.put("uid", usuario.getUid());
+    public void guardarUsuarioEnFirebase() {
+        // Asegúrate de que el usuario esté registrado antes de intentar guardarlo
+        if (usuarioRegistrado != null) {
+            // Crea un nuevo mapa para almacenar la información del usuario en la variable
+            userData = new HashMap<>();
+            userData.put("nombre", usuarioRegistrado.getNombre());
+            userData.put("email", usuarioRegistrado.getEmail());
+            userData.put("uid", usuarioRegistrado.getUid());
 
-        // Guarda la información del usuario en la colección "usuarios" de Firestore
-        db.collection("usuarios").document(usuario.getUid())
-                .set(userData)
-                .addOnSuccessListener(aVoid -> {
-                    // Manejar el éxito, si es necesario
-                })
-                .addOnFailureListener(e -> {
-                    // Manejar el error, si es necesario
-                });
+            // Guarda la información del usuario en la colección "usuarios" de Firestore
+            db.collection("usuarios").document(usuarioRegistrado.getUid())
+                    .set(userData)
+                    .addOnSuccessListener(aVoid -> {
+                        // Manejar el éxito, si es necesario
+                        Log.d(TAG, "Usuario guardado en Firestore con éxito");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Manejar el error, si es necesario
+                        Log.e(TAG, "Error al guardar usuario en Firestore", e);
+                    });
+        } else {
+            Log.e(TAG, "Usuario no registrado. No se puede guardar en Firestore.");
+        }
     }
-
 
     public static void resetValues() {
         numComensales = 0;

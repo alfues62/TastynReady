@@ -14,10 +14,12 @@ import java.util.Map;
 public class FirebaseHandler {
 
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     private DataPicker dataPicker;
 
     public FirebaseHandler() {
         // Inicializa la instancia de Firebase
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         dataPicker = new DataPicker();
     }
@@ -26,7 +28,7 @@ public class FirebaseHandler {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario != null) {
             // Si el usuario está autenticado, guarda su información en la variable userData de DataPicker
-            dataPicker.guardarUsuarioEnFirebase(usuario);
+            dataPicker.guardarUsuarioEnFirebase();
 
             // Obtén la información del usuario desde DataPicker
             Map<String, Object> usuarioInfo = DataPicker.obtenerDatosUsuario();
