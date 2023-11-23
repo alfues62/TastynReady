@@ -2,6 +2,7 @@ package com.example.afusesc.tastynready.presentation;
 
 import static android.app.PendingIntent.getActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
@@ -62,65 +65,58 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginButtonClick() {
+        resetearErrores();
+
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        if (!username.isEmpty() && !password.isEmpty()) {
+        // Validaciones de campos
+        if (username.isEmpty()) {
+            mostrarError("errorUsername", "Correo electrónico requerido ");
+
+        }
+        if (password.isEmpty()) {
+            mostrarError("errorPassword", "Contraseña requerido ");
+
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+            mostrarError("errorUsername", "Correo electrónico requerido ");
+
+        }
+
+
+
+
+
             // Utilizar Firebase Authentication para iniciar sesión
-            mAuth.signInWithEmailAndPassword(username, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-
-                                // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                                dataPicker.guardarUsuarioEnFirebase(user);
-
-                                // Obtener el rol del DataPicker
-                                String rol = DataPicker.obtenerRolUsuario();
-
-
-                                    Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                            } else {
-                                // Si el inicio de sesión falla, mostrar un mensaje de error
-                                Log.d("LoginActivity", "Login failed: " + task.getException());
-                                String errorMessage = "Inicio de sesión fallido";
-
-                                // Check if the failure is due to an incorrect username or password
-                                if (task.getException() != null &&
-                                        task.getException().getMessage() != null &&
-                                        (task.getException().getMessage().contains("invalid email") ||
-                                                task.getException().getMessage().contains("password is invalid"))) {
-                                    errorMessage = "Usuario o contraseña incorrecta";
-                                }
-
-                                Map<String, String> errores = new HashMap<>();
-                                errores.put("errorLogin", errorMessage);
-                                mostrarErrores(errores);
-                            }
+        mAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                            dataPicker.guardarUsuarioEnFirebase(user);
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
-
-                    });
-
-        } else {
-            // Campos vacíos, mostrar mensaje de error
-            Map<String, String> errores = new HashMap<>();
-            errores.put("errorCampos", "Por favor, complete todos los campos");
-            mostrarErrores(errores);
-        }
+                    }
+                });
+    }
+    private void mostrarError(String errorTextViewId, String mensajeError) {
+        TextView errorTextView = findViewById(getResources().getIdentifier(errorTextViewId, "id", getPackageName()));
+        errorTextView.setVisibility(View.VISIBLE);
+        errorTextView.setText(mensajeError);
     }
 
-    private void mostrarErrores(Map<String, String> errores) {
-        // Implementa la lógica para mostrar mensajes de error en tu interfaz de usuario
-        // Puedes mostrar estos errores en TextViews, Toasts, o cualquier otro método que prefieras
-        // Por ejemplo:
-        for (Map.Entry<String, String> entry : errores.entrySet()) {
-            String mensaje = entry.getValue();
-            // Muestra el mensaje en algún lugar de tu interfaz de usuario
-        }
-    }
+    private void resetearErrores() {
+        TextView errorUsername = findViewById(R.id.errorUsername);
+        TextView errorPassword = findViewById(R.id.errorPassword);
 
+        errorUsername.setVisibility(View.GONE);
+        errorPassword.setVisibility(View.GONE);
+    }
 }

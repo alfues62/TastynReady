@@ -72,34 +72,21 @@ public class DataPicker {
         return selectedPlato;
     }
     public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
-        // Asegúrate de que el usuario esté registrado antes de intentar guardarlo
-        if (usuario != null) {
-            // Crea un nuevo mapa para almacenar la información del usuario en la variable
-            userData = new HashMap<>();
-            userData.put("nombre", usuario.getDisplayName());
-            userData.put("email", usuario.getEmail());
-            userData.put("uid", usuario.getUid());
+        // Crea un nuevo mapa para almacenar la información del usuario en la variable
+        userData = new HashMap<>();
+        userData.put("displayName", usuario.getDisplayName());
+        userData.put("email", usuario.getEmail());
+        userData.put("uid", usuario.getUid());
 
-            // Guarda la información del usuario en la colección "usuarios" de Firestore
-            db.collection("usuarios").document(usuario.getUid())
-                    .set(userData)
-                    .addOnSuccessListener(aVoid -> {
-                        // Manejar el éxito, si es necesario
-                        Log.d(TAG, "Usuario guardado en Firestore con éxito");
-                    })
-                    .addOnFailureListener(e -> {
-                        // Manejar el error, si es necesario
-                        Log.e(TAG, "Error al guardar usuario en Firestore", e);
-                    });
-        } else {
-            Log.e(TAG, "Usuario no registrado. No se puede guardar en Firestore.");
-        }
-    }
-    public static String obtenerRolUsuario() {
-        if (usuarioRegistrado != null) {
-            return usuarioRegistrado.getRol();
-        }
-        return null;
+        // Guarda la información del usuario en la colección "usuarios" de Firestore
+        db.collection("usuarios").document(usuario.getUid())
+                .set(userData)
+                .addOnSuccessListener(aVoid -> {
+                    // Manejar el éxito, si es necesario
+                })
+                .addOnFailureListener(e -> {
+                    // Manejar el error, si es necesario
+                });
     }
     public static void resetValues() {
         numComensales = 0;
