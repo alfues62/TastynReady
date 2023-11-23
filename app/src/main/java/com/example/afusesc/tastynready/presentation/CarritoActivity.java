@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
@@ -32,8 +34,10 @@ public class CarritoActivity extends AppCompatActivity {
 
     // EFECTUACION DE RESERVA
     private DataPicker dataPicker;
-
     FirebaseHandler firebaseHandler;
+    List<Platos> platosReservados;
+    private RecyclerView recyclerView;
+    private PlatoAdapter platoAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,66 +49,37 @@ public class CarritoActivity extends AppCompatActivity {
         comensales = findViewById(R.id.cambComens);
         hora = findViewById(R.id.cambHora);
         fecha = findViewById(R.id.cambFecha);
-        dataPicker = new DataPicker(); // Initialize DataPicker
+        dataPicker = new DataPicker();
+        recyclerView = findViewById(R.id.recyclerview);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         FirebaseHandler firebaseHandler = new FirebaseHandler();
+
+        platosReservados = DataPicker.obtenerArray();
+
+        platoAdapter = new PlatoAdapter(platosReservados);
+        recyclerView.setAdapter(platoAdapter);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 // Procede con la reserva ya que ambos campos están completos
                 firebaseHandler.guardarReservaEnFirebase();
                 // Llama al resetValues para restablecer los valores cuando retrocedes
                 DataPicker.resetValues();
+                // Terminas borras este activity y te lleva de vuelta a main
+                Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+
+
 
         sala.setText(DataPicker.obtenerIdSala());
         comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
         fecha.setText(DataPicker.obtenerFechaSeleccionada());
         hora.setText(DataPicker.obtenerHoraSeleccionada());
-    }
-
-    private void subirPlatosAFirebase(ArrayList<Platos> pedidosArrayList){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (usuario != null) {
-            // Si el usuario está autenticado, guarda su información en la variable userData de DataPicker
-            dataPicker.guardarUsuarioEnFirebase();
-
-            // Obtén la información del usuario desde DataPicker
-            Map<String, Object> usuarioInfo = DataPicker.obtenerDatosUsuario();
-
-            // Guarda la reserva en Firebase
-            Map<String, Object> platoData = new HashMap<>();
-            platoData.put("Usuario", usuarioInfo.get("displayName"));
-
-            // Create a list to store information about each plate
-            List<Map<String, Object>> platosList = new ArrayList<>();
-
-            for (Platos plato : pedidosArrayList) {
-                Map<String, Object> platoInfo = new HashMap<>();
-                platoInfo.put("Nombre", plato.getNombre());
-                platoInfo.put("Cantidad", plato.getCantidad());
-                platoInfo.put("Precio", (plato.getPrecio()) * (plato.getCantidad()));
-
-                // Add the plate information to the list
-                platosList.add(platoInfo);
-            }
-
-            platoData.put("Platos", platosList);
-
-            db.collection("reservaComida").document()
-                    .set(platoData)
-                    .addOnSuccessListener(aVoid -> {
-                        // Manejar el éxito, si es necesario
-                    })
-                    .addOnFailureListener(e -> {
-                        // Manejar el error, si es necesario
-                    });
-        }
     }
 }
