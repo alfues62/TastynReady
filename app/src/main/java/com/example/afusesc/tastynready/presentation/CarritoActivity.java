@@ -67,16 +67,13 @@ public class CarritoActivity extends AppCompatActivity {
                 // Procede con la reserva ya que ambos campos están completos
                 firebaseHandler.guardarReservaEnFirebase();
                 // Llama al resetValues para restablecer los valores cuando retrocedes
-                DataPicker.resetValues();
+                dataPicker.resetValues();
                 // Terminas borras este activity y te lleva de vuelta a main
                 Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
-
         sala.setText(DataPicker.obtenerIdSala());
         comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
         fecha.setText(DataPicker.obtenerFechaSeleccionada());
