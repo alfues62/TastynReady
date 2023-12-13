@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.afusesc.tastynready.R;
+import com.example.afusesc.tastynready.model.DataPicker;
 import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //firebaseHandler = new FirebaseHandler();
         //firebaseHandler.ponerPlatosFirebase();
 
+
+        // COMENTAR Y DESCOMENTAR CUANDO HAYA QUE AÑADIR ADMINISTRADORES
+
+        //DataPicker dataPicker = new DataPicker();
+        //dataPicker.guardarAdminEnFirebase();
     }
 
     @Override
