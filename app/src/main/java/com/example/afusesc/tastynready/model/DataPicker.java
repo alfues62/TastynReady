@@ -1,13 +1,9 @@
 package com.example.afusesc.tastynready.model;
 
-import static android.content.ContentValues.TAG;
 import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +11,6 @@ import java.util.Map;
 public class DataPicker {
     private FirebaseAuth mAuth;
     private static int numComensales;
-    private static UsuarioInfo usuarioRegistrado;
     private static String idSala;
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
@@ -24,7 +19,6 @@ public class DataPicker {
     private static List<Platos> selectedPlato;
 
     public DataPicker() {
-        // Inicializa la instancia de Firebase
         db = FirebaseFirestore.getInstance();
     }
 
@@ -71,17 +65,15 @@ public class DataPicker {
     public static List<Platos> obtenerArray() {
         return selectedPlato;
     }
-    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
 
+    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
         if (usuario != null) {
-            // Crea un nuevo mapa para almacenar la información del usuario en la variable
             userData = new HashMap<>();
             userData.put("displayName", usuario.getDisplayName());
             userData.put("email", usuario.getEmail());
             userData.put("uid", usuario.getUid());
 
-            // Guarda la información del usuario en la colección "usuarios" de Firestore
-            db.collection("usuarios").document(usuario.getUid())
+            db.collection("usuarios").document(usuario.getDisplayName())
                     .set(userData)
                     .addOnSuccessListener(aVoid -> {
                         // Manejar el éxito, si es necesario
