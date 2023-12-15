@@ -2,6 +2,7 @@ package com.example.afusesc.tastynready.presentation;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,34 +40,49 @@ public class MisReservasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mis_reservas);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("reservas")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<Reserva> reservasList = new ArrayList<>();
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Reserva reserva = document.toObject(Reserva.class);
-                                reservasList.add(reserva);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                                // Agrega este log para verificar que los datos se están recuperando correctamente
-                                Log.d(TAG, "Reserva: " + reserva.getUsuario() + ", " + reserva.getFecha());
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            db.collection("reservas")
+                    .whereEqualTo("IdUser", userId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                List<Reserva> reservasList = new ArrayList<>();
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Reserva reserva = document.toObject(Reserva.class);
+                                    reservasList.add(reserva);
+                                }
+
+                                // Configura el RecyclerView con las reservas del usuario activo
+                                setupRecyclerView(reservasList);
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-
-                            // Después de agregar todos los datos a la lista, configura el RecyclerView
-                            setupRecyclerView(reservasList);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+                    });
+        }
+    }
+
+
+    public void onItemClick(Reserva reserva) {
+        Intent intent = new Intent(this, SalaActivity.class);
+        startActivity(intent);
     }
 
     private void setupRecyclerView(List<Reserva> reservasList) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewReservas);
-        ReservaAdapter adapter = new ReservaAdapter(reservasList);
+
+        // Pasa 'this' como OnItemClickListener
+        ReservaAdapter adapter = new ReservaAdapter(reservasList, this::onItemClick);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

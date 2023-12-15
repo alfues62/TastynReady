@@ -13,12 +13,18 @@ import com.example.afusesc.tastynready.model.Reserva;
 
 import java.util.List;
 
+interface OnItemClickListener {
+    void onItemClick(Reserva reserva);
+}
+
 public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaViewHolder> {
     private List<Reserva> reservasList;
-
-    public ReservaAdapter(List<Reserva> reservasList) {
+    private OnItemClickListener listener;
+    public ReservaAdapter(List<Reserva> reservasList, OnItemClickListener listener) {
         this.reservasList = reservasList;
+        this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -29,14 +35,23 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.ReservaV
 
     @Override
     public void onBindViewHolder(@NonNull ReservaViewHolder holder, int position) {
-        Reserva reserva = reservasList.get(position);
+        final Reserva reserva = reservasList.get(position);
 
         // Configura la vista con los datos de la reserva
-        holder.textViewComensales.setText(String.valueOf(reserva.getComensales()));
-        holder.textViewFecha.setText(reserva.getFecha());
-        holder.textViewHora.setText(reserva.getHora());
-        holder.textViewSala.setText(reserva.getSala());
-        holder.textViewUsuario.setText(reserva.getUsuario());
+        holder.textViewComensales.setText("Comensales: " + String.valueOf(reserva.getComensales()));
+        holder.textViewFecha.setText("Fecha: " + reserva.getFecha());
+        holder.textViewHora.setText("Hora: " + reserva.getHora());
+        holder.textViewSala.setText("En la Sala: " + reserva.getSala());
+        holder.textViewUsuario.setText("Tu Usuario: " + reserva.getUsuario());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(reserva);
+                }
+            }
+        });
     }
 
 
