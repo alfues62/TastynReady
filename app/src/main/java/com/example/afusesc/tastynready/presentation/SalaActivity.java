@@ -3,6 +3,7 @@ package com.example.afusesc.tastynready.presentation;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +17,17 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class SalaActivity extends AppCompatActivity {
-
     TextView temperatura;
     Button calida, tenue, fria;
+
+    //INPUT STEPPER
+    private EditText valueEditText;
+    private Button incrementButton;
+    private Button decrementButton;
+    private int value = 10;
+    private static final int MAX_VALUE = 50;
+
+    private Button enviar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +36,47 @@ public class SalaActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Temperatura");
         DatabaseReference luzSala1Ref = database.getReference("salas/sala1/led");
+        DatabaseReference intSala1Ref = database.getReference("salas/sala1/intensidad");
 
         temperatura = findViewById(R.id.cambiTemperatura);
         calida = findViewById(R.id.luzCalida);
         tenue = findViewById(R.id.luzTenue);
         fria = findViewById(R.id.luzFria);
+
+        valueEditText = findViewById(R.id.cantidad);
+        incrementButton = findViewById(R.id.incrementButton);
+        decrementButton = findViewById(R.id.decrementButton);
+        valueEditText.setText(String.valueOf(value));
+
+        enviar = findViewById(R.id.enviar);
+
+        incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value < MAX_VALUE) {
+                    value++;
+                    valueEditText.setText(String.valueOf(value));
+                }
+            }
+        });
+
+        decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value > 2) {
+                    value--;
+                    valueEditText.setText(String.valueOf(value));
+                }
+            }
+        });
+
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String send = String.valueOf(valueEditText.getText());
+                intSala1Ref.setValue(send);
+            }
+        });
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
