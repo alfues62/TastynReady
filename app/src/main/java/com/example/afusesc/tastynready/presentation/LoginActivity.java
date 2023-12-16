@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-            // Utilizar Firebase Authentication para iniciar sesión
+        // Utilizar Firebase Authentication para iniciar sesión
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

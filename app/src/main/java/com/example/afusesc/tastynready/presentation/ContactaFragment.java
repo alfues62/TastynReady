@@ -1,66 +1,111 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.afusesc.tastynready.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ContactaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final int REQUEST_CALL_PERMISSION = 1;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ContactaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ContactaFragment newInstance(String param1, String param2) {
-        ContactaFragment fragment = new ContactaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacta, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacta, container, false);
+
+        TextView llamarTxt = view.findViewById(R.id.llamarTxt);
+        TextView correoTxt = view.findViewById(R.id.correoTxt);
+
+        llamarTxt.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, android.view.MotionEvent event) {
+                switch (event.getAction()) {
+                    case android.view.MotionEvent.ACTION_DOWN:
+                        llamarTxt.setTextColor(getResources().getColor(R.color.colorAzul));
+                        break;
+                    case android.view.MotionEvent.ACTION_UP:
+                        if (checkCallPermission()) {
+                            realizarLlamada();
+                        } else {
+                            requestCallPermission();
+                        }
+                        // Restaurar el color original al soltar el toque
+                        llamarTxt.setTextColor(getResources().getColor(R.color.colorNegro));
+                        break;
+                }
+                return true;
+            }
+        });
+
+        correoTxt.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, android.view.MotionEvent event) {
+                switch (event.getAction()) {
+                    case android.view.MotionEvent.ACTION_DOWN:
+                        correoTxt.setTextColor(getResources().getColor(R.color.colorAzul));
+                        break;
+                    case android.view.MotionEvent.ACTION_UP:
+                        enviarCorreo();
+                        // Restaurar el color original al soltar el toque
+                        correoTxt.setTextColor(getResources().getColor(R.color.colorNegro));
+                        break;
+                }
+                return true;
+            }
+        });
+
+
+        return view;
+    }
+
+    private void realizarLlamada() {
+        Intent llamar = new Intent(Intent.ACTION_CALL, Uri.parse("tel:656678654"));
+        llamar.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            startActivity(llamar);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            Log.e("ERROR", "Error al iniciar la actividad de llamada.");
+        }
+    }
+
+    private void enviarCorreo() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:tastyAndReady@gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Asunto del correo");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Cuerpo del correo");
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Enviar correo electrónico"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("ERROR", "Error al iniciar la actividad de enviar correo.");
+        }
+    }
+
+    private boolean checkCallPermission() {
+        int result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestCallPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
     }
 }

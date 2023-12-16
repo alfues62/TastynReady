@@ -1,10 +1,16 @@
 package com.example.afusesc.tastynready.presentation;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,14 +21,20 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.afusesc.tastynready.model.DataPicker;
 import com.example.afusesc.tastynready.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import com.example.afusesc.tastynready.model.FirebaseHandler;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 
 public class ReservasActivity extends AppCompatActivity {
@@ -51,6 +63,8 @@ public class ReservasActivity extends AppCompatActivity {
     //BACK
     private ImageView back;
     private Button next;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,26 +140,44 @@ public class ReservasActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 // Convierte el valor de valueEditText a un entero
                 int numComensales = Integer.parseInt(valueEditText.getText().toString());
 
-                if (numComensales > 4){
+                if (numComensales > 4) {
                     salaReservada = "ID_Sala_2";
-                }else {
+                } else {
                     salaReservada = "ID_Sala_1";
                 }
                 //Llama al DataPicker para guardar el número de comensales
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
 
+                String fechaSeleccionada = textFecha.getText().toString();
                 Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
+                intent.putExtra("fecha_seleccionada", fechaSeleccionada);
                 startActivity(intent);
                 finish();
+
+
             }
         });
 
+
         DataPicker.resetValues();
+
+        //Obtener fechaMañana
+        Calendar calendarioManana = obtenerCalendarioManana();
+
+        // Formato de fecha deseado (puedes ajustar según tus necesidades).
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        // Convertir el objeto Calendar a String.
+        Log.d("TAG", formatoFecha.format(calendarioManana.getTime()));
+
+
     }
+
     private void mostrarDialogoCamposFaltantes() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Campos faltantes");
@@ -239,5 +271,16 @@ public class ReservasActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
+    // Método para obtener el calendario correspondiente a mañana.
+    private Calendar obtenerCalendarioManana() {
+        Calendar calendario = Calendar.getInstance();
+        calendario.add(Calendar.DAY_OF_YEAR, 1);
+        return calendario;
+    }
+
+
+
 
 }
