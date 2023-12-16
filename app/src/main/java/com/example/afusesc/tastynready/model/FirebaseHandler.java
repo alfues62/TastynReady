@@ -18,7 +18,6 @@ public class FirebaseHandler {
     private DataPicker dataPicker;
 
     public FirebaseHandler() {
-        // Inicializa la instancia de Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         dataPicker = new DataPicker();
@@ -28,11 +27,9 @@ public class FirebaseHandler {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario == null) {
             Log.e("FirebaseHandler", "El usuario es nulo. No se puede guardar la reserva.");
-            // Aquí puedes redirigir al usuario a la pantalla de inicio de sesión si es necesario.
             return;
         }
 
-        // Asegúrate de que el objeto DataPicker se haya inicializado correctamente.
         if (dataPicker == null) {
             Log.e("FirebaseHandler", "Error: DataPicker no inicializado correctamente.");
             return;
@@ -45,8 +42,12 @@ public class FirebaseHandler {
         String idSala = dataPicker.obtenerIdSala();
         List<Platos> platosList = dataPicker.obtenerArray();
 
+        String claveDisponibilidad = idSala + " " +
+                dataPicker.obtenerHoraSeleccionada() + " " +
+                dataPicker.obtenerFechaSeleccionada();
 
-        String IDReserva = usuarioInfo.get("displayName") +""+  fechaSeleccionada;
+        agregarNuevaReservacion(claveDisponibilidad);
+        String IDReserva = usuarioInfo.get("displayName") + " - " + fechaSeleccionada;
 
         Map<String, Object> reservaInfo = new HashMap<>();
         reservaInfo.put("Usuario", usuarioInfo.get("displayName"));
@@ -75,9 +76,20 @@ public class FirebaseHandler {
                     // Manejar el error, si es necesario
                     Log.e("FirebaseHandler", "Error al guardar reserva en Firestore", e);
                 });
-
-        // Crear clave única para la disponibilidad
-
     }
-}
 
+    private void agregarNuevaReservacion(String claveDisponibilidad) {
+        Map<String, Object> disponibilidad = new HashMap<>();
+        disponibilidad.put("Reserva", "Sala: " + dataPicker.obtenerIdSala() + " -Fecha: " +
+                dataPicker.obtenerHoraSeleccionada() + " -Hora: " + dataPicker.obtenerFechaSeleccionada());
+
+        db.collection("disponibilidad").document(claveDisponibilidad).set(disponibilidad)
+                .addOnSuccessListener(aVoid -> {
+                    // Reserva agregada con éxito, manejar el éxito si es necesario
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirebaseHandler", "Error al guardar disponibilidad en Firestore", e);
+                });
+    }
+
+}

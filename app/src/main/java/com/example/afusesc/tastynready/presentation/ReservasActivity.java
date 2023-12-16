@@ -19,8 +19,6 @@ import com.example.afusesc.tastynready.model.DataPicker;
 import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReservasActivity extends AppCompatActivity {
 
@@ -126,7 +124,6 @@ public class ReservasActivity extends AppCompatActivity {
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
                 comprobarDisponibilidad();
-
             }
         });
 
@@ -215,7 +212,9 @@ public class ReservasActivity extends AppCompatActivity {
                         if (task.getResult().exists()) {
                             mostrarPopupReservado();
                         } else {
-                        
+                            Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     } else {
                         Log.e("FirebaseHandler", "Error al verificar disponibilidad en Firestore", task.getException());
@@ -232,27 +231,11 @@ public class ReservasActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                // Agrega la llamada al método resetValues aquí
                 DataPicker.resetValues();
+                textFecha.setText("Fecha Seleccionada: ");
+                textHora.setText("Hora Seleccionada: ");
             }
         });
-
         builder.show();
-    }
-
-
-
-    private void agregarNuevaReservacion(String claveDisponibilidad) {
-        Map<String, Object> disponibilidad = new HashMap<>();
-        disponibilidad.put("Reserva", "Sala: " + DataPicker.obtenerIdSala() + " -Fecha: " +
-                DataPicker.obtenerHoraSeleccionada() + " -Hora: " + DataPicker.obtenerFechaSeleccionada());
-
-        db.collection("disponibilidad").document(claveDisponibilidad).set(disponibilidad)
-                .addOnSuccessListener(aVoid -> {
-                    // Reserva agregada con éxito, manejar el éxito si es necesario
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FirebaseHandler", "Error al guardar disponibilidad en Firestore", e);
-                });
     }
 }
