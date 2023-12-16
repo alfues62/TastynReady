@@ -89,6 +89,54 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
+        android:id="@+id/decrementButton"
+        style="@style/BotonApp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/boton_redondo"
+        android:text="-"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cantidad"
+        app:layout_constraintEnd_toStartOf="@+id/cantidad" />
+
+    <EditText
+        android:id="@+id/cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:inputType="number"
+        android:text="0"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/luzCalida"
+        app:layout_constraintTop_toBottomOf="@+id/luzCalida" />
+
+    <Button
+        android:id="@+id/incrementButton"
+        style="@style/BotonApp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/boton_redondo"
+        android:text="+"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cantidad"
+        app:layout_constraintStart_toEndOf="@+id/cantidad" />
+
+    <Button
+        android:id="@+id/enviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Enviar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cantidad" />
+
+
+    <Button
         android:id="@+id/botonCamarero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -78,6 +78,7 @@ public class FirebaseHandler {
         }
 
         reservaInfo.put("zPlatos", todosPlatos);
+        reservaInfo.put("IdUser", usuario.getUid());
 
         db.collection("reservas").document().set(reservaInfo)
                 .addOnSuccessListener(aVoid -> {
