@@ -1,6 +1,7 @@
 package com.example.afusesc.tastynready.model;
 
 import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,20 +67,23 @@ public class DataPicker {
         return selectedPlato;
     }
 
-    public void guardarUsuarioEnFirebase(FirebaseUser usuario) {
+    // Actualizado para aceptar el rol del usuario
+    public void guardarUsuarioEnFirebase(FirebaseUser usuario, String rol) {
         if (usuario != null) {
             userData = new HashMap<>();
             userData.put("displayName", usuario.getDisplayName());
             userData.put("email", usuario.getEmail());
             userData.put("uid", usuario.getUid());
+            userData.put("rol", rol);  // Agrega la asignación del rol
 
-            db.collection("usuarios").document(usuario.getDisplayName())
+            db.collection("usuarios").document(usuario.getUid())
                     .set(userData)
                     .addOnSuccessListener(aVoid -> {
                         // Manejar el éxito, si es necesario
                     })
                     .addOnFailureListener(e -> {
                         // Manejar el error, si es necesario
+                        Log.e("DataPicker", "Error al guardar usuario en Firestore", e);
                     });
         }
     }

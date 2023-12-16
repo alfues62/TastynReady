@@ -92,5 +92,4 @@ public class FirebaseHandler {
                     Log.e("FirebaseHandler", "Error al guardar disponibilidad en Firestore", e);
                 });
     }
-
 }
