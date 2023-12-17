@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private ValueEventListener reservaEventListener;
+    private static final String TAG = "MainActivity";
+
 
 
     //NOTIFICACION 1
@@ -55,11 +58,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     static final String CANAL_ID = "mi_canal_foreground"; //Me lo invento
     static final int NOTIFICACION_ID = 1; //Me lo invento
     NotificationCompat.Builder notificacion; //Creo el constructor
+
+
+    //////////////////////////////////ESTO IRA EN EL MAINACTIVITY DEL ADMIN/////////////////////////////////////////////////
     //NOTIFICACION2
     private NotificationManager notificationManager2;
     static final String CANAL_ID2 = "mi_otro_canal_foreground"; //Me lo invento
     static final int NOTIFICACION_ID2 = 2; //Me lo invento
     NotificationCompat.Builder notificacion2; //Creo el constructor
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        //String idUsuario = "FdCGourbIleLFFoZaUBPkhfbzu82";
-
         //FORMA 1 DE HACERLO
         db.collection("reservas")
                 .whereEqualTo("IdUser", usuario.getUid())
@@ -131,7 +137,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
 
 
+        ////////////////////////////ESTO IRA EN EL MAINACTIVITY DEL ADMIN//////////////////////////////////////////////////
         verificarYProcesarNotificacion();
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
 
@@ -225,6 +233,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
+        Intent intent = new Intent(this, SalaActivity.class);
+        PendingIntent intencionPendiente = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+
         // Creamos la notificación.
         notificacion =
                 new NotificationCompat.Builder(this, CANAL_ID)
@@ -232,12 +249,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setContentText("Usted tiene programada una reserva para mañana")
                         .setSmallIcon(android.R.drawable.ic_popup_reminder)
                         .setDefaults(Notification.DEFAULT_ALL)  // Añadir sonido y vibración
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);  // Establecer prioridad alta
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(intencionPendiente)  // Agregar el PendingIntent
+                        .setAutoCancel(false);
 
         notificationManager.notify(NOTIFICACION_ID, notificacion.build());
         Log.d(TAG, "Notificación creada exitosamente");
     }
 
+
+    /////////////////////////////////ESTO IRA EN EL MAINACTIVITY DEL ADMIN////////////////////////////////////////////////
     private void crearNotificacionLlamada() {
         Log.d(TAG, "Creando notificación de llamada");
         // Usar un asistente de notificaciones para crear un canal (o categoría) de notificaciones.
@@ -290,7 +311,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
     }
+    ///////////////////////////////////////////////////////////////////////////////////
+
+
 }
