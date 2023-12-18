@@ -15,6 +15,8 @@ public class DataPicker {
     private static String idSala;
     private FirebaseFirestore db;
     private static Map<String, Object> userData;
+    private static Map<String, Object> AdminData;
+
     private static String selectedDate;
     private static String selectedTime;
     private static List<Platos> selectedPlato;

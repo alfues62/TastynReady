@@ -1,5 +1,6 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 public class SalaActivity extends AppCompatActivity {
     TextView temperatura;
     Button calida, tenue, fria;
+    Button botonCamarero; //Llamar al camarero
+    private DatabaseReference databaseReference;
 
     //INPUT STEPPER
     private EditText valueEditText;
@@ -29,6 +33,8 @@ public class SalaActivity extends AppCompatActivity {
 
     private Button enviar;
 
+
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala);
@@ -78,6 +84,9 @@ public class SalaActivity extends AppCompatActivity {
             }
         });
 
+        //Llamar al camarero
+        botonCamarero = findViewById(R.id.botonCamarero);
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -123,5 +132,22 @@ public class SalaActivity extends AppCompatActivity {
                 luzSala1Ref.setValue(valorAEnviar);
             }
         });
+
+
+        //Llamar al camarero
+        botonCamarero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String idAdministrador = "XAILBTk7e8GkhOUy2HKl";
+
+                // Crea una instancia del AdminDatabaseManager
+                FirebaseHandler adminDatabaseManager = new FirebaseHandler();
+
+                // Llama al método para actualizar la notificación
+                adminDatabaseManager.actualizarNotificacion(idAdministrador);
+
+            }
+        });
     }
+
 }

@@ -1,9 +1,15 @@
 package com.example.afusesc.tastynready.presentation;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +20,20 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.afusesc.tastynready.R;
+import androidx.core.app.NotificationCompat;
+
 import com.example.afusesc.tastynready.model.DataPicker;
-import com.example.afusesc.tastynready.model.FirebaseHandler;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.afusesc.tastynready.R;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+
+import com.example.afusesc.tastynready.model.FirebaseHandler;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class ReservasActivity extends AppCompatActivity {
 
@@ -43,7 +58,8 @@ public class ReservasActivity extends AppCompatActivity {
     private ImageView back;
     private Button next;
 
-    @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservas_main);
@@ -113,6 +129,8 @@ public class ReservasActivity extends AppCompatActivity {
                     return;
                 }
 
+
+                // Convierte el valor de valueEditText a un entero
                 int numComensales = Integer.parseInt(valueEditText.getText().toString());
 
                 if (numComensales > 4) {
@@ -123,11 +141,30 @@ public class ReservasActivity extends AppCompatActivity {
 
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
-                comprobarDisponibilidad();
+
+                String fechaSeleccionada = textFecha.getText().toString();
+                Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
+                intent.putExtra("fecha_seleccionada", fechaSeleccionada);
+                startActivity(intent);
+                finish();
+
+
             }
         });
 
+
         DataPicker.resetValues();
+
+        //Obtener fechaMañana
+        Calendar calendarioManana = obtenerCalendarioManana();
+
+        // Formato de fecha deseado (puedes ajustar según tus necesidades).
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        // Convertir el objeto Calendar a String.
+        Log.d("TAG", formatoFecha.format(calendarioManana.getTime()));
+
+
     }
 
     private void mostrarDialogoCamposFaltantes() {
@@ -200,42 +237,15 @@ public class ReservasActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void comprobarDisponibilidad() {
-        String claveDisponibilidad = DataPicker.obtenerIdSala() + " " +
-                DataPicker.obtenerHoraSeleccionada() + " " +
-                DataPicker.obtenerFechaSeleccionada();
 
-        db.collection("disponibilidad").document(claveDisponibilidad)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().exists()) {
-                            mostrarPopupReservado();
-                        } else {
-                            Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    } else {
-                        Log.e("FirebaseHandler", "Error al verificar disponibilidad en Firestore", task.getException());
-                    }
-                });
+    // Método para obtener el calendario correspondiente a mañana.
+    private Calendar obtenerCalendarioManana() {
+        Calendar calendario = Calendar.getInstance();
+        calendario.add(Calendar.DAY_OF_YEAR, 1);
+        return calendario;
     }
 
-    private void mostrarPopupReservado() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Sala Reservada");
-        builder.setMessage("Lo siento, la sala ya está reservada en la fecha y hora seleccionadas.");
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                DataPicker.resetValues();
-                textFecha.setText("Fecha Seleccionada: ");
-                textHora.setText("Hora Seleccionada: ");
-            }
-        });
-        builder.show();
-    }
+
+
 }

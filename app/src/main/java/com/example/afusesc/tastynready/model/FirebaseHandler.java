@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -16,11 +18,22 @@ public class FirebaseHandler {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private DataPicker dataPicker;
+    private DatabaseReference databaseReference;
+
 
     public FirebaseHandler() {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         dataPicker = new DataPicker();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+    }
+    public void actualizarNotificacion(String idAdministrador) {
+        // Construye la ruta completa en la base de datos
+        String rutaAdmin = "administradores/" + idAdministrador + "/notificacion";
+
+        // Actualiza el valor a "true"
+        databaseReference.child(rutaAdmin).setValue(true);
+
     }
 
     public void guardarReservaEnFirebase() {
@@ -55,6 +68,7 @@ public class FirebaseHandler {
         reservaInfo.put("Hora", horaSeleccionada);
         reservaInfo.put("Fecha", fechaSeleccionada);
         reservaInfo.put("Comensales", numComensales);
+        reservaInfo.put("IdUser", usuarioInfo.get("uid"));
 
         List<Map<String, Object>> todosPlatos = new ArrayList<>();
 
