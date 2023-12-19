@@ -88,10 +88,27 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
+                            dataPicker.guardarUsuarioEnFirebase(user);
+
+                            // Obtén el rol del usuario desde la instancia global de DataPicker
+                            String rol = dataPicker.obtenerRolUsuario();
+
+                            // Redirigir según el rol del usuario
+                            if ("cliente".equals(rol)) {
+                                // Si el rol es "cliente", redirigir a ReservasActivity
+                                Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if ("admin".equals(rol)) {
+                                // Si el rol es "admin", redirigir a la página de administrador (puedes agregar la página en el futuro)
+                                // Por ahora, redirige a una actividad ficticia llamada AdminActivity
+                                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // En caso de otro rol, puedes manejarlo según tus necesidades
+                                Toast.makeText(LoginActivity.this, "Rol no reconocido", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
