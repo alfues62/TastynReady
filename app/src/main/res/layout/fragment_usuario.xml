@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.MainActivity">
 
 
@@ -79,8 +80,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/nombre"
         app:layout_constraintStart_toEndOf="@+id/nombre"
         app:layout_constraintTop_toTopOf="@+id/nombre"
-        app:srcCompat="@drawable/boton_editar"
-        />
+        app:srcCompat="@drawable/boton_editar" />
 
     <ImageButton
         android:id="@+id/editarCorreo"
