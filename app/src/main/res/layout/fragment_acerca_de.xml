@@ -1,19 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.HomeFragment">
+    android:background="@android:color/white">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+    <!-- Título "SOBRE NOSOTROS" -->
+
+    <!-- Título "Un nuevo concepto gastronómico" -->
+
+    <!-- Título "INICIOS" -->
+    <TextView
+        android:id="@+id/tituloSobreNosotros"
+        android:layout_width="411dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/acercade_jotapejj"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/AmarilloTYR"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="SOBRE NOSOTROS"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/subtituloSobreNosotros"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="@color/AmarilloTYR"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Un nuevo concepto gastronómico"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/tituloSobreNosotros"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/tituloInicios"
+        android:layout_width="109dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="INICIOS"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtituloSobreNosotros" />
+
+    <!-- Texto "Tasty&Ready surge en la universidad..." -->
+
+    <!-- Título "CONCEPTO" -->
+
+    <!-- Texto "Juntar dos conceptos..." -->
+
+    <!-- Título "MISIÓN Y VISIÓN" -->
+
+    <!-- Texto "Nuestra misión es conseguir que el cliente reciba su plato..." -->
+
+    <TextView
+        android:id="@+id/textoInicios"
+        android:layout_width="161dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="16dp"
+        android:text="TastyAndReady surge en la universidad como una idea para un trabajo en grupo. Pero no sabíamos lo que íbamos a crear."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloInicios" />
+
+    <TextView
+        android:id="@+id/tituloConcepto"
+        android:layout_width="132dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="CONCEPTO"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textoConcepto"
+        android:layout_width="151dp"
+        android:layout_height="58dp"
+        android:text="Juntar dos conceptos, el fast food, con la alta gastronomía."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tituloConcepto"
+        app:layout_constraintTop_toBottomOf="@+id/tituloConcepto" />
+
+    <TextView
+        android:id="@+id/tituloMisionVision"
+        android:layout_width="195dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="MISIÓN Y VISIÓN"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/textoMisionVision"
+        android:layout_width="203dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="16dp"
+        android:text="Nuestra misión es conseguir que el cliente reciba su plato en un tiempo récord comparado con el tipo de platos que se preparan en nuestros establecimientos. Confiamos en nosotros mismos y nuestro objetivo es expandirnos a nivel nacional. Somos los pioneros en este concepto."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloMisionVision" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="124dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="60dp"
+        android:src="@drawable/imagen1acercade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textoInicios"
+        app:layout_constraintTop_toTopOf="@+id/textoInicios" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="119dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/imagen2acercade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textoInicios" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="158dp"
+        android:layout_height="202dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/imagen3acercade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tituloMisionVision" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
