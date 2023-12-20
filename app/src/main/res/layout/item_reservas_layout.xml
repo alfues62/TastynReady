@@ -26,20 +26,23 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
+                android:textColor="@color/AzulTYR"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/AzulTYR"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/cantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:textSize="14sp"/>
 
         </LinearLayout>

@@ -29,8 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="Resumen del Pedido"
+        android:textColor="@color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -41,9 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="Sala:"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        android:textColor="@color/AzulTYR"
+        />
 
     <TextView
         android:id="@+id/txtComensasles"
@@ -51,7 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="Nº Comensales:"
+        android:textColor="@color/AzulTYR"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/salaTxt" />
 
@@ -61,7 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="Fecha y Hora:"
+        android:textColor="@color/AzulTYR"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtComensasles" />
 
@@ -144,7 +157,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="Importe Total:"
+        android:textColor="@color/AzulTYR"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDate" />
 

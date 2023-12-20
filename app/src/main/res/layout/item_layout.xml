@@ -12,7 +12,9 @@
         android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:fontFamily="@font/nunito_sans"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,6 +30,7 @@
             android:id="@+id/img_entrante"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:fontFamily="@font/nunito_sans"
             android:scaleType="centerCrop" />
 
     </androidx.cardview.widget.CardView>

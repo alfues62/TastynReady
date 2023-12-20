@@ -22,10 +22,12 @@
                 android:id="@+id/textViewComensales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:text="Comensales: " />
 
             <TextView
                 android:id="@+id/textViewFecha"
+                android:fontFamily="@font/nunito_sans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fecha: " />
@@ -34,18 +36,21 @@
                 android:id="@+id/textViewHora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:text="Hora: " />
 
             <TextView
                 android:id="@+id/textViewSala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:text="Sala: " />
 
             <TextView
                 android:id="@+id/textViewUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans"
                 android:text="Usuario: " />
 
         </LinearLayout>
