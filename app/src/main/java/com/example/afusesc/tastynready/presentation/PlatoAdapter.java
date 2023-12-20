@@ -34,8 +34,8 @@ public class PlatoAdapter extends RecyclerView.Adapter<PlatoAdapter.PlatoViewHol
     public void onBindViewHolder(@NonNull PlatoViewHolder holder, int position) {
         Platos plato = listaDePlatos.get(position);
         holder.nombreTextView.setText(plato.getNombre());
-        holder.precio.setText(String.valueOf(plato.getPrecioTotal()));
-        holder.cantidad.setText(String.valueOf(plato.getCantidad()));
+        holder.precio.setText("Total: " + String.valueOf( plato.getPrecioTotal()) + " €");
+        holder.cantidad.setText(String.valueOf(plato.getCantidad()) + " Uds.");
 
     }
 

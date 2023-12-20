@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.contacta) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactaFragment()).commit();
-            int color = getResources().getColor(R.color.gris_semi_transparente);
+            int color = getResources().getColor(R.color.AmarilloTYR);
             toolbar.setBackgroundColor(color);
         }
         drawerLayout.closeDrawer(GravityCompat.START);

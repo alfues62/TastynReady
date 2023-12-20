@@ -1,5 +1,6 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,20 +71,39 @@ public class CarritoActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Procede con la reserva ya que ambos campos están completos
-                firebaseHandler.guardarReservaEnFirebase();
-                // Llama al resetValues para restablecer los valores cuando retrocedes
-                dataPicker.resetValues();
-                // Terminas borras este activity y te lleva de vuelta a main
-                Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                mostrarConfirmacion();
             }
         });
         sala.setText(DataPicker.obtenerIdSala());
         comensales.setText(String.valueOf(DataPicker.obtenerNumComensales()));
         fecha.setText(DataPicker.obtenerFechaSeleccionada());
         hora.setText(DataPicker.obtenerHoraSeleccionada());
+    }
+
+    private void mostrarConfirmacion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmación")
+                .setMessage("¿Estás seguro de que deseas proceder con la reserva?")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Procede con la reserva ya que el usuario confirmó
+                        firebaseHandler.guardarReservaEnFirebase();
+                        // Llama al resetValues para restablecer los valores cuando retrocedes
+                        dataPicker.resetValues();
+                        // Terminas y borras este activity y te lleva de vuelta a main
+                        Intent intent = new Intent(CarritoActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // No hagas nada si el usuario cancela
+                    }
+                })
+                .show();
     }
 
     private double calcularTotalPrecio(List<Platos> platos) {
