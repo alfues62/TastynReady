@@ -2,12 +2,16 @@ package com.example.afusesc.tastynready.presentation;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,10 +38,21 @@ import java.util.List;
 import java.util.Map;
 
 public class MisReservasActivity extends AppCompatActivity {
+
+    ImageView back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_reservas);
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irAMainActivity();
+            }
+        });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -85,5 +100,11 @@ public class MisReservasActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    private void irAMainActivity() {
+        Intent intent = new Intent(MisReservasActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

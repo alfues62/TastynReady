@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".presentation.HomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/AmarilloTYR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/atras"
         android:layout_width="48dp"
         android:layout_height="47dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_backarrow" />
@@ -22,65 +30,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Busca un plato..."
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/atras"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_bebidas"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/vaso_amarillo"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toStartOf="@+id/img_postres"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/img_entrante"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <ImageView
-        android:id="@+id/img_entrante"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/filete_amarillo"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toStartOf="@+id/img_bebidas"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <ImageView
-        android:id="@+id/img_postres"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/cafe_amarillo"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toStartOf="@+id/img_aperitivos"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/img_bebidas"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <ImageView
-        android:id="@+id/img_aperitivos"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/nachos_amarillo"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/img_postres"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="361dp"
         android:layout_height="519dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"

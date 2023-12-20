@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_app"
+    android:background="@drawable/fondo_mask"
     android:fitsSystemWindows="true"
     tools:context=".presentation.MainActivity"
     tools:openDrawer="start">
