@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.PaginaTrabajadorActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="94dp"
+        android:text="BIENVENIDO/A"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nombre_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="93dp"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <Button
+        android:id="@+id/boton_seleccionarDia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="147dp"
+        android:background="@color/AzulTYR"
+        android:text="Seleccionar Día" />
+
+    <!-- Agrega el RecyclerView para mostrar las reservas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reservas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/boton_seleccionarDia"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>
