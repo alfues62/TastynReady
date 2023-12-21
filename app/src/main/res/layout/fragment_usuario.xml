@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.MainActivity">
 
 
@@ -60,15 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="47dp"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/flecha_atras" />
-
     <ImageButton
         android:id="@+id/editarNombre"
         android:layout_width="48dp"
@@ -79,8 +71,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/nombre"
         app:layout_constraintStart_toEndOf="@+id/nombre"
         app:layout_constraintTop_toTopOf="@+id/nombre"
-        app:srcCompat="@drawable/boton_editar"
-        />
+        app:srcCompat="@drawable/boton_editar" />
 
     <ImageButton
         android:id="@+id/editarCorreo"
@@ -99,13 +90,15 @@
         android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/boton_background"
+        android:backgroundTint="@color/AmarilloTYR"
         android:text="Guardar"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/guardarReserva2"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintHorizontal_bias="0.832"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/correo"
         app:layout_constraintVertical_bias="0.0" />
 

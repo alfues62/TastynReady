@@ -1,13 +1,16 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,10 +19,22 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class SalaActivity extends AppCompatActivity {
-
     TextView temperatura;
     Button calida, tenue, fria;
+    Button botonCamarero; //Llamar al camarero
+    private DatabaseReference databaseReference;
 
+    //INPUT STEPPER
+    private EditText valueEditText;
+    private Button incrementButton;
+    private Button decrementButton;
+    private int value = 10;
+    private static final int MAX_VALUE = 50;
+
+    private Button enviar;
+
+
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala);
@@ -27,11 +42,50 @@ public class SalaActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Temperatura");
         DatabaseReference luzSala1Ref = database.getReference("salas/sala1/led");
+        DatabaseReference intSala1Ref = database.getReference("salas/sala1/intensidad");
 
         temperatura = findViewById(R.id.cambiTemperatura);
         calida = findViewById(R.id.luzCalida);
         tenue = findViewById(R.id.luzTenue);
         fria = findViewById(R.id.luzFria);
+
+        valueEditText = findViewById(R.id.cantidad);
+        incrementButton = findViewById(R.id.incrementButton);
+        decrementButton = findViewById(R.id.decrementButton);
+        valueEditText.setText(String.valueOf(value));
+
+        enviar = findViewById(R.id.enviar);
+
+        incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value < MAX_VALUE) {
+                    value++;
+                    valueEditText.setText(String.valueOf(value));
+                }
+            }
+        });
+
+        decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value > 2) {
+                    value--;
+                    valueEditText.setText(String.valueOf(value));
+                }
+            }
+        });
+
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String send = String.valueOf(valueEditText.getText());
+                intSala1Ref.setValue(send);
+            }
+        });
+
+        //Llamar al camarero
+        botonCamarero = findViewById(R.id.botonCamarero);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,5 +132,22 @@ public class SalaActivity extends AppCompatActivity {
                 luzSala1Ref.setValue(valorAEnviar);
             }
         });
+
+
+        //Llamar al camarero
+        botonCamarero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String idAdministrador = "XAILBTk7e8GkhOUy2HKl";
+
+                // Crea una instancia del AdminDatabaseManager
+                FirebaseHandler adminDatabaseManager = new FirebaseHandler();
+
+                // Llama al método para actualizar la notificación
+                adminDatabaseManager.actualizarNotificacion(idAdministrador);
+
+            }
+        });
     }
+
 }

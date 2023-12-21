@@ -6,11 +6,11 @@
 
     <ImageView
         android:id="@+id/imageLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/img_tasty2"
+        android:layout_width="350dp"
+        android:layout_height="284dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/img_tasty2" />
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -31,11 +31,12 @@
 
     <Button
         android:id="@+id/btnLogin"
+        style="@style/BotonApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar sesión"
         android:layout_below="@id/editTextPassword"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp"
+        android:text="Iniciar sesión" />
 
     <Button
         android:id="@+id/btnGoToRegister"
