@@ -10,20 +10,6 @@
     <!-- Título "Un nuevo concepto gastronómico" -->
 
     <!-- Título "INICIOS" -->
-    <TextView
-        android:id="@+id/tituloSobreNosotros"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:background="@color/AmarilloTYR"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="SOBRE NOSOTROS"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subtituloSobreNosotros"
@@ -35,8 +21,9 @@
         android:text="Un nuevo concepto gastronómico"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/tituloSobreNosotros"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tituloInicios"
@@ -44,7 +31,9 @@
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="INICIOS"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +52,7 @@
     <TextView
         android:id="@+id/textoInicios"
         android:layout_width="161dp"
-        android:layout_height="97dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="TastyAndReady surge en la universidad como una idea para un trabajo en grupo. Pero no sabíamos lo que íbamos a crear."
         android:textSize="16sp"
@@ -76,7 +65,9 @@
         android:layout_height="31dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="CONCEPTO"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +76,7 @@
     <TextView
         android:id="@+id/textoConcepto"
         android:layout_width="151dp"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:text="Juntar dos conceptos, el fast food, con la alta gastronomía."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tituloConcepto"
@@ -93,11 +84,13 @@
 
     <TextView
         android:id="@+id/tituloMisionVision"
-        android:layout_width="195dp"
-        android:layout_height="29dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/nunito_sans"
         android:text="MISIÓN Y VISIÓN"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +99,7 @@
     <TextView
         android:id="@+id/textoMisionVision"
         android:layout_width="203dp"
-        android:layout_height="218dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Nuestra misión es conseguir que el cliente reciba su plato en un tiempo récord comparado con el tipo de platos que se preparan en nuestros establecimientos. Confiamos en nosotros mismos y nuestro objetivo es expandirnos a nivel nacional. Somos los pioneros en este concepto."
         android:textSize="16sp"
@@ -137,7 +130,7 @@
         android:id="@+id/imageView12"
         android:layout_width="158dp"
         android:layout_height="202dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/imagen3acercade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloMisionVision" />
