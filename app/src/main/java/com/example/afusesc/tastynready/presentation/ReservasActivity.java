@@ -18,9 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
 import com.example.afusesc.tastynready.model.DataPicker;
@@ -36,16 +36,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-
 public class ReservasActivity extends AppCompatActivity {
 
     DataPicker dataPicker = new DataPicker();
 
-    //BBDD
-    private FirebaseFirestore db; // Variable de clase
+    private FirebaseFirestore db;
     FirebaseHandler firebaseHandler = new FirebaseHandler();
 
-    //INPUT STEPPER
     private EditText valueEditText;
     private Button incrementButton;
     private Button decrementButton;
@@ -54,13 +51,11 @@ public class ReservasActivity extends AppCompatActivity {
 
     private String salaReservada;
 
-    //HORA Y FECHA
     private TextView textHora;
     private Button btnHora;
     private TextView textFecha;
     private Button btnFecha;
 
-    //BACK
     private ImageView back;
     private Button next;
 
@@ -70,7 +65,9 @@ public class ReservasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservas_main);
 
-        //DECLARACIONES
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         valueEditText = findViewById(R.id.valueEditText);
         incrementButton = findViewById(R.id.incrementButton);
         decrementButton = findViewById(R.id.decrementButton);
@@ -85,7 +82,6 @@ public class ReservasActivity extends AppCompatActivity {
         next = findViewById(R.id.BotonContinuar);
 
         db = FirebaseFirestore.getInstance();
-
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +120,6 @@ public class ReservasActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(ReservasActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -133,9 +128,7 @@ public class ReservasActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Verifica si se ha seleccionado la fecha y la hora
-                if (dataPicker.obtenerFechaSeleccionada() == null || dataPicker.obtenerHoraSeleccionada() == null) {
-                    // Muestra un cuadro de diálogo para informar al usuario
+                if (DataPicker.obtenerFechaSeleccionada() == null || DataPicker.obtenerHoraSeleccionada() == null) {
                     mostrarDialogoCamposFaltantes();
                     return;
                 }
@@ -149,7 +142,7 @@ public class ReservasActivity extends AppCompatActivity {
                 } else {
                     salaReservada = "ID_Sala_1";
                 }
-                //Llama al DataPicker para guardar el número de comensales
+
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
 
@@ -183,21 +176,17 @@ public class ReservasActivity extends AppCompatActivity {
         builder.setTitle("Campos faltantes");
         builder.setMessage("Por favor, completa la fecha y la hora antes de continuar.");
 
-        // Agrega un botón de OK para cerrar el cuadro de diálogo
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Cierra el cuadro de diálogo
                 dialogInterface.dismiss();
             }
         });
 
-        // Muestra el cuadro de diálogo
         builder.show();
     }
 
     private void openDatePicker() {
-        // Obtén la fecha actual
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth = calendar.get(Calendar.MONTH);
@@ -206,43 +195,29 @@ public class ReservasActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // Actualiza la instancia de Calendar con la fecha seleccionada
                 calendar.set(year, month, day);
 
-                // Verifica si la fecha seleccionada es en el pasado
                 if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
-                    // No permitir selección de fechas pasadas
                     return;
                 }
 
-                // Muestra la fecha seleccionada
                 textFecha.setText("Fecha Seleccionada: " + String.valueOf(year) + "." + String.valueOf(month + 1) + "." + String.valueOf(day));
-
-                // Formatea la fecha como "yyyy-MM-dd"
                 String formattedDate = String.format("%04d-%02d-%02d", year, month + 1, day);
-
-                // Llama al método para guardar la fecha en DataPicker
                 dataPicker.guardarFechaSeleccionada(formattedDate);
-
             }
         }, currentYear, currentMonth, currentDay);
 
-        // Establece la fecha mínima como mañana
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
         datePickerDialog.show();
     }
 
     private void openTimePicker() {
-        // Obtén la hora actual
         Calendar calendar = Calendar.getInstance();
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-        // Crear un cuadro de diálogo personalizado para mostrar solo la hora
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Selecciona la hora de la reserva");
 
-        // Crear un NumberPicker personalizado para seleccionar las horas
         final NumberPicker hourPicker = new NumberPicker(this);
         hourPicker.setMinValue(9);
         hourPicker.setMaxValue(21);
@@ -254,14 +229,8 @@ public class ReservasActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int hour = hourPicker.getValue();
-
-                // Muestra la hora seleccionada
                 textHora.setText("Hora Seleccionada: " + String.valueOf(hour) + ":00");
-
-                // Formatea la hora como "HH:00"
                 String formattedTime = String.format("%02d:00", hour);
-
-                // Llama al método para guardar la hora en DataPicker
                 dataPicker.guardarHoraSeleccionada(formattedTime);
             }
         });

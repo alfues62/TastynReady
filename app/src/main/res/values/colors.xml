@@ -13,6 +13,7 @@
     <color name="black_overlay">#66000000</color>
     <color name="colorAzul">#0000FF</color>
     <color name="colorNegro">#000000</color>
+    <color name="gris_semi_transparente">#00909090</color>
 
 
 </resources>

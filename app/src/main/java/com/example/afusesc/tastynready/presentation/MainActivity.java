@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NotificationCompat.Builder notificacion2; //Creo el constructor
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        toolbar = findViewById(R.id.toolbar); //Ignore red line errors
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
+            int color = getResources().getColor(R.color.gris_semi_transparente);
+            toolbar.setBackgroundColor(color);
         }
 
         // COMENTAR Y DESCOMENTAR CUANDO HAYA QUE AÑADIR PLATOS
@@ -142,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
@@ -166,10 +168,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            int color = getResources().getColor(R.color.gris_semi_transparente);
+            toolbar.setBackgroundColor(color);
         } else if (id == R.id.nav_carta) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CartaFragment()).commit();
+            int color = getResources().getColor(R.color.AmarilloTYR);
+            toolbar.setBackgroundColor(color);
         } else if (id == R.id.nav_acerca) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AcercaDeFragment()).commit();
+            int color = getResources().getColor(R.color.AmarilloTYR);
+            toolbar.setBackgroundColor(color);
         } else if (id == R.id.nav_logout) {
 
             AuthUI.getInstance().signOut(getApplicationContext()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -184,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.contacta) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactaFragment()).commit();
+            int color = getResources().getColor(R.color.AmarilloTYR);
+            toolbar.setBackgroundColor(color);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -197,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_mi_perfil) {
             if (usuario != null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentUsuario()).commit();
+                int color = getResources().getColor(R.color.AmarilloTYR);
+                toolbar.setBackgroundColor(color);
                 return true;
             } else {
                 Intent loginIntent = new Intent(this, LoginActivity.class);
