@@ -17,5 +17,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_tasty2" />
+        app:srcCompat="@drawable/logo_tasty_redondotransparente" />
 </androidx.constraintlayout.widget.ConstraintLayout>

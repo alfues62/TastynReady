@@ -1,3 +1,4 @@
+
 package com.example.afusesc.tastynready.presentation;
 
 import android.content.Intent;
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                            dataPicker.guardarUsuarioEnFirebase(user);
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
                             Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
                             startActivity(intent);
                             finish();
