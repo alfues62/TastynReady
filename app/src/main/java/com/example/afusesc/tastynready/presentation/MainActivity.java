@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -142,16 +144,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
     protected void onStart() {
         super.onStart();
-        usuario = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (usuario != null) {
-            perfilMenuItem.setVisible(true); // Mostrar el elemento del menú si el usuario está autenticado
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (currentUser != null || googleAccount != null) {
+            perfilMenuItem.setVisible(true);
         } else {
-            perfilMenuItem.setVisible(false); // Ocultar el elemento del menú si el usuario no está autenticado
+            perfilMenuItem.setVisible(false);
         }
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
