@@ -121,23 +121,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        //FORMA 1 DE HACERLO
-        db.collection("reservas")
-                .whereEqualTo("IdUser", usuario.getUid())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Aquí puedes imprimir o manipular la información de cada reserva
-                            String fecha = document.getString("Fecha");
-                            if (fecha != null && fecha.equals(fechaManana)) {
-                                crearNotificacionReserva();
+        if (usuario != null) {
+            db.collection("reservas")
+                    .whereEqualTo("IdUser", usuario.getUid())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Aquí puedes imprimir o manipular la información de cada reserva
+                                String fecha = document.getString("Fecha");
+                                if (fecha != null && fecha.equals(fechaManana)) {
+                                    crearNotificacionReserva();
+                                }
                             }
+                        } else {
+                            Log.e(TAG, "Error obteniendo documentos", task.getException());
                         }
-                    } else {
-                        Log.e(TAG, "Error obteniendo documentos", task.getException());
-                    }
-                });
+                    });
+        } else {
+            // Manejar el caso cuando usuario es null
+            Log.e(TAG, "Usuario es null");
+        }
 
 
         ////////////////////////////ESTO IRA EN EL MAINACTIVITY DEL ADMIN//////////////////////////////////////////////////
