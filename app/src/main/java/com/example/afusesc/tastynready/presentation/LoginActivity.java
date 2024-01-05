@@ -107,22 +107,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            // Use the global instance of DataPicker to save user information
-                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                // Use the global instance of DataPicker to save user information
+                dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onLoginButtonClick() {

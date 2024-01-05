@@ -30,7 +30,6 @@ public class HomeFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(getActivity());
 
-        dataPicker.guardarUsuarioEnFirebase(user, "cliente");
         reserButton = view.findViewById(R.id.reservaButton);
         reserButton.setOnClickListener(new View.OnClickListener() {
             @Override
