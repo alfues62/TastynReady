@@ -27,7 +27,7 @@ public class PaginaTrabajadorActivity extends Activity {
     private Button botonCogerFecha;
     private TextView nombreUsuario;
     private RecyclerView recyclerView;
-    private ReservaAdapter reservasAdapter;
+    private AdaptadorPedidosFirestore reservasAdapter;
 
     private Calendar calendar;
     private List<ReservasActivity> listaReservas;
