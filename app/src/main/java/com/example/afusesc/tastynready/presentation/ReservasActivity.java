@@ -146,11 +146,8 @@ public class ReservasActivity extends AppCompatActivity {
                 DataPicker.guardarNumComensales(numComensales);
                 DataPicker.guardarIdSala(salaReservada);
 
-                String fechaSeleccionada = textFecha.getText().toString();
-                Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
-                intent.putExtra("fecha_seleccionada", fechaSeleccionada);
-                startActivity(intent);
-                finish();
+
+                comprobarDisponibilidad();
 
 
             }
@@ -169,6 +166,44 @@ public class ReservasActivity extends AppCompatActivity {
         Log.d("TAG", formatoFecha.format(calendarioManana.getTime()));
 
 
+    }
+    public void comprobarDisponibilidad() {
+        String claveDisponibilidad = DataPicker.obtenerIdSala() + " " +
+                DataPicker.obtenerHoraSeleccionada() + " " +
+                DataPicker.obtenerFechaSeleccionada();
+
+        db.collection("disponibilidad").document(claveDisponibilidad)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            mostrarPopupReservado();
+                        } else {
+                            Intent intent = new Intent(ReservasActivity.this, PedirActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        Log.e("FirebaseHandler", "Error al verificar disponibilidad en Firestore", task.getException());
+                    }
+                });
+    }
+
+    private void mostrarPopupReservado() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sala Reservada");
+        builder.setMessage("Lo siento, la sala ya está reservada en la fecha y hora seleccionadas.");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                DataPicker.resetValues();
+                textFecha.setText("Fecha Seleccionada: ");
+                textHora.setText("Hora Seleccionada: ");
+            }
+        });
+        builder.show();
     }
 
     private void mostrarDialogoCamposFaltantes() {
