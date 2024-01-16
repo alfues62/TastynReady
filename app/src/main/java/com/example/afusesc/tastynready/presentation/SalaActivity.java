@@ -28,6 +28,10 @@ public class SalaActivity extends AppCompatActivity {
     private EditText valueEditText;
     private Button incrementButton;
     private Button decrementButton;
+
+    private EditText valueEditText2;
+    private Button incrementButton2;
+    private Button decrementButton2;
     private int value = 10;
     private static final int MAX_VALUE = 50;
 
