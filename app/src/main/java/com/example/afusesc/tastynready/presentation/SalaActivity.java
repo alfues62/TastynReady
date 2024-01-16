@@ -1,12 +1,14 @@
 package com.example.afusesc.tastynready.presentation;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.R;
@@ -28,15 +30,36 @@ public class SalaActivity extends AppCompatActivity {
     private EditText valueEditText;
     private Button incrementButton;
     private Button decrementButton;
-
-    private EditText valueEditText2;
-    private Button incrementButton2;
-    private Button decrementButton2;
     private int value = 10;
+    private int value2 = 20;
     private static final int MAX_VALUE = 50;
 
     private Button enviar;
 
+    private EditText valueEditText2;
+    private Button incrementButton2;
+    private Button decrementButton2;
+    private Button enviar2;
+    private AlertDialog alertDialog;
+
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Mensaje recibido");
+        builder.setMessage("En breve, podrás apreciar el cambio de temperatura!");
+
+        // Add an OK button to close the dialog
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Close the dialog
+                alertDialog.dismiss();
+            }
+        });
+
+        // Create and show the AlertDialog
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +80,11 @@ public class SalaActivity extends AppCompatActivity {
         incrementButton = findViewById(R.id.incrementButton);
         decrementButton = findViewById(R.id.decrementButton);
         valueEditText.setText(String.valueOf(value));
+
+        valueEditText2 = findViewById(R.id.cantidad2);
+        incrementButton2 = findViewById(R.id.incrementButton2);
+        decrementButton2 = findViewById(R.id.decrementButton2);
+        valueEditText2.setText(String.valueOf(value2));
 
         enviar = findViewById(R.id.enviar);
 
@@ -80,11 +108,40 @@ public class SalaActivity extends AppCompatActivity {
             }
         });
 
+        incrementButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value2 < 35) {
+                    value2++;
+                    valueEditText2.setText(String.valueOf(value2));
+                }
+            }
+        });
+
+        decrementButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (value2 > 15) {
+                    value2--;
+                    valueEditText2.setText(String.valueOf(value2));
+                }
+            }
+        });
+
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String send = String.valueOf(valueEditText.getText());
                 intSala1Ref.setValue(send);
+            }
+        });
+
+        enviar2 = findViewById(R.id.enviar2);
+
+        enviar2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showConfirmationDialog();
             }
         });
 
