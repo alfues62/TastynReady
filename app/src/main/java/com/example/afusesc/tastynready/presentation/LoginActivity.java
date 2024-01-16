@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.afusesc.tastynready.AdminActivity;
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
 import com.google.android.gms.auth.api.Auth;
@@ -125,12 +126,20 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+
     private void onLoginButtonClick() {
         resetearErrores();
 
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
+        if (username.equals("admin") && password.equals("admin")) {
+            // Acceso directo para el usuario Admin
+            Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
+            startActivity(adminIntent);
+            finish();
+            return;
+        }
         // Validaciones de campos
         if (username.isEmpty() && password.isEmpty()) {
             mostrarError("errorUsername", "Correo electrónico requerido ");
