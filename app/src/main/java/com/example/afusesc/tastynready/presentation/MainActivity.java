@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
 
 
-
     //NOTIFICACION 1
     private NotificationManager notificationManager;
     static final String CANAL_ID = "mi_canal_foreground"; //Me lo invento
@@ -180,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toolbar.setBackgroundColor(color);
         } else if (id == R.id.nav_logout) {
 
+
             AuthUI.getInstance().signOut(getApplicationContext()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -194,7 +194,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactaFragment()).commit();
             int color = getResources().getColor(R.color.AmarilloTYR);
             toolbar.setBackgroundColor(color);
+        } else if (id == R.id.mapa) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapaFragment()).commit();
+            int color = getResources().getColor(R.color.AmarilloTYR);
+            toolbar.setBackgroundColor(color);
         }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
