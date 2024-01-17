@@ -1,4 +1,5 @@
 package com.example.afusesc.tastynready.presentation;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.AdminActivity;
+import com.example.afusesc.tastynready.presentation.PaginaTrabajadorActivity;
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
 import com.google.android.gms.auth.api.Auth;
@@ -26,8 +28,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private FirebaseUser currentUser;
 
     private EditText editTextUsername;
     private EditText editTextPassword;
@@ -113,12 +122,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            // Use the global instance of DataPicker to save user information
-                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
+                            currentUser = mAuth.getCurrentUser();
+                            // Obtener el rol del usuario desde la base de datos
+                            obtenerRolDeFirebase(currentUser.getUid());
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
@@ -166,17 +172,49 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
+                            // Obtener el rol del usuario desde la base de datos
+                            obtenerRolDeFirebase(user.getUid());
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
                     }
                 });
     }
+
+    private void obtenerRolDeFirebase(String userId) {
+        DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(userId);
+
+        usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String rol = snapshot.child("rol").getValue(String.class);
+                    if (rol != null) {
+                        if (rol.equals("cliente")) {
+                            // Usuario es cliente
+                            dataPicker.guardarUsuarioEnFirebase(currentUser, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else if (rol.equals("trabajador")) {
+                            // Usuario es trabajador
+                            Intent intent = new Intent(LoginActivity.this, PaginaTrabajadorActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // Otro rol, manejar según sea necesario
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejar el error según sea necesario
+            }
+        });
+    }
+
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
         TextView errorTextView = findViewById(getResources().getIdentifier(errorTextViewId, "id", getPackageName()));
