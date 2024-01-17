@@ -1,5 +1,7 @@
 package com.example.afusesc.tastynready.model;
 
+import java.util.List;
+
 public class Reserva {
     private Long Comensales;
     private String Fecha;
@@ -7,6 +9,7 @@ public class Reserva {
     private String IdUser;
     private String Sala;
     private String Usuario;
+    private List<Platos> zPlatos;
 
     // Agrega este constructor sin argumentos
     public Reserva() {
@@ -59,5 +62,13 @@ public class Reserva {
 
     public void setUsuario(String usuario) {
         Usuario = usuario;
+    }
+
+    public List<Platos> getzPlatos() {
+        return zPlatos;
+    }
+
+    public void setzPlatos(List<Platos> zPlatos) {
+        this.zPlatos = zPlatos;
     }
 }
