@@ -76,7 +76,7 @@ public class AdaptadorPedidosFirestore extends RecyclerView.Adapter<AdaptadorPed
         });
 
         holder.valueEditText.setText(String.valueOf(platos.getCantidad()));
-        
+
     }
 
     @Override

@@ -58,6 +58,44 @@
         app:layout_constraintStart_toEndOf="@+id/textView6" />
 
     <Button
+        android:id="@+id/decrementButton2"
+        style="@style/BotonApp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/boton_background"
+        android:backgroundTint="@color/AzulTYR"
+        android:text="-"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <EditText
+        android:id="@+id/cantidad2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:inputType="number"
+        android:text="0"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@+id/decrementButton2"
+        app:layout_constraintTop_toTopOf="@+id/decrementButton2" />
+
+    <Button
+        android:id="@+id/incrementButton2"
+        style="@style/BotonApp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/boton_redondo"
+        android:backgroundTint="@color/AzulTYR"
+        android:text="+"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/cantidad2"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Button
         android:id="@+id/luzCalida"
         style="@style/BotonApp"
         android:layout_width="wrap_content"
@@ -140,6 +178,18 @@
 
 
     <Button
+        android:id="@+id/enviar2"
+        style="@style/BotonApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/AzulTYR"
+        android:text="Enviar Temperatura"
+        app:layout_constraintEnd_toStartOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/incrementButton2"
+        app:layout_constraintTop_toBottomOf="@+id/cambiTemperatura" />
+
+    <Button
         android:id="@+id/botonCamarero"
         style="@style/BotonApp"
         android:layout_width="wrap_content"
@@ -161,6 +211,8 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="64dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
