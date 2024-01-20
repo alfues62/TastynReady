@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.AdminActivity;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
 import com.example.afusesc.tastynready.model.UsuarioInfo;
 import com.example.afusesc.tastynready.presentation.PaginaTrabajadorActivity;
 import com.example.afusesc.tastynready.R;
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         SignInButton btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         Button btnGoToRegister = findViewById(R.id.btnGoToRegister);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +146,8 @@ public class LoginActivity extends AppCompatActivity {
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        if (username.equals("admin") && password.equals("admin")) {
+
+        if (intentarLoginComoAdmin(username, password)) {
             // Acceso directo para el usuario Admin
             Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(adminIntent);
@@ -165,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
             mostrarError("errorPassword", "Contraseña requerida ");
             return;  // Evitar la autenticación si el campo de contraseña está vacío
         }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+        if (!esAdmin(username) && !android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
             mostrarError("errorUsername", "Formato de correo electrónico incorrecto");
             return;  // Evitar la autenticación si el formato del correo electrónico es incorrecto
         }
@@ -176,17 +179,54 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            currentUser = mAuth.getCurrentUser();
-                            // Obtener el rol del usuario desde la base de datos
-                            obtenerRolDeFirebase(currentUser.getUid());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
                     }
                 });
     }
+    private boolean esAdmin(String username) {
+        return "admin".equals(username);
+    }
+    private boolean intentarLoginComoAdmin(String username, String password) {
+        // Verificar si las credenciales coinciden con el administrador recién creado
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child("admin00");
 
-    
+        adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String storedUsername = dataSnapshot.child("username").getValue(String.class);
+                    String storedPassword = dataSnapshot.child("password").getValue(String.class);
+
+                    if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                        // Credenciales correctas para el administrador
+                        Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso como administrador", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                // Si no se encuentra una coincidencia en las credenciales
+                mostrarError("errorPassword", "Credenciales de administrador incorrectas");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores de base de datos si es necesario
+                Toast.makeText(LoginActivity.this, "Error de base de datos", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return false;
+    }
+
+
 
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
