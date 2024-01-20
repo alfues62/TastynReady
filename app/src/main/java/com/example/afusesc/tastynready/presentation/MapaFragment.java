@@ -35,8 +35,10 @@ public class MapaFragment extends Fragment {
 
 
     private void mostrarMapa() {
+        String nombreLugar = "Tasty&Ready";
+
         // Crear un Uri para mostrar un mapa en una ubicación específica
-        Uri gmmIntentUri = Uri.parse("geo:" + latitud + "," + longitud);
+        Uri gmmIntentUri = Uri.parse("geo:" + latitud + "," + longitud + "?q=" + Uri.encode(nombreLugar));
 
         // Crear un Intent con la acción ACTION_VIEW y el Uri creado
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

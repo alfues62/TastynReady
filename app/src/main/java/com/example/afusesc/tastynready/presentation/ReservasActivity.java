@@ -236,7 +236,8 @@ public class ReservasActivity extends AppCompatActivity {
                     return;
                 }
 
-                textFecha.setText("Fecha Seleccionada: " + String.valueOf(year) + "." + String.valueOf(month + 1) + "." + String.valueOf(day));
+                textFecha.setText(String.valueOf(day) + " del " + String.valueOf(month + 1) + " del "+ String.valueOf(year));
+
                 String formattedDate = String.format("%04d-%02d-%02d", year, month + 1, day);
                 dataPicker.guardarFechaSeleccionada(formattedDate);
             }
@@ -264,7 +265,7 @@ public class ReservasActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int hour = hourPicker.getValue();
-                textHora.setText("Hora Seleccionada: " + String.valueOf(hour) + ":00");
+                textHora.setText(String.valueOf(hour) + ":00");
                 String formattedTime = String.format("%02d:00", hour);
                 dataPicker.guardarHoraSeleccionada(formattedTime);
             }

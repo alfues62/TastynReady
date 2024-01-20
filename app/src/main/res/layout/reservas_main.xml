@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,11 +19,11 @@
         style="@style/BotonApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
         android:text="Escoger Fecha"
-        app:layout_constraintBottom_toTopOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="@+id/text_fecha"
-        app:layout_constraintTop_toBottomOf="@+id/text_fecha" />
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView3"
@@ -35,8 +34,8 @@
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_sans"
-        android:textColor="@color/black"
         android:text="Nº Comensales:"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
@@ -58,9 +57,10 @@
         <Button
             android:id="@+id/decrementButton"
             style="@style/BotonApp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:background="@drawable/boton_redondo"
+            android:gravity="center"
             android:text="-"
             android:textSize="12sp" />
 
@@ -79,7 +79,9 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/boton_redondo"
+            android:gravity="center"
             android:text="+"
+
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -87,22 +89,19 @@
         android:id="@+id/text_hora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="10dp"
-        android:text="Hora Seleccionada:"
-        app:layout_constraintBottom_toTopOf="@+id/timeButton"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/text_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Fecha Seleccionada:"
-        app:layout_constraintBottom_toTopOf="@+id/fechaButton"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView5"
@@ -119,22 +118,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Escoger Hora"
-        app:layout_constraintStart_toStartOf="@+id/text_hora"
-        app:layout_constraintTop_toBottomOf="@+id/text_hora" />
+        app:layout_constraintStart_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="321dp"
+        android:layout_marginTop="68dp"
         android:fontFamily="@font/nunito_sans"
         android:text="Hora:"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_fecha"
+        app:layout_constraintStart_toStartOf="@+id/fechaButton"
         app:layout_constraintTop_toBottomOf="@+id/fechaButton" />
 
     <TextView
@@ -181,7 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/nunito_sans"
-        android:text="Reserva tu comida"
+        android:text="Reserva mesa"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"

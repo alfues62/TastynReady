@@ -1,5 +1,7 @@
 package com.example.afusesc.tastynready.presentation;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.afusesc.tastynready.R;
@@ -22,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +43,7 @@ public class CartaFragment extends Fragment {
     ArrayList<Platos> platosArrayList;
     AdaptadorComidasFirestore adaptadorComidasFirestore;
     FirebaseFirestore db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,23 +97,25 @@ public class CartaFragment extends Fragment {
             }
         });
 
+
+
         EventChangeListener();
 
         return view;
     }
 
-    private void EventChangeListener(){
+    private void EventChangeListener() {
         db.collection("Platos").orderBy("Categoria", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error != null){
+                        if (error != null) {
                             Log.e("Firestore Error", error.getMessage());
                             return;
                         }
 
-                        for(DocumentChange dc : value.getDocumentChanges()){
-                            if(dc.getType() == DocumentChange.Type.ADDED){
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
                                 Platos plato = dc.getDocument().toObject(Platos.class);
                                 plato.setImg(dc.getDocument().getString("img"));
                                 platosArrayList.add(plato);
