@@ -2,6 +2,7 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -172,8 +173,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // Obtener el rol del usuario desde la base de datos
-                            obtenerRolDeFirebase(user.getUid());
+                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
@@ -190,14 +194,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String rol = snapshot.child("rol").getValue(String.class);
                     if (rol != null) {
+                        Log.d("DEBUG", "Rol obtenido: " + rol); // Agrega este log
                         if (rol.equals("cliente")) {
                             // Usuario es cliente
-                            dataPicker.guardarUsuarioEnFirebase(currentUser, "cliente");
                             Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
                             startActivity(intent);
                             finish();
-                        } else if (rol.equals("trabajador")) {
-                            // Usuario es trabajador
+                        }
+                        if (rol.equals("trabajador")) {
+                            Log.d("DEBUG", "Redirigiendo a PaginaTrabajadorActivity"); // Agrega este log
                             Intent intent = new Intent(LoginActivity.this, PaginaTrabajadorActivity.class);
                             startActivity(intent);
                             finish();
