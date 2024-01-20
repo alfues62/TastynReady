@@ -176,12 +176,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
+                            currentUser = mAuth.getCurrentUser();
+                            // Obtener el rol del usuario desde la base de datos
+                            obtenerRolDeFirebase(currentUser.getUid());
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
@@ -189,39 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void obtenerRolDeFirebase(String userId) {
-        DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(userId);
-
-        usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String rol = snapshot.child("rol").getValue(String.class);
-                    if (rol != null) {
-                        if (rol.equals("cliente")) {
-                            // Usuario es cliente
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                        if (rol.equals("trabajador")) {
-                            Log.d("DEBUG", "Redirigiendo a PaginaTrabajadorActivity"); // Agrega este log
-                            Intent intent = new Intent(LoginActivity.this, PaginaTrabajadorActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // Otro rol, manejar según sea necesario
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar el error según sea necesario
-            }
-        });
-    }
+    
 
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
