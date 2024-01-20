@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.AdminActivity;
+import com.example.afusesc.tastynready.model.UsuarioInfo;
 import com.example.afusesc.tastynready.presentation.PaginaTrabajadorActivity;
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
@@ -123,9 +124,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            currentUser = mAuth.getCurrentUser();
-                            // Obtener el rol del usuario desde la base de datos
-                            obtenerRolDeFirebase(currentUser.getUid());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Use the global instance of DataPicker to save user information
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
@@ -194,7 +198,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String rol = snapshot.child("rol").getValue(String.class);
                     if (rol != null) {
-                        Log.d("DEBUG", "Rol obtenido: " + rol); // Agrega este log
                         if (rol.equals("cliente")) {
                             // Usuario es cliente
                             Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
