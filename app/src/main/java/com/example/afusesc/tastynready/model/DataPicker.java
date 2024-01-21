@@ -76,9 +76,10 @@ public class DataPicker {
             userData.put("displayName", usuario.getDisplayName());
             userData.put("email", usuario.getEmail());
             userData.put("uid", usuario.getUid());
-            userData.put("rol", rol);  // Agrega la asignación del rol
+            userData.put("rol", rol);
 
-            db.collection("usuarios").document(usuario.getUid())
+
+            db.collection("usuarios").document(usuario.getDisplayName())
                     .set(userData)
                     .addOnSuccessListener(aVoid -> {
                         // Manejar el éxito, si es necesario
@@ -89,6 +90,7 @@ public class DataPicker {
                     });
         }
     }
+
 
 
     public static void resetValues() {

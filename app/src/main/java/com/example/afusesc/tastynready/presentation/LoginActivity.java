@@ -36,6 +36,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -145,14 +152,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
-
-        if (intentarLoginComoAdmin(username, password)) {
-            // Acceso directo para el usuario Admin
-            Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
-            startActivity(adminIntent);
-            finish();
-            return;
-        }
         // Validaciones de campos
         if (username.isEmpty() && password.isEmpty()) {
             mostrarError("errorUsername", "Correo electrónico requerido ");
@@ -170,6 +169,11 @@ public class LoginActivity extends AppCompatActivity {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
             mostrarError("errorUsername", "Formato de correo electrónico incorrecto");
             return;  // Evitar la autenticación si el formato del correo electrónico es incorrecto
+        }
+
+        // Intentar iniciar sesión como Admin
+        if (intentarLoginComoAdmin(username, password)) {
+            return;  // Evitar mostrar el mensaje de credenciales incorrectas para trabajador
         }
 
         // Utilizar Firebase Authentication para iniciar sesión
@@ -192,15 +196,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean intentarLoginComoAdmin(String username, String password) {
-        if ("admin@gmail.com".equals(username) && "admin123".equals(password)) {
-            // Credenciales correctas para el administrador
-            Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
-            startActivity(adminIntent);
-            finish();
-            return true;
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuariosRef = db.collection("usuarios");
 
-        return false;
+        usuariosRef.whereEqualTo("email", username)
+                .whereEqualTo("password", password)
+                .whereEqualTo("rol", "admin")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Usuario con credenciales de administrador encontrado
+                                Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                                startActivity(adminIntent);
+                                finish();
+                                return;
+                            }
+                            // Si no se encuentra un usuario con las credenciales proporcionadas
+                            mostrarError("errorPassword", "Credenciales de administrador incorrectas");
+                        } else {
+                            // Manejar errores de Firestore
+                            Toast.makeText(LoginActivity.this, "Error al acceder a la base de datos", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        return false;  // Retorna false por defecto, actualiza según tus necesidades
     }
 
 
@@ -217,4 +240,5 @@ public class LoginActivity extends AppCompatActivity {
         errorUsername.setVisibility(View.GONE);
         errorPassword.setVisibility(View.GONE);
     }
+
 }
