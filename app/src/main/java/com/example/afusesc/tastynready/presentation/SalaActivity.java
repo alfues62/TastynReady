@@ -2,10 +2,12 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,6 +43,7 @@ public class SalaActivity extends AppCompatActivity {
     private Button decrementButton2;
     private Button enviar2;
     private AlertDialog alertDialog;
+    private ImageView back;
 
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -86,6 +89,8 @@ public class SalaActivity extends AppCompatActivity {
         decrementButton2 = findViewById(R.id.decrementButton2);
         valueEditText2.setText(String.valueOf(value2));
 
+        back = findViewById(R.id.imageView11);
+
         enviar = findViewById(R.id.enviar);
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +130,15 @@ public class SalaActivity extends AppCompatActivity {
                     value2--;
                     valueEditText2.setText(String.valueOf(value2));
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SalaActivity.this, MisReservasActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
