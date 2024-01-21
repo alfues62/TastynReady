@@ -63,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         Button btnGoToRegister = findViewById(R.id.btnGoToRegister);
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             mostrarError("errorPassword", "Contraseña requerida ");
             return;  // Evitar la autenticación si el campo de contraseña está vacío
         }
-        if (!esAdmin(username) && !android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
             mostrarError("errorUsername", "Formato de correo electrónico incorrecto");
             return;  // Evitar la autenticación si el formato del correo electrónico es incorrecto
         }
@@ -191,42 +190,18 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-    private boolean esAdmin(String username) {
-        return "admin".equals(username);
-    }
+
     private boolean intentarLoginComoAdmin(String username, String password) {
-        // Verificar si las credenciales coinciden con el administrador recién creado
-        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child("admin00");
-
-        adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String storedUsername = dataSnapshot.child("username").getValue(String.class);
-                    String storedPassword = dataSnapshot.child("password").getValue(String.class);
-
-                    if (username.equals(storedUsername) && password.equals(storedPassword)) {
-                        // Credenciales correctas para el administrador
-                        Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso como administrador", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-
-                // Si no se encuentra una coincidencia en las credenciales
-                mostrarError("errorPassword", "Credenciales de administrador incorrectas");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar errores de base de datos si es necesario
-                Toast.makeText(LoginActivity.this, "Error de base de datos", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if ("admin@gmail.com".equals(username) && "admin123".equals(password)) {
+            // Credenciales correctas para el administrador
+            Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
+            startActivity(adminIntent);
+            finish();
+            return true;
+        }
 
         return false;
     }
-
-
 
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
