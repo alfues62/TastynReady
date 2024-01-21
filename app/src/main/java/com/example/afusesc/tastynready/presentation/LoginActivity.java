@@ -2,6 +2,7 @@ package com.example.afusesc.tastynready.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.afusesc.tastynready.AdminActivity;
+import com.example.afusesc.tastynready.model.FirebaseHandler;
+import com.example.afusesc.tastynready.model.UsuarioInfo;
 import com.example.afusesc.tastynready.presentation.PaginaTrabajadorActivity;
 import com.example.afusesc.tastynready.R;
 import com.example.afusesc.tastynready.model.DataPicker;
@@ -122,9 +125,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            currentUser = mAuth.getCurrentUser();
-                            // Obtener el rol del usuario desde la base de datos
-                            obtenerRolDeFirebase(currentUser.getUid());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Use the global instance of DataPicker to save user information
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
@@ -139,7 +145,8 @@ public class LoginActivity extends AppCompatActivity {
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        if (username.equals("admin") && password.equals("admin")) {
+
+        if (intentarLoginComoAdmin(username, password)) {
             // Acceso directo para el usuario Admin
             Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(adminIntent);
@@ -172,8 +179,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // Obtener el rol del usuario desde la base de datos
-                            obtenerRolDeFirebase(user.getUid());
+                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                            dataPicker.guardarUsuarioEnFirebase(user, "cliente");
+                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             mostrarError("errorPassword", "Usuario o contraseña incorrecta");
                         }
@@ -181,38 +191,16 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void obtenerRolDeFirebase(String userId) {
-        DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(userId);
+    private boolean intentarLoginComoAdmin(String username, String password) {
+        if ("admin@gmail.com".equals(username) && "admin123".equals(password)) {
+            // Credenciales correctas para el administrador
+            Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
+            startActivity(adminIntent);
+            finish();
+            return true;
+        }
 
-        usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String rol = snapshot.child("rol").getValue(String.class);
-                    if (rol != null) {
-                        if (rol.equals("cliente")) {
-                            // Usuario es cliente
-                            dataPicker.guardarUsuarioEnFirebase(currentUser, "cliente");
-                            Intent intent = new Intent(LoginActivity.this, ReservasActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else if (rol.equals("trabajador")) {
-                            // Usuario es trabajador
-                            Intent intent = new Intent(LoginActivity.this, PaginaTrabajadorActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // Otro rol, manejar según sea necesario
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar el error según sea necesario
-            }
-        });
+        return false;
     }
 
 

@@ -106,4 +106,35 @@ public class FirebaseHandler {
                     Log.e("FirebaseHandler", "Error al guardar disponibilidad en Firestore", e);
                 });
     }
+
+    ////////////////////////////// Usar para añadir admin //////////////////////////////
+    /*private void agregarUsuarioAdmin() {
+        String adminEmail = "admin@gmail.com";
+        String adminPassword = "admin123";  // Cambia la contraseña a algo con al menos 6 caracteres
+
+        mAuth.createUserWithEmailAndPassword(adminEmail, adminPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Creación de usuario administrador exitosa
+                            FirebaseUser adminUser = mAuth.getCurrentUser();
+                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
+                            dataPicker.guardarUsuarioEnFirebase(adminUser, "admin");
+
+                            // También puedes almacenar información adicional si es necesario
+                            DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child("admin00");
+                            adminRef.child("username").setValue(adminEmail);
+                            adminRef.child("password").setValue(adminPassword);
+
+                            Toast.makeText(LoginActivity.this, "Usuario administrador creado exitosamente", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Manejar errores en la creación del usuario administrador
+                            Toast.makeText(LoginActivity.this, "Error al crear el usuario administrador", Toast.LENGTH_SHORT).show();
+                            Log.e("LoginActivity", "Error al crear el usuario administrador", task.getException());
+                        }
+                    }
+                });
+    }
+*/
 }

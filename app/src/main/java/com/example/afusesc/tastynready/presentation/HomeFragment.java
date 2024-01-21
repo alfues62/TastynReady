@@ -26,7 +26,6 @@ public class HomeFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        dataPicker.guardarUsuarioEnFirebase(user, "cliente");
         reserButton = view.findViewById(R.id.reservaButton);
         reserButton.setOnClickListener(new View.OnClickListener() {
             @Override
