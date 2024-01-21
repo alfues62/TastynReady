@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,19 @@ public class MisReservasActivity extends AppCompatActivity {
 
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Reserva reserva = document.toObject(Reserva.class);
-                                    reservasList.add(reserva);
+                                    // Obtener la fecha de la reserva como String
+                                    String fechaReservaStr = reserva.getFecha();
+
+                                    // Convertir el String a LocalDate (ajusta el formato según el de tu aplicación)
+                                    LocalDate fechaReserva = parseFecha(fechaReservaStr);
+
+                                    // Obtener la fecha actual
+                                    LocalDate fechaActual = LocalDate.now();
+
+                                    // Comparar las fechas
+                                    if (fechaReserva != null && !fechaReserva.isBefore(fechaActual)) {
+                                        reservasList.add(reserva);
+                                    }
                                 }
 
                                 // Configura el RecyclerView con las reservas del usuario activo
@@ -86,6 +99,9 @@ public class MisReservasActivity extends AppCompatActivity {
         }
     }
 
+    private LocalDate parseFecha(String fechaStr) {
+        return LocalDate.parse(fechaStr);
+    }
 
     public void onItemClick(Reserva reserva) {
         Intent intent = new Intent(this, SalaActivity.class);
