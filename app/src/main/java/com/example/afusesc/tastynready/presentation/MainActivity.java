@@ -135,8 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.e(TAG, "Usuario es null");
         }
 
-        // ESTO IRA EN EL MAINACTIVITY DEL ADMIN
-        verificarYProcesarNotificacion();
+
     }
 
     @Override
@@ -191,7 +190,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactaFragment()).commit();
             int color = getResources().getColor(R.color.AmarilloTYR);
             toolbar.setBackgroundColor(color);
+        } else if (id == R.id.mapa) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapaFragment()).commit();
+            int color = getResources().getColor(R.color.AmarilloTYR);
+            toolbar.setBackgroundColor(color);
         }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -256,55 +260,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "Notificación creada exitosamente");
     }
 
-    private void verificarYProcesarNotificacion() {
-        String rutaAdmin = "administradores/XAILBTk7e8GkhOUy2HKl/notificacion";
 
-        // Lee el valor de la base de datos
-        databaseReference.child(rutaAdmin).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
-                // Obtén el valor actual
-                Boolean notificacion = dataSnapshot.getValue(Boolean.class);
-
-                // Si el valor es true, manda una notificación
-                if (notificacion != null && notificacion) {
-                    // Llama al método para mandar la notificación
-                    crearNotificacionLlamada();
-
-                    // Después de enviar la notificación, actualiza el valor a "false"
-                    databaseReference.child(rutaAdmin).setValue(false);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void crearNotificacionLlamada() {
-        Log.d(TAG, "Creando notificación de llamada");
-        // Usar un asistente de notificaciones para crear un canal (o categoría) de notificaciones.
-        notificationManager2 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel =
-                    new NotificationChannel(CANAL_ID2, "Mis Notificaciones foreground",
-                            NotificationManager.IMPORTANCE_DEFAULT);
-
-            notificationChannel.setDescription("Descripcion del canal foreground");
-            notificationManager2.createNotificationChannel(notificationChannel);
-        }
-
-        notificacion2 =
-                new NotificationCompat.Builder(this, CANAL_ID2)
-                        .setContentTitle("AVISO")
-                        .setContentText("¡LA mesa 3 te esta llamando!")
-                        .setSmallIcon(android.R.drawable.ic_popup_reminder)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-        notificationManager2.notify(NOTIFICACION_ID2, notificacion2.build());
-        Log.d(TAG, "Notificación2 creada exitosamente");
-    }
 }

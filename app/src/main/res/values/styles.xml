@@ -26,6 +26,7 @@
         </item> <!-- Ajusta el margen según tus necesidades -->
         <item name="android:stateListAnimator">@null
         </item> <!-- Desactiva la animación predeterminada -->
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TimePickerDialogStyle" parent="Theme.AppCompat.Light.Dialog">
