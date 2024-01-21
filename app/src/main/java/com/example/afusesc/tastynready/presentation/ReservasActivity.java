@@ -91,7 +91,6 @@ public class ReservasActivity extends AppCompatActivity {
         next = findViewById(R.id.BotonContinuar);
 
         db = FirebaseFirestore.getInstance();
-        eliminarReservasPasadas();
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,59 +176,7 @@ public class ReservasActivity extends AppCompatActivity {
 
 
     }
-    private void eliminarReservasPasadas() {
-        // Obtener la fecha actual
-        Date fechaActual = Calendar.getInstance().getTime();
 
-        // Obtener referencia a la colección de reservas en Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference reservasRef = db.collection("reservas");
-
-        // Consultar las reservas que tienen una fecha menor que la actual
-        reservasRef.whereLessThan("Fecha", fechaActual)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Recorrer los documentos y eliminar las reservas pasadas
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Obtener la fecha de la reserva del documento
-                            String fechaReservaStr = document.getString("Fecha"); // Ajustar el nombre del campo si es diferente
-
-                            if (fechaReservaStr != null) {
-                                // Convertir la fecha de Firestore (en formato de cadena) a un objeto Date
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                try {
-                                    Date fechaReserva = sdf.parse(fechaReservaStr);
-
-                                    // Comparar la fecha y eliminar la reserva si es pasada
-                                    if (fechaReserva != null && fechaReserva.before(fechaActual)) {
-                                        eliminarReserva(document.getId());
-                                    }
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    } else {
-                        Log.e(TAG, "Error obteniendo documentos", task.getException());
-                    }
-                });
-    }
-
-    private void eliminarReserva(String reservaId) {
-        // Obtener referencia al documento de la reserva en Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference reservaDocRef = db.collection("reservas").document(reservaId);
-
-        // Eliminar la reserva
-        reservaDocRef.delete()
-                .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Reserva eliminada correctamente");
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error al eliminar la reserva", e);
-                });
-    }
     public void comprobarDisponibilidad() {
         String claveDisponibilidad = DataPicker.obtenerIdSala() + " " +
                 DataPicker.obtenerHoraSeleccionada() + " " +
