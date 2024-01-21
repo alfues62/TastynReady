@@ -100,7 +100,7 @@ public class RegisterTrabajador extends AppCompatActivity {
                             if (result != null && result.getSignInMethods() != null && !result.getSignInMethods().isEmpty()) {
                                 mostrarError("errorRegistroEmail", "Correo electrónico ya registrado");
                             } else {
-                                agregarTrabajador(email, password, username, "trabajador");
+                                registrarUsuario(email, password, username);
                             }
                         } else {
                             Toast.makeText(RegisterTrabajador.this, "Error al verificar el correo electrónico", Toast.LENGTH_SHORT).show();
@@ -109,37 +109,54 @@ public class RegisterTrabajador extends AppCompatActivity {
                 });
     }
 
-
-    private void agregarTrabajador(String email, String password, String username, String rol) {
-        String Email = email;
-        String Password = password;  // Cambia la contraseña a algo con al menos 6 caracteres
-        String Usurname = 
-
-        mAuth.createUserWithEmailAndPassword(Email, Password)
+    private void registrarUsuario(String email, String password, String username) {
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Creación de usuario administrador exitosa
-                            FirebaseUser adminUser = mAuth.getCurrentUser();
-                            // Utiliza la instancia global de DataPicker para guardar la información del usuario
-                            dataPicker.guardarUsuarioEnFirebase(adminUser, "admin");
+                            FirebaseUser user = mAuth.getCurrentUser();
 
-                            // También puedes almacenar información adicional si es necesario
-                            DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child("admin00");
-                            adminRef.child("username").setValue(Email);
-                            adminRef.child("password").setValue(Password);
+                            if (user != null) {
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> emailTask) {
+                                                if (emailTask.isSuccessful()) {
+                                                    mostrarMensajeRegistroExitoso();
+                                                } else {
+                                                    Toast.makeText(RegisterTrabajador.this, "Error al enviar el correo de verificación", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
 
-                            Toast.makeText(RegisterTrabajador.this, "Usuario administrador creado exitosamente", Toast.LENGTH_SHORT).show();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(username)
+                                        .build();
+
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> profileUpdateTask) {
+                                                if (profileUpdateTask.isSuccessful()) {
+                                                    dataPicker.guardarUsuarioEnFirebase(user, "trabajador");
+                                                    mostrarMensajeRegistroExitoso();
+                                                } else {
+                                                    Toast.makeText(RegisterTrabajador.this, "Error al actualizar el perfil del usuario", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
                         } else {
-                            // Manejar errores en la creación del usuario administrador
-                            Toast.makeText(RegisterTrabajador.this, "Error al crear el usuario administrador", Toast.LENGTH_SHORT).show();
-                            Log.e("LoginActivity", "Error al crear el usuario administrador", task.getException());
+                            if (task.getException().getMessage().contains("email address is already in use")) {
+                                mostrarError("errorRegistroEmail", "Correo electrónico ya registrado");
+                            } else {
+                                Toast.makeText(RegisterTrabajador.this, "Error en el registro: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
     }
-
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
         TextView errorTextView = findViewById(getResources().getIdentifier(errorTextViewId, "id", getPackageName()));

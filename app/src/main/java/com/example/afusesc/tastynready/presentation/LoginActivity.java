@@ -152,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
-
         // Validaciones de campos
         if (username.isEmpty() && password.isEmpty()) {
             mostrarError("errorUsername", "Correo electrónico requerido ");
@@ -177,11 +176,6 @@ public class LoginActivity extends AppCompatActivity {
             return;  // Evitar mostrar el mensaje de credenciales incorrectas para trabajador
         }
 
-        // Intentar iniciar sesión como Trabajador
-        if (intentarLoginComoTrabajador(username, password)) {
-            return;  // Evitar mostrar el mensaje de credenciales incorrectas para admin
-        }
-
         // Utilizar Firebase Authentication para iniciar sesión
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -201,37 +195,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean intentarLoginComoTrabajador(String username, String password) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference usuariosRef = db.collection("usuarios");
-
-        usuariosRef.whereEqualTo("email", username)
-                .whereEqualTo("password", password)
-                .whereEqualTo("rol", "trabajador")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Usuario con credenciales de trabajador encontrado
-                                Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso como trabajador", Toast.LENGTH_SHORT).show();
-                                Intent trabajadorIntent = new Intent(LoginActivity.this, PaginaTrabajadorActivity.class);
-                                startActivity(trabajadorIntent);
-                                finish();
-                                return;
-                            }
-                            // Si no se encuentra un usuario con las credenciales proporcionadas
-                            mostrarError("errorPassword", "Credenciales de trabajador incorrectas");
-                        } else {
-                            // Manejar errores de Firestore
-                            Toast.makeText(LoginActivity.this, "Error al acceder a la base de datos", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-        return false;  // Retorna false por defecto, actualiza según tus necesidades
-    }
     private boolean intentarLoginComoAdmin(String username, String password) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usuariosRef = db.collection("usuarios");
@@ -246,7 +209,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Usuario con credenciales de administrador encontrado
-                                Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso como administrador", Toast.LENGTH_SHORT).show();
                                 Intent adminIntent = new Intent(LoginActivity.this, AdminActivity.class);
                                 startActivity(adminIntent);
                                 finish();
@@ -254,7 +216,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             // Si no se encuentra un usuario con las credenciales proporcionadas
                             mostrarError("errorPassword", "Credenciales de administrador incorrectas");
-                            finish();
                         } else {
                             // Manejar errores de Firestore
                             Toast.makeText(LoginActivity.this, "Error al acceder a la base de datos", Toast.LENGTH_SHORT).show();
@@ -264,6 +225,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return false;  // Retorna false por defecto, actualiza según tus necesidades
     }
+
 
     private void mostrarError(String errorTextViewId, String mensajeError) {
         TextView errorTextView = findViewById(getResources().getIdentifier(errorTextViewId, "id", getPackageName()));
