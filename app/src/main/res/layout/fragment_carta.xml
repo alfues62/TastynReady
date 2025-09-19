@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    android:background="@color/white"
+    tools:context=".presentation.HomeFragment">
 
 
     <EditText
@@ -12,11 +13,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
-        android:hint="Busca un plato..."
+        android:hint="Busca un plato...."
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +27,7 @@
         android:id="@+id/img_bebidas"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_bebidas"
+        android:src="@drawable/vaso_amarillo"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toStartOf="@+id/img_postres"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,7 +38,7 @@
         android:id="@+id/img_entrante"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_platos"
+        android:src="@drawable/filete_amarillo"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toStartOf="@+id/img_bebidas"
         app:layout_constraintHorizontal_bias="0.5"
@@ -47,7 +49,7 @@
         android:id="@+id/img_postres"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_postes"
+        android:src="@drawable/cafe_amarillo"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toStartOf="@+id/img_aperitivos"
         app:layout_constraintHorizontal_bias="0.5"
@@ -58,7 +60,7 @@
         android:id="@+id/img_aperitivos"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_aperitivos"
+        android:src="@drawable/nachos_amarillo"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +71,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="379dp"
         android:layout_height="538dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

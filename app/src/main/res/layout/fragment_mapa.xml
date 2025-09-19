@@ -1,0 +1,17 @@
+<!-- res/layout/fragment_map.xml -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- MapView para mostrar el mapa -->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="771dp" />
+
+    <!-- Puedes agregar otros elementos UI encima del mapa si es necesario -->
+    <!-- Por ejemplo, un botón para realizar alguna acción relacionada con el mapa -->
+
+</FrameLayout>

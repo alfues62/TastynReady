@@ -20,6 +20,16 @@
             android:icon="@drawable/icono_acerca_de"
             android:title="Sobre Nosotros"
             />
+        <item
+            android:id="@+id/contacta"
+            android:icon="@drawable/telefono"
+            android:title="Contacta"
+            />
+        <item
+            android:id="@+id/mapa"
+            android:icon="@drawable/mapa"
+            android:title="Encuéntranos"
+            />
     </group>
     <item
         android:title="">
